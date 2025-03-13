@@ -8,73 +8,67 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-// Modelo para tipos de artículos
 model TipoArticulo {
-  id                Int                 @id @default(autoincrement())
-  nombre            String              @unique
-  creadoEn          DateTime            @default(now())
-  articulosOferta   ArticuloOferta[]
+  id                 Int                 @id @default(autoincrement())
+  nombre             String              @unique
+  creadoEn           DateTime            @default(now())
+  articulosOferta    ArticuloOferta[]
+  articulosPeticion  ArticuloPeticion[]
   articulosSolicitud ArticuloSolicitud[]
-  articulosPeticion ArticuloPeticion[]
 }
 
-// Modelo para centros de distribución (ofertas)
 model CentroDistribucion {
-  id             Int              @id @default(autoincrement())
-  direccion      String
-  latitud        Float
-  longitud       Float
-  horarioApertura String?         // Formato: "HH:MM"
-  horarioCierre  String?          // Formato: "HH:MM"
-  activo         Boolean          @default(true)
-  articulos      ArticuloOferta[]
-  creadoEn       DateTime         @default(now())
-  actualizadoEn  DateTime         @updatedAt
+  id              Int              @id @default(autoincrement())
+  direccion       String
+  latitud         Float
+  longitud        Float
+  horarioApertura String?
+  horarioCierre   String?
+  activo          Boolean          @default(true)
+  creadoEn        DateTime         @default(now())
+  actualizadoEn   DateTime         @updatedAt
+  articulos       ArticuloOferta[]
 }
 
-// Modelo para artículos disponibles en centros de distribución
 model ArticuloOferta {
-  id                  Int               @id @default(autoincrement())
-  centroDistribucion  CentroDistribucion @relation(fields: [centroDistribucionId], references: [id], onDelete: Cascade)
+  id                   Int                @id @default(autoincrement())
   centroDistribucionId Int
-  tipoArticulo        TipoArticulo      @relation(fields: [tipoArticuloId], references: [id])
-  tipoArticuloId      Int
-  cantidad            Int
-  estado              String            @default("Disponible") // Disponible, Seleccionado, Entregado
-  creadoEn            DateTime          @default(now())
-  actualizadoEn       DateTime          @updatedAt
+  tipoArticuloId       Int
+  cantidad             Int
+  estado               String             @default("Disponible")
+  creadoEn             DateTime           @default(now())
+  actualizadoEn        DateTime           @updatedAt
+  centroDistribucion   CentroDistribucion @relation(fields: [centroDistribucionId], references: [id], onDelete: Cascade)
+  tipoArticulo         TipoArticulo       @relation(fields: [tipoArticuloId], references: [id])
 
   @@unique([centroDistribucionId, tipoArticuloId])
 }
 
-// Modelo para solicitudes (puntos de necesidad)
 model Solicitud {
-  id             Int                @id @default(autoincrement())
+  id             Int                 @id @default(autoincrement())
   direccion      String
   contactoNombre String
   contactoTel    String
-  estado         String             @default("Pendiente") // Pendiente, Entregada, Cancelada
+  estado         String              @default("Pendiente")
   latitud        Float
   longitud       Float
+  creadoEn       DateTime            @default(now())
+  actualizadoEn  DateTime            @updatedAt
   articulos      ArticuloSolicitud[]
-  creadoEn       DateTime           @default(now())
-  actualizadoEn  DateTime           @updatedAt
 }
 
-// Modelo para artículos requeridos en solicitudes
 model ArticuloSolicitud {
-  id             Int         @id @default(autoincrement())
-  solicitud      Solicitud   @relation(fields: [solicitudId], references: [id], onDelete: Cascade)
+  id             Int          @id @default(autoincrement())
   solicitudId    Int
-  tipoArticulo   TipoArticulo @relation(fields: [tipoArticuloId], references: [id])
   tipoArticuloId Int
   cantidad       Int
-  creadoEn       DateTime    @default(now())
+  creadoEn       DateTime     @default(now())
+  solicitud      Solicitud    @relation(fields: [solicitudId], references: [id], onDelete: Cascade)
+  tipoArticulo   TipoArticulo @relation(fields: [tipoArticuloId], references: [id])
 
   @@unique([solicitudId, tipoArticuloId])
 }
 
-// Modelo para peticiones de donación (pendientes de aprobación)
 model PeticionDonacion {
   id             Int                @id @default(autoincrement())
   direccion      String
@@ -82,30 +76,28 @@ model PeticionDonacion {
   contactoTel    String
   latitud        Float?
   longitud       Float?
-  estado         String             @default("Pendiente") // Pendiente, Aprobado, Rechazado
-  articulos      ArticuloPeticion[]
+  estado         String             @default("Pendiente")
   creadoEn       DateTime           @default(now())
   actualizadoEn  DateTime           @updatedAt
+  articulos      ArticuloPeticion[]
 }
 
-// Modelo para artículos solicitados en peticiones
 model ArticuloPeticion {
-  id                Int              @id @default(autoincrement())
-  peticionDonacion  PeticionDonacion @relation(fields: [peticionDonacionId], references: [id], onDelete: Cascade)
+  id                 Int              @id @default(autoincrement())
   peticionDonacionId Int
-  tipoArticulo      TipoArticulo     @relation(fields: [tipoArticuloId], references: [id])
-  tipoArticuloId    Int
-  cantidad          Int
-  creadoEn          DateTime         @default(now())
+  tipoArticuloId     Int
+  cantidad           Int
+  creadoEn           DateTime         @default(now())
+  peticionDonacion   PeticionDonacion @relation(fields: [peticionDonacionId], references: [id], onDelete: Cascade)
+  tipoArticulo       TipoArticulo     @relation(fields: [tipoArticuloId], references: [id])
 
   @@unique([peticionDonacionId, tipoArticuloId])
 }
 
-// Modelo para administradores
 model Administrador {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String   // Almacenar hash de contraseña
-  nombre    String?
-  creadoEn  DateTime @default(now())
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String
+  nombre   String?
+  creadoEn DateTime @default(now())
 }
