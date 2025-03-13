@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Modelo para tipos de artículos
+model TipoArticulo {
+  id                Int                 @id @default(autoincrement())
+  nombre            String              @unique
+  creadoEn          DateTime            @default(now())
+  articulosOferta   ArticuloOferta[]
+  articulosSolicitud ArticuloSolicitud[]
+  articulosPeticion ArticuloPeticion[]
+}
+
+// Modelo para centros de distribución (ofertas)
+model CentroDistribucion {
+  id             Int              @id @default(autoincrement())
+  direccion      String
+  latitud        Float
+  longitud       Float
+  horarioApertura String?         // Formato: "HH:MM"
+  horarioCierre  String?          // Formato: "HH:MM"
+  activo         Boolean          @default(true)
+  articulos      ArticuloOferta[]
+  creadoEn       DateTime         @default(now())
+  actualizadoEn  DateTime         @updatedAt
+}
+
+// Modelo para artículos disponibles en centros de distribución
+model ArticuloOferta {
+  id                  Int               @id @default(autoincrement())
+  centroDistribucion  CentroDistribucion @relation(fields: [centroDistribucionId], references: [id], onDelete: Cascade)
+  centroDistribucionId Int
+  tipoArticulo        TipoArticulo      @relation(fields: [tipoArticuloId], references: [id])
+  tipoArticuloId      Int
+  cantidad            Int
+  estado              String            @default("Disponible") // Disponible, Seleccionado, Entregado
+  creadoEn            DateTime          @default(now())
+  actualizadoEn       DateTime          @updatedAt
+
+  @@unique([centroDistribucionId, tipoArticuloId])
+}
+
+// Modelo para solicitudes (puntos de necesidad)
+model Solicitud {
+  id             Int                @id @default(autoincrement())
+  direccion      String
+  contactoNombre String
+  contactoTel    String
+  estado         String             @default("Pendiente") // Pendiente, Entregada, Cancelada
+  latitud        Float
+  longitud       Float
+  articulos      ArticuloSolicitud[]
+  creadoEn       DateTime           @default(now())
+  actualizadoEn  DateTime           @updatedAt
+}
+
+// Modelo para artículos requeridos en solicitudes
+model ArticuloSolicitud {
+  id             Int         @id @default(autoincrement())
+  solicitud      Solicitud   @relation(fields: [solicitudId], references: [id], onDelete: Cascade)
+  solicitudId    Int
+  tipoArticulo   TipoArticulo @relation(fields: [tipoArticuloId], references: [id])
+  tipoArticuloId Int
+  cantidad       Int
+  creadoEn       DateTime    @default(now())
+
+  @@unique([solicitudId, tipoArticuloId])
+}
+
+// Modelo para peticiones de donación (pendientes de aprobación)
+model PeticionDonacion {
+  id             Int                @id @default(autoincrement())
+  direccion      String
+  contactoNombre String
+  contactoTel    String
+  latitud        Float?
+  longitud       Float?
+  estado         String             @default("Pendiente") // Pendiente, Aprobado, Rechazado
+  articulos      ArticuloPeticion[]
+  creadoEn       DateTime           @default(now())
+  actualizadoEn  DateTime           @updatedAt
+}
+
+// Modelo para artículos solicitados en peticiones
+model ArticuloPeticion {
+  id                Int              @id @default(autoincrement())
+  peticionDonacion  PeticionDonacion @relation(fields: [peticionDonacionId], references: [id], onDelete: Cascade)
+  peticionDonacionId Int
+  tipoArticulo      TipoArticulo     @relation(fields: [tipoArticuloId], references: [id])
+  tipoArticuloId    Int
+  cantidad          Int
+  creadoEn          DateTime         @default(now())
+
+  @@unique([peticionDonacionId, tipoArticuloId])
+}
+
+// Modelo para administradores
+model Administrador {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String   // Almacenar hash de contraseña
+  nombre    String?
+  creadoEn  DateTime @default(now())
+}
