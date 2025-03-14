@@ -160,6 +160,10 @@ export default function EditarSolicitud({ solicitudId }: EditarSolicitudProps) {
     try {
       setLoading(true);
       
+      // Preparar datos para la actualización
+      let latitudFinal = formData.latitud;
+      let longitudFinal = formData.longitud;
+      
       // Actualizar la solicitud
       const responseSolicitud = await fetch(`/api/solicitudes/${solicitudId}`, {
         method: "PUT",
@@ -170,8 +174,8 @@ export default function EditarSolicitud({ solicitudId }: EditarSolicitudProps) {
           direccion: formData.direccion,
           contactoNombre: formData.contactoNombre,
           contactoTel: formData.contactoTel,
-          latitud: parseFloat(formData.latitud),
-          longitud: parseFloat(formData.longitud),
+          latitud: latitudFinal ? parseFloat(latitudFinal) : null,
+          longitud: longitudFinal ? parseFloat(longitudFinal) : null,
           descripcion: formData.descripcion || null
         }),
       });

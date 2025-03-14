@@ -164,96 +164,114 @@ export default function MapaVoluntario({ tiposArticulos }: MapaVoluntarioProps) 
   }
 
   return (
-    <MapContainer
-      center={centroMapa}
-      zoom={13}
-      style={{ height: "100%", width: "100%" }}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      
-      <CentrarMapa posicion={centroMapa} />
-      
-      {/* Marcadores de centros de distribución (puntos azules) */}
-      {centrosDistribucion
-        .filter(centro => centro.activo)
-        .filter(centro => centro.articulos.some(art => tiposArticulos.includes(art.tipoArticulo.nombre)))
-        .map((centro) => (
-          <Marker 
-            key={`centro-${centro.id}`}
-            position={[centro.latitud, centro.longitud]}
-            icon={iconoAzul}
-          >
-            <Popup>
-              <div className="space-y-2">
-                {centro.nombre ? (
-                  <>
-                    <h3 className="font-bold text-lg">{centro.nombre}</h3>
-                    <p className="text-sm text-muted-foreground">{centro.direccion}</p>
-                  </>
-                ) : (
-                  <h3 className="font-bold text-lg">{centro.direccion}</h3>
-                )}
-                <p><strong>Horario:</strong> {formatearHorario(centro.horarioApertura, centro.horarioCierre)}</p>
-                <div>
-                  <p className="font-medium">Artículos disponibles:</p>
-                  <ul className="list-disc list-inside">
-                    {centro.articulos
-                      .filter(art => tiposArticulos.includes(art.tipoArticulo.nombre))
-                      .map(art => (
-                        <li key={art.id}>{art.tipoArticulo.nombre}</li>
-                      ))
-                    }
-                  </ul>
+    <>
+      <MapContainer
+        center={[-38.7196, -62.2724]} // Coordenadas de Bahía Blanca
+        zoom={13}
+        style={{ height: "100%", width: "100%" }}
+        zoomControl={false} // Desactivamos los controles de zoom predeterminados para colocarlos en otra posición
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        
+        {/* Añadimos los controles de zoom en la esquina inferior derecha para mejor acceso en móviles */}
+        <div className="leaflet-bottom leaflet-right" style={{ zIndex: 1000 }}>
+          <div className="leaflet-control-zoom leaflet-bar leaflet-control">
+            <a className="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in">+</a>
+            <a className="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out">−</a>
+          </div>
+        </div>
+
+        <CentrarMapa posicion={[-38.7196, -62.2724]} />
+
+        {/* Marcadores de centros de distribución (puntos azules) */}
+        {centrosDistribucion
+          .filter(centro => centro.activo)
+          .filter(centro => centro.articulos.some(art => tiposArticulos.includes(art.tipoArticulo.nombre)))
+          .map((centro) => (
+            <Marker 
+              key={`centro-${centro.id}`}
+              position={[centro.latitud, centro.longitud]}
+              icon={iconoAzul}
+            >
+              <Popup className="custom-popup">
+                <div className="text-xs sm:text-sm space-y-1 sm:space-y-2 max-w-[250px] sm:max-w-[300px]">
+                  <h3 className="font-semibold text-sm sm:text-base">{centro.nombre || "Centro de donaciones"}</h3>
+                  <p className="text-muted-foreground">{centro.direccion}</p>
+                  
+                  {(centro.horarioApertura || centro.horarioCierre) && (
+                    <p className="text-muted-foreground">
+                      Horario: {formatearHorario(centro.horarioApertura, centro.horarioCierre)}
+                    </p>
+                  )}
+                  
+                  <div>
+                    <p className="font-medium text-xs sm:text-sm">Artículos que reciben:</p>
+                    <ul className="list-disc list-inside text-xs sm:text-sm">
+                      {centro.articulos
+                        .filter(art => tiposArticulos.includes(art.tipoArticulo.nombre))
+                        .map((articulo) => (
+                          <li key={`articulo-${articulo.id}`}>{articulo.tipoArticulo.nombre}</li>
+                        ))
+                      }
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </Popup>
-          </Marker>
-        ))
-      }
-      
-      {/* Marcadores de solicitudes (puntos rojos) */}
-      {solicitudes
-        .filter(solicitud => solicitud.estado === "Pendiente")
-        .filter(solicitud => solicitud.articulos.some(art => tiposArticulos.includes(art.tipoArticulo.nombre)))
-        .map((solicitud) => (
-          <Marker 
-            key={`solicitud-${solicitud.id}`}
-            position={[solicitud.latitud, solicitud.longitud]}
-            icon={iconoRojo}
-          >
-            <Popup>
-              <div className="space-y-2">
-                <h3 className="font-bold text-lg">{solicitud.direccion}</h3>
-                <p><strong>Contacto:</strong> {solicitud.contactoNombre}</p>
-                {solicitud.contactoTel && (
-                  <p><strong>Teléfono:</strong> {solicitud.contactoTel}</p>
-                )}
-                <div>
-                  <p className="font-medium">Artículos solicitados:</p>
-                  <ul className="list-disc list-inside">
-                    {solicitud.articulos
-                      .filter(art => tiposArticulos.includes(art.tipoArticulo.nombre))
-                      .map(art => (
-                        <li key={art.id}>{art.tipoArticulo.nombre} (x{art.cantidad})</li>
-                      ))
-                    }
-                  </ul>
+              </Popup>
+            </Marker>
+          ))
+        }
+        
+        {/* Marcadores de solicitudes (puntos rojos) */}
+        {solicitudes
+          .filter(solicitud => solicitud.estado === "Pendiente")
+          .filter(solicitud => solicitud.articulos.some(art => tiposArticulos.includes(art.tipoArticulo.nombre)))
+          .map((solicitud) => (
+            <Marker 
+              key={`solicitud-${solicitud.id}`}
+              position={[solicitud.latitud, solicitud.longitud]}
+              icon={iconoRojo}
+            >
+              <Popup className="custom-popup">
+                <div className="text-xs sm:text-sm space-y-1 sm:space-y-2 max-w-[250px] sm:max-w-[300px]">
+                  <h3 className="font-semibold text-sm sm:text-base">Solicitud de donación</h3>
+                  <p className="text-muted-foreground">{solicitud.direccion}</p>
+                  
+                  <div>
+                    <p className="font-medium text-xs sm:text-sm">Artículos solicitados:</p>
+                    <ul className="list-disc list-inside text-xs sm:text-sm">
+                      {solicitud.articulos
+                        .filter(art => tiposArticulos.includes(art.tipoArticulo.nombre))
+                        .map((articulo) => (
+                          <li key={`articulo-${articulo.id}`}>
+                            {articulo.tipoArticulo.nombre} ({articulo.cantidad})
+                          </li>
+                        ))
+                      }
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <p className="font-medium text-xs sm:text-sm">Contacto:</p>
+                    <p className="text-xs sm:text-sm">{solicitud.contactoNombre}</p>
+                    <p className="text-xs sm:text-sm">Tel: {solicitud.contactoTel}</p>
+                  </div>
+                  
+                  <Button 
+                    size="sm" 
+                    className="w-full mt-2"
+                    onClick={() => marcarComoEntregada(solicitud.id)}
+                  >
+                    Marcar como entregada
+                  </Button>
                 </div>
-                <Button 
-                  className="w-full mt-2" 
-                  size="sm"
-                  onClick={() => marcarComoEntregada(solicitud.id)}
-                >
-                  Marcar como entregada
-                </Button>
-              </div>
-            </Popup>
-          </Marker>
-        ))
-      }
-    </MapContainer>
+              </Popup>
+            </Marker>
+          ))
+        }
+      </MapContainer>
+    </>
   );
 } 

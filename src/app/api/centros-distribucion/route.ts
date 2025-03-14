@@ -6,17 +6,25 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 // GET /api/centros-distribucion
-// Obtiene todos los centros de distribución activos con artículos disponibles
+// Obtiene todos los centros de distribución
 export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url);
     const tiposArticulosParam = url.searchParams.get("tiposArticulos");
+    const soloActivos = url.searchParams.get("soloActivos") === "true";
+    
+    console.log("GET /api/centros-distribucion - Parámetros:", {
+      tiposArticulosParam,
+      soloActivos
+    });
     
     let tiposArticulos: string[] = [];
     if (tiposArticulosParam) {
       try {
         tiposArticulos = JSON.parse(tiposArticulosParam);
+        console.log("Tipos de artículos filtrados:", tiposArticulos);
       } catch {
+        console.error("Error al parsear tiposArticulos:", tiposArticulosParam);
         return NextResponse.json(
           { error: "Formato inválido para tiposArticulos" },
           { status: 400 }
@@ -24,30 +32,31 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Consulta para obtener centros de distribución con artículos disponibles
-    const centros = await prisma.centroDistribucion.findMany({
-      where: {
-        activo: true,
-        articulos: {
-          some: tiposArticulos.length > 0 
-            ? {
-                tipoArticulo: {
-                  nombre: {
-                    in: tiposArticulos
-                  }
-                },
-                estado: "Disponible"
-              }
-            : {
-                estado: "Disponible"
-              }
+    // Construir el filtro para la consulta
+    const where: any = {};
+    if (soloActivos) {
+      where.activo = true;
+    }
+    
+    if (tiposArticulos.length > 0) {
+      where.articulos = {
+        some: {
+          tipoArticulo: {
+            nombre: {
+              in: tiposArticulos
+            }
+          }
         }
-      },
+      };
+    }
+    
+    console.log("Filtro de consulta:", JSON.stringify(where, null, 2));
+
+    // Consulta para obtener centros de distribución
+    const centros = await prisma.centroDistribucion.findMany({
+      where,
       include: {
         articulos: {
-          where: {
-            estado: "Disponible"
-          },
           include: {
             tipoArticulo: true
           }
@@ -58,6 +67,7 @@ export async function GET(request: NextRequest) {
       }
     });
 
+    console.log(`Centros encontrados: ${centros.length}`);
     return NextResponse.json(centros);
   } catch (error) {
     console.error("Error al obtener centros de distribución:", error);
@@ -85,9 +95,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     
     // Validar campos requeridos
-    if (!body.direccion || !body.latitud || !body.longitud || !body.responsable) {
+    if (!body.direccion || !body.responsable) {
       return NextResponse.json(
-        { error: "Faltan campos requeridos: direccion, latitud, longitud, responsable" },
+        { error: "Faltan campos requeridos: direccion, responsable" },
         { status: 400 }
       );
     }
@@ -96,8 +106,8 @@ export async function POST(request: NextRequest) {
     const centro = await prisma.centroDistribucion.create({
       data: {
         direccion: body.direccion,
-        latitud: body.latitud,
-        longitud: body.longitud,
+        latitud: body.latitud || null,
+        longitud: body.longitud || null,
         responsable: body.responsable,
         telefono: body.telefono || null,
         horarioApertura: body.horarioApertura || null,

@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+// Configuración para las rutas de API
+export const dynamic = 'force-dynamic';
+
 // GET /api/centros-distribucion/[id]
 // Obtiene un centro de distribución específico por ID
 export async function GET(
@@ -8,8 +11,11 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
-    if (isNaN(id)) {
+    // Usar desestructuración para obtener el ID
+    const { id } = params;
+    const centroId = parseInt(id);
+    
+    if (isNaN(centroId)) {
       return NextResponse.json(
         { error: "ID inválido" },
         { status: 400 }
@@ -18,7 +24,7 @@ export async function GET(
 
     // Buscar el centro con sus artículos
     const centro = await prisma.centroDistribucion.findUnique({
-      where: { id },
+      where: { id: centroId },
       include: {
         articulos: {
           include: {
@@ -63,9 +69,12 @@ export async function PATCH(
       );
     }
 
-    const id = parseInt(params.id);
-    if (isNaN(id)) {
-      console.log("ID inválido:", params.id);
+    // Usar desestructuración para obtener el ID
+    const { id } = params;
+    const centroId = parseInt(id);
+    
+    if (isNaN(centroId)) {
+      console.log("ID inválido:", id);
       return NextResponse.json(
         { error: "ID inválido" },
         { status: 400 }
@@ -73,15 +82,15 @@ export async function PATCH(
     }
 
     const body = await request.json();
-    console.log("Datos recibidos para actualizar centro:", { id, ...body });
+    console.log("Datos recibidos para actualizar centro:", { id: centroId, ...body });
     
     // Verificar que el centro existe
     const centroExistente = await prisma.centroDistribucion.findUnique({
-      where: { id }
+      where: { id: centroId }
     });
     
     if (!centroExistente) {
-      console.log("Centro no encontrado con ID:", id);
+      console.log("Centro no encontrado con ID:", centroId);
       return NextResponse.json(
         { error: "Centro de distribución no encontrado" },
         { status: 404 }
@@ -104,7 +113,7 @@ export async function PATCH(
       });
       
       const centro = await prisma.centroDistribucion.update({
-        where: { id },
+        where: { id: centroId },
         data: {
           activo: body.activo !== undefined ? body.activo : centroExistente.activo,
           direccion: body.direccion || centroExistente.direccion,
@@ -118,11 +127,6 @@ export async function PATCH(
           descripcion: body.descripcion !== undefined ? body.descripcion : centroExistente.descripcion
         }
       });
-      
-      // Ya no es necesario actualizar el nombre con una consulta SQL directa
-      // if (body.nombre !== undefined) {
-      //   await prisma.$executeRaw`UPDATE "CentroDistribucion" SET "nombre" = ${body.nombre} WHERE "id" = ${id}`;
-      // }
       
       console.log("Centro actualizado correctamente:", centro);
       return NextResponse.json(centro);
@@ -159,8 +163,11 @@ export async function PUT(
       );
     }
 
-    const id = parseInt(params.id);
-    if (isNaN(id)) {
+    // Usar desestructuración para obtener el ID
+    const { id } = params;
+    const centroId = parseInt(id);
+    
+    if (isNaN(centroId)) {
       return NextResponse.json(
         { error: "ID inválido" },
         { status: 400 }
@@ -171,7 +178,7 @@ export async function PUT(
     
     // Verificar que el centro existe
     const centroExistente = await prisma.centroDistribucion.findUnique({
-      where: { id }
+      where: { id: centroId }
     });
     
     if (!centroExistente) {
@@ -183,7 +190,7 @@ export async function PUT(
     
     // Actualizar el centro
     const centro = await prisma.centroDistribucion.update({
-      where: { id },
+      where: { id: centroId },
       data: {
         direccion: body.direccion,
         responsable: body.responsable,
@@ -197,11 +204,6 @@ export async function PUT(
       }
     });
     
-    // Ya no es necesario actualizar el nombre con una consulta SQL directa
-    // if (body.nombre !== undefined) {
-    //   await prisma.$executeRaw`UPDATE "CentroDistribucion" SET "nombre" = ${body.nombre} WHERE "id" = ${id}`;
-    // }
-    
     return NextResponse.json(centro);
   } catch (error) {
     console.error("Error al actualizar centro de distribución:", error);
@@ -213,7 +215,7 @@ export async function PUT(
 }
 
 // DELETE /api/centros-distribucion/[id]
-// Elimina un centro de distribución (solo para administradores)
+// Elimina un centro de distribución y todos sus artículos (solo para administradores)
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -229,36 +231,47 @@ export async function DELETE(
       );
     }
 
-    const id = parseInt(params.id);
-    if (isNaN(id)) {
+    // Usar desestructuración para obtener el ID
+    const { id } = params;
+    const centroId = parseInt(id);
+    
+    if (isNaN(centroId)) {
       return NextResponse.json(
         { error: "ID inválido" },
         { status: 400 }
       );
     }
-    
+
     // Verificar que el centro existe
-    const centroExistente = await prisma.centroDistribucion.findUnique({
-      where: { id }
+    const centro = await prisma.centroDistribucion.findUnique({
+      where: { id: centroId }
     });
     
-    if (!centroExistente) {
+    if (!centro) {
       return NextResponse.json(
-        { error: "Centro de distribución no encontrado" },
+        { error: "Centro no encontrado" },
         { status: 404 }
       );
     }
-    
+
+    // Eliminar los artículos asociados al centro
+    await prisma.articuloOferta.deleteMany({
+      where: { centroDistribucionId: centroId }
+    });
+
     // Eliminar el centro
     await prisma.centroDistribucion.delete({
-      where: { id }
+      where: { id: centroId }
     });
-    
-    return NextResponse.json({ success: true });
+
+    return NextResponse.json({
+      success: true,
+      message: "Centro eliminado correctamente"
+    });
   } catch (error) {
-    console.error("Error al eliminar centro de distribución:", error);
+    console.error("Error al eliminar centro:", error);
     return NextResponse.json(
-      { error: "Error al eliminar centro de distribución" },
+      { error: "Error al eliminar el centro" },
       { status: 500 }
     );
   }

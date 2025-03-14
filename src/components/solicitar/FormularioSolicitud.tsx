@@ -33,8 +33,6 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
     direccion: "",
     contactoNombre: "",
     contactoTel: "",
-    latitud: "-38.7196", // Valor predeterminado para Bahía Blanca
-    longitud: "-62.2724", // Valor predeterminado para Bahía Blanca
     descripcion: ""
   });
   const [articulos, setArticulos] = useState<ArticuloSolicitado[]>([
@@ -149,8 +147,6 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
           direccion: formData.direccion,
           contactoNombre: formData.contactoNombre,
           contactoTel: formData.contactoTel,
-          latitud: parseFloat(formData.latitud),
-          longitud: parseFloat(formData.longitud),
           descripcion: formData.descripcion,
           articulos: articulosParaEnviar
         }),
@@ -174,174 +170,168 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
 
   return (
     <Card className="shadow-sm">
-      <CardHeader>
-        <CardTitle>Formulario de Solicitud</CardTitle>
+      <CardHeader className="pb-4">
+        <CardTitle className="text-lg sm:text-xl">Formulario de Solicitud</CardTitle>
         <CardDescription>
-          Completa tus datos y selecciona los artículos que necesitas
+          Completa todos los campos para solicitar donaciones
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="direccion">Dirección exacta *</Label>
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          {/* Datos de contacto */}
+          <div className="space-y-3 sm:space-y-4">
+            <h3 className="text-sm sm:text-base font-medium">Datos de contacto</h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="space-y-1.5 sm:space-y-2">
+                <Label htmlFor="contactoNombre">Nombre completo</Label>
+                <Input
+                  id="contactoNombre"
+                  name="contactoNombre"
+                  value={formData.contactoNombre}
+                  onChange={handleChange}
+                  placeholder="Ej: Juan Pérez"
+                  required
+                  className="text-sm sm:text-base"
+                />
+              </div>
+              
+              <div className="space-y-1.5 sm:space-y-2">
+                <Label htmlFor="contactoTel">Teléfono de contacto</Label>
+                <Input
+                  id="contactoTel"
+                  name="contactoTel"
+                  value={formData.contactoTel}
+                  onChange={handleChange}
+                  placeholder="Ej: 291-4123456"
+                  required
+                  className="text-sm sm:text-base"
+                />
+              </div>
+            </div>
+          </div>
+          
+          {/* Ubicación */}
+          <div className="space-y-3 sm:space-y-4">
+            <h3 className="text-sm sm:text-base font-medium">Ubicación</h3>
+            
+            <div className="space-y-1.5 sm:space-y-2">
+              <Label htmlFor="direccion">Dirección completa</Label>
               <Input
                 id="direccion"
                 name="direccion"
-                placeholder="Ej: Av. Colón 80, Bahía Blanca"
                 value={formData.direccion}
                 onChange={handleChange}
+                placeholder="Ej: Calle 123, Bahía Blanca"
                 required
+                className="text-sm sm:text-base"
               />
-              <p className="text-xs text-muted-foreground">
-                Ingresa la dirección lo más detallada posible para que los voluntarios puedan ubicarte.
+              <p className="text-xs text-muted-foreground mt-1">
+                Incluye calle, número, piso/depto y barrio para facilitar la entrega
               </p>
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="contactoNombre">Nombre de contacto *</Label>
-              <Input
-                id="contactoNombre"
-                name="contactoNombre"
-                placeholder="Ej: Juan Pérez"
-                value={formData.contactoNombre}
-                onChange={handleChange}
-                required
-              />
+          </div>
+          
+          {/* Artículos solicitados */}
+          <div className="space-y-3 sm:space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-sm sm:text-base font-medium">Artículos solicitados</h3>
+              <Button 
+                type="button" 
+                onClick={agregarArticulo} 
+                size="sm" 
+                variant="outline"
+                className="h-7 sm:h-8 text-xs sm:text-sm"
+              >
+                <Plus className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                Agregar artículo
+              </Button>
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="contactoTel">Teléfono de contacto</Label>
-              <Input
-                id="contactoTel"
-                name="contactoTel"
-                placeholder="Ej: 291-4123456"
-                value={formData.contactoTel}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="latitud">Latitud</Label>
-              <Input
-                id="latitud"
-                name="latitud"
-                placeholder="Latitud"
-                value={formData.latitud}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="longitud">Longitud</Label>
-              <Input
-                id="longitud"
-                name="longitud"
-                placeholder="Longitud"
-                value={formData.longitud}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="descripcion">Descripción (opcional)</Label>
-              <Textarea
-                id="descripcion"
-                name="descripcion"
-                placeholder="Describe brevemente tu solicitud"
-                value={formData.descripcion}
-                onChange={handleChange}
-                rows={3}
-              />
-            </div>
-
-            <div className="pt-4">
-              <h3 className="text-lg font-medium mb-2">Artículos solicitados</h3>
-              {cargandoTipos ? (
-                <div className="flex justify-center items-center py-4">
-                  <p>Cargando tipos de artículos...</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {articulos.map((articulo, index) => (
-                    <div key={index} className="flex flex-col gap-2 border p-3 rounded-md">
-                      <div className="flex flex-row gap-2 items-start">
-                        <div className={`flex-grow space-y-2 ${articulo.tipoArticulo === "Otro" ? "w-1/2" : "w-full"}`}>
-                          <Label htmlFor={`tipoArticulo-${index}`}>Tipo de artículo *</Label>
-                          <Select
-                            value={articulo.tipoArticulo}
-                            onValueChange={(value) => handleArticuloChange(index, "tipoArticulo", value)}
-                          >
-                            <SelectTrigger id={`tipoArticulo-${index}`}>
-                              <SelectValue placeholder="Selecciona un tipo de artículo" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {tiposArticulos.map((tipo) => (
-                                <SelectItem key={tipo} value={tipo}>
-                                  {tipo}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        
-                        {articulo.tipoArticulo === "Otro" && (
-                          <div className="flex-grow space-y-2 w-1/2">
-                            <Label htmlFor={`tipoPersonalizado-${index}`}>Especificar *</Label>
-                            <Input
-                              id={`tipoPersonalizado-${index}`}
-                              value={articulo.tipoPersonalizado || ""}
-                              onChange={(e) => handleArticuloChange(index, "tipoPersonalizado", e.target.value)}
-                              placeholder="Ej: Pañales"
-                              required
-                            />
-                          </div>
-                        )}
-                        
-                        <div className="space-y-2 w-24">
-                          <Label htmlFor={`cantidad-${index}`}>Cantidad *</Label>
-                          <Input
-                            id={`cantidad-${index}`}
-                            type="number"
-                            min="1"
-                            value={articulo.cantidad}
-                            onChange={(e) => handleArticuloChange(index, "cantidad", parseInt(e.target.value) || 1)}
-                            required
-                          />
-                        </div>
-                        
-                        <div className="pt-8">
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => eliminarArticulo(index)}
-                            className="flex-shrink-0"
-                          >
-                            <Trash2 className="h-5 w-5" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+            
+            <div className="space-y-3">
+              {articulos.map((articulo, index) => (
+                <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-4 p-3 border rounded-md relative">
                   <Button
                     type="button"
-                    variant="outline"
-                    onClick={agregarArticulo}
-                    className="w-full"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => eliminarArticulo(index)}
+                    className="absolute top-1 right-1 h-6 w-6 sm:h-8 sm:w-8"
+                    disabled={articulos.length === 1}
                   >
-                    <Plus className="h-4 w-4 mr-2" /> Agregar otro artículo
+                    <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
                   </Button>
+                  
+                  <div className="flex-1 space-y-1.5 sm:space-y-2">
+                    <Label htmlFor={`tipoArticulo-${index}`}>Tipo de artículo</Label>
+                    <Select
+                      value={articulo.tipoArticulo}
+                      onValueChange={(value: string) => handleArticuloChange(index, "tipoArticulo", value)}
+                    >
+                      <SelectTrigger id={`tipoArticulo-${index}`} className="text-sm sm:text-base">
+                        <SelectValue placeholder="Selecciona un tipo" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {cargandoTipos ? (
+                          <div className="p-2 text-center">Cargando...</div>
+                        ) : (
+                          <>
+                            {tiposArticulos.map((tipo) => (
+                              <SelectItem key={tipo} value={tipo} className="text-sm sm:text-base">
+                                {tipo}
+                              </SelectItem>
+                            ))}
+                            <SelectItem value="otro" className="text-sm sm:text-base">Otro (especificar)</SelectItem>
+                          </>
+                        )}
+                      </SelectContent>
+                    </Select>
+                    
+                    {articulo.tipoArticulo === "otro" && (
+                      <div className="mt-2">
+                        <Input
+                          placeholder="Especifica el tipo de artículo"
+                          value={articulo.tipoPersonalizado || ""}
+                          onChange={(e) => handleArticuloChange(index, "tipoPersonalizado", e.target.value)}
+                          className="text-sm sm:text-base"
+                          required={articulo.tipoArticulo === "otro"}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="w-full sm:w-24 space-y-1.5 sm:space-y-2">
+                    <Label htmlFor={`cantidad-${index}`}>Cantidad</Label>
+                    <Input
+                      id={`cantidad-${index}`}
+                      type="number"
+                      min="1"
+                      value={articulo.cantidad}
+                      onChange={(e) => handleArticuloChange(index, "cantidad", parseInt(e.target.value) || 1)}
+                      className="text-sm sm:text-base"
+                    />
+                  </div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
-
-          <div className="pt-2 flex justify-end">
-            <Button type="submit" disabled={loading} className="w-full sm:w-auto">
-              {loading ? "Enviando..." : "Enviar solicitud"}
-            </Button>
+          
+          {/* Descripción adicional */}
+          <div className="space-y-1.5 sm:space-y-2">
+            <Label htmlFor="descripcion">Descripción adicional (opcional)</Label>
+            <Textarea
+              id="descripcion"
+              name="descripcion"
+              value={formData.descripcion}
+              onChange={handleChange}
+              placeholder="Información adicional que pueda ser útil para los voluntarios"
+              className="min-h-[80px] text-sm sm:text-base"
+            />
           </div>
+          
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Enviando solicitud..." : "Enviar solicitud"}
+          </Button>
         </form>
       </CardContent>
     </Card>

@@ -9,7 +9,8 @@ import { toast } from "sonner";
 
 const tiposArticulos = [
   "Ropa",
-  "Colchones",
+  "Colchon 1 plaza",
+  "Colchon 2 plazas",
   "Alimentos no perecederos",
   "Sabanas / Frazadas",
   "Agua",
@@ -47,15 +48,14 @@ export default function RegistroOferta() {
     try {
       setLoading(true);
       
-      // Geocodificar la dirección para obtener latitud y longitud
-      if (!formData.latitud || !formData.longitud) {
-        // Aquí iría la lógica para geocodificar la dirección
-        // Por ahora, usamos valores de ejemplo
-        setFormData(prev => ({
-          ...prev,
-          latitud: "-38.7196",
-          longitud: "-62.2724"
-        }));
+      // Valores por defecto para latitud y longitud si no están presentes
+      let latitudFinal = formData.latitud;
+      let longitudFinal = formData.longitud;
+      
+      if (!latitudFinal || !longitudFinal) {
+        // Usar valores por defecto para Bahía Blanca
+        latitudFinal = "-38.7196";
+        longitudFinal = "-62.2724";
       }
 
       // Enviar datos al servidor
@@ -67,8 +67,8 @@ export default function RegistroOferta() {
         body: JSON.stringify({
           ...formData,
           cantidad: parseInt(formData.cantidad),
-          latitud: parseFloat(formData.latitud),
-          longitud: parseFloat(formData.longitud),
+          latitud: parseFloat(latitudFinal),
+          longitud: parseFloat(longitudFinal),
         }),
       });
 

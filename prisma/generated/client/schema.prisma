@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model TipoArticulo {
+  id                   Int                  @id @default(autoincrement())
+  nombre               String               @unique
+  creadoEn             DateTime             @default(now())
+  articulosOferta      ArticuloOferta[]
+  articulosPeticion    ArticuloPeticion[]
+  articulosSolicitud   ArticuloSolicitud[]
+  articulosSolicitados ArticuloSolicitado[]
+}
+
+model CentroDistribucion {
+  id              Int              @id @default(autoincrement())
+  nombre          String? // Campo opcional para el nombre del centro
+  direccion       String
+  responsable     String
+  telefono        String?
+  latitud         Float
+  longitud        Float
+  horarioApertura String?
+  horarioCierre   String?
+  descripcion     String?
+  activo          Boolean          @default(true)
+  creadoEn        DateTime         @default(now())
+  actualizadoEn   DateTime         @updatedAt
+  articulos       ArticuloOferta[]
+}
+
+model ArticuloOferta {
+  id                   Int                @id @default(autoincrement())
+  centroDistribucionId Int
+  tipoArticuloId       Int
+  cantidad             Int
+  estado               String             @default("Disponible")
+  creadoEn             DateTime           @default(now())
+  actualizadoEn        DateTime           @updatedAt
+  centroDistribucion   CentroDistribucion @relation(fields: [centroDistribucionId], references: [id], onDelete: Cascade)
+  tipoArticulo         TipoArticulo       @relation(fields: [tipoArticuloId], references: [id])
+
+  @@unique([centroDistribucionId, tipoArticuloId])
+}
+
+model Solicitud {
+  id             Int                 @id @default(autoincrement())
+  direccion      String
+  contactoNombre String
+  contactoTel    String
+  estado         String              @default("Pendiente")
+  latitud        Float
+  longitud       Float
+  descripcion    String?
+  creadoEn       DateTime            @default(now())
+  actualizadoEn  DateTime            @updatedAt
+  articulos      ArticuloSolicitud[]
+}
+
+model ArticuloSolicitud {
+  id             Int          @id @default(autoincrement())
+  solicitudId    Int
+  tipoArticuloId Int
+  cantidad       Int
+  creadoEn       DateTime     @default(now())
+  solicitud      Solicitud    @relation(fields: [solicitudId], references: [id], onDelete: Cascade)
+  tipoArticulo   TipoArticulo @relation(fields: [tipoArticuloId], references: [id])
+
+  @@unique([solicitudId, tipoArticuloId])
+}
+
+model PeticionDonacion {
+  id             Int                @id @default(autoincrement())
+  direccion      String
+  contactoNombre String
+  contactoTel    String
+  latitud        Float?
+  longitud       Float?
+  descripcion    String?
+  estado         String             @default("Pendiente")
+  creadoEn       DateTime           @default(now())
+  actualizadoEn  DateTime           @updatedAt
+  articulos      ArticuloPeticion[]
+}
+
+model ArticuloPeticion {
+  id                 Int              @id @default(autoincrement())
+  peticionDonacionId Int
+  tipoArticuloId     Int
+  cantidad           Int
+  creadoEn           DateTime         @default(now())
+  peticionDonacion   PeticionDonacion @relation(fields: [peticionDonacionId], references: [id], onDelete: Cascade)
+  tipoArticulo       TipoArticulo     @relation(fields: [tipoArticuloId], references: [id])
+
+  @@unique([peticionDonacionId, tipoArticuloId])
+}
+
+model Administrador {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String
+  nombre   String?
+  creadoEn DateTime @default(now())
+}
+
+model SolicitudCentro {
+  id                   Int                  @id @default(autoincrement())
+  nombre               String?
+  direccion            String
+  responsable          String
+  telefono             String?
+  horarioApertura      String?
+  horarioCierre        String?
+  latitud              Float
+  longitud             Float
+  descripcion          String?
+  estado               String // "Pendiente", "Aprobada", "Rechazada"
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  articulosSolicitados ArticuloSolicitado[]
+}
+
+model ArticuloSolicitado {
+  id                Int             @id @default(autoincrement())
+  solicitudCentroId Int
+  tipoArticuloId    Int
+  cantidad          Int
+  solicitudCentro   SolicitudCentro @relation(fields: [solicitudCentroId], references: [id], onDelete: Cascade)
+  tipoArticulo      TipoArticulo    @relation(fields: [tipoArticuloId], references: [id])
+}

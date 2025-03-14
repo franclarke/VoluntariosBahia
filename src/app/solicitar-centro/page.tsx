@@ -32,8 +32,6 @@ export default function SolicitarCentroPage() {
     telefono: "",
     horarioApertura: "",
     horarioCierre: "",
-    latitud: "-38.7196", // Valor predeterminado para Bahía Blanca
-    longitud: "-62.2724", // Valor predeterminado para Bahía Blanca
     descripcion: "",
     nombre: ""
   });
@@ -126,6 +124,12 @@ export default function SolicitarCentroPage() {
     try {
       setLoading(true);
       
+      console.log("Enviando solicitud de centro:", {
+        direccion: formData.direccion,
+        responsable: formData.responsable,
+        articulos: articulos
+      });
+      
       // Crear la solicitud de centro
       const response = await fetch("/api/solicitudes-centro", {
         method: "POST",
@@ -138,8 +142,6 @@ export default function SolicitarCentroPage() {
           telefono: formData.telefono || null,
           horarioApertura: formData.horarioApertura || null,
           horarioCierre: formData.horarioCierre || null,
-          latitud: formData.latitud,
-          longitud: formData.longitud,
           descripcion: formData.descripcion || null,
           nombre: formData.nombre || null,
           articulos: articulos
@@ -148,9 +150,13 @@ export default function SolicitarCentroPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
+        console.error("Error en la respuesta:", errorData);
         throw new Error(errorData.error || "Error al enviar la solicitud");
       }
 
+      const responseData = await response.json();
+      console.log("Respuesta del servidor:", responseData);
+      
       toast.success("Solicitud enviada correctamente. Un administrador la revisará pronto.");
       setEnviado(true);
       
@@ -169,8 +175,6 @@ export default function SolicitarCentroPage() {
       telefono: "",
       horarioApertura: "",
       horarioCierre: "",
-      latitud: "-38.7196", // Valor predeterminado para Bahía Blanca
-      longitud: "-62.2724", // Valor predeterminado para Bahía Blanca
       descripcion: "",
       nombre: ""
     });
@@ -295,28 +299,6 @@ export default function SolicitarCentroPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="latitud">Latitud</Label>
-                  <Input
-                    id="latitud"
-                    name="latitud"
-                    type="text"
-                    value={formData.latitud}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="longitud">Longitud</Label>
-                  <Input
-                    id="longitud"
-                    name="longitud"
-                    type="text"
-                    value={formData.longitud}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="space-y-2">
                   <Label htmlFor="descripcion">Descripción (opcional)</Label>
                   <Textarea
                     id="descripcion"
@@ -370,7 +352,7 @@ export default function SolicitarCentroPage() {
                               <Label htmlFor={`tipoArticulo-${index}`}>Tipo de artículo *</Label>
                               <Select
                                 value={articulo.tipoArticuloId.toString()}
-                                onValueChange={(value) => handleArticuloChange(index, "tipoArticuloId", parseInt(value))}
+                                onValueChange={(value: string) => handleArticuloChange(index, "tipoArticuloId", parseInt(value))}
                               >
                                 <SelectTrigger id={`tipoArticulo-${index}`}>
                                   <SelectValue placeholder="Selecciona un tipo" />

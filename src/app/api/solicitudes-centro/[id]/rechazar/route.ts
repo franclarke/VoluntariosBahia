@@ -8,16 +8,8 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    // Verificar si el usuario está autenticado como administrador
-    const token = request.cookies.get("admin_token")?.value;
+    console.log("Rechazando solicitud de centro con ID:", params.id);
     
-    if (!token) {
-      return NextResponse.json(
-        { error: "No autorizado" },
-        { status: 401 }
-      );
-    }
-
     const id = parseInt(params.id);
     if (isNaN(id)) {
       return NextResponse.json(
@@ -44,6 +36,8 @@ export async function POST(
         { status: 400 }
       );
     }
+
+    console.log("Rechazando solicitud de centro:", solicitud);
 
     // Actualizar el estado de la solicitud
     await prisma.solicitudCentro.update({

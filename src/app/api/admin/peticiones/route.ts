@@ -40,6 +40,11 @@ export async function GET(request: NextRequest) {
 interface ArticuloPeticion {
   tipoArticuloId: number;
   cantidad: number;
+  id?: number;
+  tipoArticulo?: {
+    id: number;
+    nombre: string;
+  };
 }
 
 // PUT /api/admin/peticiones

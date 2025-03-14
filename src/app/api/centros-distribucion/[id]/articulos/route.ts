@@ -1,6 +1,45 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { PrismaClient } from "@prisma/client";
+
+// Configuración para las rutas de API
+export const dynamic = 'force-dynamic';
+
+// GET /api/centros-distribucion/[id]/articulos
+// Obtiene los artículos de un centro de distribución
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    // Usar desestructuración para obtener el ID
+    const { id } = params;
+    
+    const centroId = parseInt(id);
+    if (isNaN(centroId)) {
+      console.log("ID inválido en GET artículos:", id);
+      return NextResponse.json(
+        { error: "ID inválido" },
+        { status: 400 }
+      );
+    }
+
+    // Buscar los artículos del centro
+    const articulos = await prisma.articuloOferta.findMany({
+      where: { centroDistribucionId: centroId },
+      include: {
+        tipoArticulo: true
+      }
+    });
+
+    return NextResponse.json(articulos);
+  } catch (error) {
+    console.error("Error al obtener artículos del centro:", error);
+    return NextResponse.json(
+      { error: "Error al obtener artículos del centro" },
+      { status: 500 }
+    );
+  }
+}
 
 // DELETE /api/centros-distribucion/[id]/articulos
 // Elimina todos los artículos de un centro de distribución (solo para administradores)
@@ -20,9 +59,12 @@ export async function DELETE(
       );
     }
 
-    const id = parseInt(params.id);
-    if (isNaN(id)) {
-      console.log("ID inválido en DELETE artículos:", params.id);
+    // Usar desestructuración para obtener el ID
+    const { id } = params;
+    
+    const centroId = parseInt(id);
+    if (isNaN(centroId)) {
+      console.log("ID inválido en DELETE artículos:", id);
       return NextResponse.json(
         { error: "ID inválido" },
         { status: 400 }
@@ -31,11 +73,11 @@ export async function DELETE(
     
     // Verificar que el centro existe
     const centroExistente = await prisma.centroDistribucion.findUnique({
-      where: { id }
+      where: { id: centroId }
     });
     
     if (!centroExistente) {
-      console.log("Centro no encontrado con ID:", id);
+      console.log("Centro no encontrado con ID:", centroId);
       return NextResponse.json(
         { error: "Centro de distribución no encontrado" },
         { status: 404 }
@@ -46,7 +88,7 @@ export async function DELETE(
       // Eliminar todos los artículos del centro
       const resultado = await prisma.articuloOferta.deleteMany({
         where: {
-          centroDistribucionId: id
+          centroDistribucionId: centroId
         }
       });
       
@@ -90,9 +132,12 @@ export async function POST(
       );
     }
 
-    const id = parseInt(params.id);
-    if (isNaN(id)) {
-      console.log("ID inválido en POST artículos:", params.id);
+    // Usar desestructuración para obtener el ID
+    const { id } = params;
+    
+    const centroId = parseInt(id);
+    if (isNaN(centroId)) {
+      console.log("ID inválido en POST artículos:", id);
       return NextResponse.json(
         { error: "ID inválido" },
         { status: 400 }
@@ -100,7 +145,7 @@ export async function POST(
     }
     
     const body = await request.json();
-    console.log("Datos recibidos para agregar artículos:", { centroId: id, body });
+    console.log("Datos recibidos para agregar artículos:", { centroId, body });
     
     // Validar que el cuerpo tenga un array de artículos
     if (!body.articulos || !Array.isArray(body.articulos) || body.articulos.length === 0) {
@@ -113,11 +158,11 @@ export async function POST(
     
     // Verificar que el centro existe
     const centroExistente = await prisma.centroDistribucion.findUnique({
-      where: { id }
+      where: { id: centroId }
     });
     
     if (!centroExistente) {
-      console.log("Centro no encontrado con ID:", id);
+      console.log("Centro no encontrado con ID:", centroId);
       return NextResponse.json(
         { error: "Centro de distribución no encontrado" },
         { status: 404 }
@@ -126,7 +171,8 @@ export async function POST(
     
     // Crear los artículos en una transacción
     try {
-      const articulosCreados = await prisma.$transaction(async (tx: Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use">) => {
+      // Usar una función sin tipo explícito
+      const articulosCreados = await prisma.$transaction(async (tx) => {
         const resultados = [];
         
         for (const articulo of body.articulos) {
@@ -149,7 +195,7 @@ export async function POST(
           // Crear el artículo
           const articuloCreado = await tx.articuloOferta.create({
             data: {
-              centroDistribucionId: id,
+              centroDistribucionId: centroId,
               tipoArticuloId: articulo.tipoArticuloId,
               cantidad: articulo.cantidad,
               estado: "Disponible"

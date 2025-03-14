@@ -105,8 +105,8 @@ export default function RegistroCentro() {
     e.preventDefault();
     
     // Validar datos requeridos
-    if (!formData.direccion || !formData.responsable || !formData.latitud || !formData.longitud) {
-      toast.error("Por favor completa los campos obligatorios (dirección, responsable, latitud y longitud)");
+    if (!formData.direccion || !formData.responsable) {
+      toast.error("Por favor completa los campos obligatorios (dirección y responsable)");
       return;
     }
 
@@ -309,25 +309,23 @@ export default function RegistroCentro() {
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="latitud">Latitud *</Label>
+            <Label htmlFor="latitud">Latitud</Label>
             <Input
               id="latitud"
               name="latitud"
               placeholder="Ej: -38.7196"
               value={formData.latitud}
               onChange={handleChange}
-              required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="longitud">Longitud *</Label>
+            <Label htmlFor="longitud">Longitud</Label>
             <Input
               id="longitud"
               name="longitud"
               placeholder="Ej: -62.2724"
               value={formData.longitud}
               onChange={handleChange}
-              required
             />
           </div>
         </div>
@@ -358,7 +356,7 @@ export default function RegistroCentro() {
                     <Label htmlFor={`tipoArticulo-${index}`}>Tipo de artículo *</Label>
                     <Select
                       value={articulo.tipoArticuloId.toString()}
-                      onValueChange={(value) => handleArticuloChange(index, "tipoArticuloId", parseInt(value))}
+                      onValueChange={(value: string) => handleArticuloChange(index, "tipoArticuloId", parseInt(value))}
                     >
                       <SelectTrigger id={`tipoArticulo-${index}`}>
                         <SelectValue placeholder="Selecciona un tipo de artículo" />

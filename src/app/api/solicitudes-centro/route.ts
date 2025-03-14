@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import type { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 
 // Configuración para las rutas de API
 export const dynamic = 'force-dynamic';
@@ -13,19 +13,11 @@ interface ArticuloSolicitado {
 }
 
 // GET /api/solicitudes-centro
-// Obtiene todas las solicitudes de centros de distribución (solo para administradores)
+// Obtiene todas las solicitudes de centros de distribución
 export async function GET(request: NextRequest) {
   try {
-    // Verificar si el usuario está autenticado como administrador
-    const token = request.cookies.get("admin_token")?.value;
+    console.log("Obteniendo solicitudes de centros...");
     
-    if (!token) {
-      return NextResponse.json(
-        { error: "No autorizado" },
-        { status: 401 }
-      );
-    }
-
     // Consulta para obtener solicitudes de centros
     const solicitudes = await prisma.solicitudCentro.findMany({
       include: {
@@ -40,9 +32,10 @@ export async function GET(request: NextRequest) {
       }
     });
 
+    console.log(`Solicitudes de centros encontradas: ${solicitudes.length}`);
     return NextResponse.json(solicitudes);
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error al obtener solicitudes de centros:", error);
     return NextResponse.json(
       { error: "Error al obtener solicitudes" },
       { status: 500 }
@@ -72,23 +65,30 @@ export async function POST(request: NextRequest) {
       );
     }
     
+    console.log("Creando solicitud de centro:", {
+      direccion: body.direccion,
+      responsable: body.responsable
+    });
+    
     // Crear la solicitud de centro en una transacción
-    const solicitud = await prisma.$transaction(async (tx: Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use">) => {
+    const solicitud = await prisma.$transaction(async (tx) => {
       // Crear la solicitud de centro
       const nuevaSolicitud = await tx.solicitudCentro.create({
         data: {
           direccion: body.direccion,
           responsable: body.responsable,
-          telefono: body.telefono,
-          horarioApertura: body.horarioApertura,
-          horarioCierre: body.horarioCierre,
+          telefono: body.telefono || null,
+          horarioApertura: body.horarioApertura || null,
+          horarioCierre: body.horarioCierre || null,
           descripcion: body.descripcion || null,
           nombre: body.nombre || null,
-          latitud: body.latitud,
-          longitud: body.longitud,
+          latitud: body.latitud !== undefined ? body.latitud : -38.7196,
+          longitud: body.longitud !== undefined ? body.longitud : -62.2724,
           estado: "Pendiente"
         }
       });
+      
+      console.log("Solicitud de centro creada:", nuevaSolicitud);
       
       // Crear los artículos solicitados
       for (const articulo of body.articulos as ArticuloSolicitado[]) {
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
     
     return NextResponse.json(solicitud, { status: 201 });
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error al crear solicitud de centro:", error);
     return NextResponse.json(
       { error: "Error al crear solicitud" },
       { status: 500 }

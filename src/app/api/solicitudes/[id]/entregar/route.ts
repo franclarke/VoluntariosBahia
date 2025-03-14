@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-
+// Configuración para las rutas de API
+export const dynamic = 'force-dynamic';
 
 // PUT /api/solicitudes/:id/entregar
 // Marca una solicitud como entregada
@@ -10,7 +11,8 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    // Usar desestructuración para obtener el ID
+    const { id } = params;
     
     if (!id) {
       return NextResponse.json(
@@ -20,7 +22,7 @@ export async function PUT(
     }
     
     // Actualizar el estado de la solicitud
-    const solicitud = await prisma.Solicitud.update({
+    const solicitud = await prisma.solicitud.update({
       where: {
         id: parseInt(id)
       },

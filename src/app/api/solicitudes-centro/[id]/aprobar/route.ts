@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+// Configuración para las rutas de API
+export const dynamic = 'force-dynamic';
+
 // POST /api/solicitudes-centro/[id]/aprobar
 // Aprueba una solicitud de centro y crea el centro de distribución
 export async function POST(
@@ -8,18 +11,12 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    // Verificar si el usuario está autenticado como administrador
-    const token = request.cookies.get("admin_token")?.value;
+    // Obtener el ID de los parámetros y convertirlo a un número
+    const { id } = params;
+    console.log("Aprobando solicitud de centro con ID:", id);
     
-    if (!token) {
-      return NextResponse.json(
-        { error: "No autorizado" },
-        { status: 401 }
-      );
-    }
-
-    const id = parseInt(params.id);
-    if (isNaN(id)) {
+    const solicitudId = parseInt(id);
+    if (isNaN(solicitudId)) {
       return NextResponse.json(
         { error: "ID inválido" },
         { status: 400 }
@@ -28,7 +25,7 @@ export async function POST(
 
     // Buscar la solicitud
     const solicitud = await prisma.solicitudCentro.findUnique({
-      where: { id },
+      where: { id: solicitudId },
       include: {
         articulosSolicitados: true
       }
@@ -48,9 +45,11 @@ export async function POST(
       );
     }
 
+    console.log("Aprobando solicitud de centro:", solicitud);
+
     // Actualizar el estado de la solicitud
     await prisma.solicitudCentro.update({
-      where: { id },
+      where: { id: solicitudId },
       data: {
         estado: "Aprobada"
       }
@@ -67,35 +66,20 @@ export async function POST(
         latitud: solicitud.latitud,
         longitud: solicitud.longitud,
         descripcion: solicitud.descripcion,
+        nombre: solicitud.nombre,
         activo: true
       }
     });
-
-    // Si el nombre se proporcionó, actualizarlo con una consulta SQL directa
-    if (solicitud.nombre) {
-      await prisma.$executeRaw`UPDATE "CentroDistribucion" SET "nombre" = ${solicitud.nombre} WHERE "id" = ${centro.id}`;
-    }
-
-    // Crear los artículos disponibles
-    for (const articuloSolicitado of solicitud.articulosSolicitados) {
-      await prisma.articuloOferta.create({
-        data: {
-          centroDistribucionId: centro.id,
-          tipoArticuloId: articuloSolicitado.tipoArticuloId,
-          cantidad: articuloSolicitado.cantidad,
-          estado: "Disponible"
-        }
-      });
-    }
-
+    
     return NextResponse.json({
       success: true,
-      message: "Solicitud aprobada y centro creado correctamente"
+      message: "Solicitud aprobada y centro creado correctamente",
+      centro
     });
   } catch (error) {
-    console.error("Error al aprobar solicitud:", error);
+    console.error("Error al aprobar solicitud de centro:", error);
     return NextResponse.json(
-      { error: "Error al aprobar solicitud" },
+      { error: "Error al aprobar solicitud de centro" },
       { status: 500 }
     );
   }

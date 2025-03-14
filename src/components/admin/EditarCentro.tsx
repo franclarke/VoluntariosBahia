@@ -160,13 +160,16 @@ export default function EditarCentro({ centroId }: EditarCentroProps) {
       return;
     }
 
-    // Validar que latitud y longitud sean números válidos
-    const latitud = parseFloat(formData.latitud);
-    const longitud = parseFloat(formData.longitud);
-    
-    if (isNaN(latitud) || isNaN(longitud)) {
-      toast.error("La latitud y longitud deben ser números válidos");
-      return;
+    // Validar que latitud y longitud sean números válidos si están presentes
+    let latitudNum, longitudNum;
+    if (formData.latitud || formData.longitud) {
+      latitudNum = parseFloat(formData.latitud);
+      longitudNum = parseFloat(formData.longitud);
+      
+      if (isNaN(latitudNum) || isNaN(longitudNum)) {
+        toast.error("La latitud y longitud deben ser números válidos");
+        return;
+      }
     }
 
     // Filtrar artículos personalizados
@@ -188,8 +191,8 @@ export default function EditarCentro({ centroId }: EditarCentroProps) {
           telefono: formData.telefono || null,
           horarioApertura: formData.horarioApertura || null,
           horarioCierre: formData.horarioCierre || null,
-          latitud: latitud,
-          longitud: longitud,
+          latitud: formData.latitud ? latitudNum : null,
+          longitud: formData.longitud ? longitudNum : null,
           descripcion: formData.descripcion || null,
           nombre: formData.nombre || null
         }),
@@ -325,25 +328,23 @@ export default function EditarCentro({ centroId }: EditarCentroProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="latitud">Latitud *</Label>
+            <Label htmlFor="latitud">Latitud</Label>
             <Input
               id="latitud"
               name="latitud"
               placeholder="Ej: -38.7196"
               value={formData.latitud}
               onChange={handleChange}
-              required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="longitud">Longitud *</Label>
+            <Label htmlFor="longitud">Longitud</Label>
             <Input
               id="longitud"
               name="longitud"
               placeholder="Ej: -62.2724"
               value={formData.longitud}
               onChange={handleChange}
-              required
             />
           </div>
         </div>

@@ -65,7 +65,7 @@ export default function RegistroSolicitud() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleArticuloChange = (index: number, field: keyof ArticuloSolicitud, value: number | string) => {
@@ -88,55 +88,57 @@ export default function RegistroSolicitud() {
     if (articulos.length > 1) {
       setArticulos(articulos.filter((_, i) => i !== index));
     } else {
-      toast.error("Debes tener al menos un artículo");
+      toast.error("Debes tener al menos un artículo en la solicitud");
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.direccion || !formData.contactoNombre || !formData.contactoTel) {
+    // Validar datos requeridos
+    if (!formData.direccion || !formData.contactoNombre) {
       toast.error("Por favor completa todos los campos obligatorios");
       return;
     }
 
     // Validar que todos los artículos tengan tipo y cantidad
-    const articulosInvalidos = articulos.some(art => 
-      (art.tipoArticuloId === 0) || 
-      (art.tipoArticuloId === -1 && (!art.tipoPersonalizado || art.tipoPersonalizado.trim() === "")) || 
-      art.cantidad < 1
-    );
+    const articulosInvalidos = articulos.some(art => {
+      if (art.tipoArticuloId === 0 || art.cantidad < 1) return true;
+      if (art.tipoArticuloId === -1 && (!art.tipoPersonalizado || art.tipoPersonalizado.trim() === "")) return true;
+      return false;
+    });
     
     if (articulosInvalidos) {
-      toast.error("Por favor completa correctamente todos los artículos");
+      toast.error("Por favor completa correctamente todos los artículos solicitados");
       return;
+    }
+
+    // Validar coordenadas
+    let latitudFinal = formData.latitud;
+    let longitudFinal = formData.longitud;
+    
+    if (!latitudFinal || !longitudFinal) {
+      // Usar coordenadas por defecto para Bahía Blanca
+      latitudFinal = "-38.7196";
+      longitudFinal = "-62.2724";
     }
 
     try {
       setLoading(true);
       
-      // Geocodificar la dirección para obtener latitud y longitud si no están definidas
-      let latitudFinal = formData.latitud;
-      let longitudFinal = formData.longitud;
-      
-      if (!latitudFinal || !longitudFinal) {
-        // Aquí iría la lógica para geocodificar la dirección
-        // Por ahora, usamos valores de ejemplo
-        latitudFinal = "-38.7196";
-        longitudFinal = "-62.2724";
-      }
-
-      // Primero, registrar los tipos de artículos personalizados si existen
+      // Preparar los artículos para enviar
       const articulosFinales = [...articulos];
       
+      // Procesar tipos personalizados
       for (let i = 0; i < articulosFinales.length; i++) {
         const articulo = articulosFinales[i];
+        
         if (articulo.tipoArticuloId === -1 && articulo.tipoPersonalizado) {
-          // Verificar si ya existe un tipo de artículo con ese nombre
+          // Verificar si ya existe un tipo con ese nombre
           const tipoExistente = tiposArticulos.find(
-            tipo => tipo.nombre.toLowerCase() === articulo.tipoPersonalizado?.toLowerCase()
+            t => t.nombre.toLowerCase() === articulo.tipoPersonalizado?.toLowerCase()
           );
-
+          
           if (!tipoExistente) {
             // Crear nuevo tipo de artículo
             const responseTipo = await fetch("/api/tipos-articulos", {
@@ -146,7 +148,7 @@ export default function RegistroSolicitud() {
               },
               body: JSON.stringify({ nombre: articulo.tipoPersonalizado }),
             });
-
+            
             if (!responseTipo.ok) {
               throw new Error("Error al registrar nuevo tipo de artículo");
             }
@@ -208,147 +210,157 @@ export default function RegistroSolicitud() {
         descripcion: ""
       });
       setArticulos([{ tipoArticuloId: 0, cantidad: 1 }]);
+      
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Error al registrar la solicitud");
+      toast.error(error instanceof Error ? error.message : "Error al registrar la solicitud");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="direccion">Dirección exacta *</Label>
-        <Input
-          id="direccion"
-          name="direccion"
-          placeholder="Ej: Av. Colón 80, Bahía Blanca"
-          value={formData.direccion}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="contactoNombre">Nombre de contacto *</Label>
-        <Input
-          id="contactoNombre"
-          name="contactoNombre"
-          placeholder="Ej: Juan Pérez"
-          value={formData.contactoNombre}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="contactoTel">Teléfono de contacto *</Label>
-        <Input
-          id="contactoTel"
-          name="contactoTel"
-          placeholder="Ej: 291-4123456"
-          value={formData.contactoTel}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="latitud">Latitud *</Label>
+    <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+      <div className="space-y-2 sm:space-y-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+          <div className="space-y-1 sm:space-y-2">
+            <Label htmlFor="contactoNombre" className="text-xs sm:text-sm">Nombre de contacto</Label>
+            <Input
+              id="contactoNombre"
+              name="contactoNombre"
+              value={formData.contactoNombre}
+              onChange={handleChange}
+              placeholder="Ej: Juan Pérez"
+              className="text-xs sm:text-sm h-8 sm:h-10"
+              required
+            />
+          </div>
+          
+          <div className="space-y-1 sm:space-y-2">
+            <Label htmlFor="contactoTel" className="text-xs sm:text-sm">Teléfono de contacto</Label>
+            <Input
+              id="contactoTel"
+              name="contactoTel"
+              value={formData.contactoTel}
+              onChange={handleChange}
+              placeholder="Ej: 291-4123456"
+              className="text-xs sm:text-sm h-8 sm:h-10"
+            />
+          </div>
+        </div>
+        
+        <div className="space-y-1 sm:space-y-2">
+          <Label htmlFor="direccion" className="text-xs sm:text-sm">Dirección completa</Label>
           <Input
-            id="latitud"
-            name="latitud"
-            placeholder="Ej: -38.7196"
-            value={formData.latitud}
+            id="direccion"
+            name="direccion"
+            value={formData.direccion}
             onChange={handleChange}
+            placeholder="Ej: Calle 123, Bahía Blanca"
+            className="text-xs sm:text-sm h-8 sm:h-10"
             required
           />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="longitud">Longitud *</Label>
-          <Input
-            id="longitud"
-            name="longitud"
-            placeholder="Ej: -62.2724"
-            value={formData.longitud}
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+          <div className="space-y-1 sm:space-y-2">
+            <Label htmlFor="latitud" className="text-xs sm:text-sm">Latitud</Label>
+            <Input
+              id="latitud"
+              name="latitud"
+              value={formData.latitud}
+              onChange={handleChange}
+              placeholder="-38.7196"
+              className="text-xs sm:text-sm h-8 sm:h-10"
+            />
+          </div>
+          
+          <div className="space-y-1 sm:space-y-2">
+            <Label htmlFor="longitud" className="text-xs sm:text-sm">Longitud</Label>
+            <Input
+              id="longitud"
+              name="longitud"
+              value={formData.longitud}
+              onChange={handleChange}
+              placeholder="-62.2724"
+              className="text-xs sm:text-sm h-8 sm:h-10"
+            />
+          </div>
+        </div>
+        
+        <div className="space-y-1 sm:space-y-2">
+          <Label htmlFor="descripcion" className="text-xs sm:text-sm">Descripción (opcional)</Label>
+          <Textarea
+            id="descripcion"
+            name="descripcion"
+            value={formData.descripcion}
             onChange={handleChange}
-            required
+            placeholder="Información adicional sobre la solicitud"
+            className="text-xs sm:text-sm min-h-[60px] sm:min-h-[80px]"
           />
         </div>
       </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="descripcion">Descripción (opcional)</Label>
-        <Textarea
-          id="descripcion"
-          name="descripcion"
-          placeholder="Información adicional sobre la solicitud"
-          value={formData.descripcion}
-          onChange={handleChange}
-          rows={3}
-        />
-      </div>
-
-      <div className="space-y-3 pt-4">
+      
+      <div className="space-y-2 sm:space-y-3">
         <div className="flex justify-between items-center">
-          <Label>Artículos necesitados *</Label>
-          <Button 
-            type="button" 
-            variant="outline" 
+          <Label className="text-xs sm:text-sm font-medium">Artículos solicitados</Label>
+          <Button
+            type="button"
+            variant="outline"
             size="sm"
             onClick={agregarArticulo}
-            className="flex items-center gap-1"
+            className="flex items-center gap-1 h-7 text-xs sm:h-8 sm:text-sm"
           >
-            <Plus className="h-4 w-4" /> Agregar artículo
+            <Plus className="h-3 w-3 sm:h-4 sm:w-4" /> Agregar artículo
           </Button>
         </div>
 
         {articulos.map((articulo, index) => (
-          <div key={index} className="flex gap-3 items-start border p-3 rounded-md">
-            <div className="flex-1 space-y-2">
-              <Label>Tipo de artículo</Label>
+          <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start border p-2 sm:p-3 rounded-md relative">
+            <div className="flex-1 space-y-1 sm:space-y-2 w-full sm:w-auto">
+              <Label className="text-xs sm:text-sm">Tipo de artículo</Label>
               {cargandoTipos ? (
-                <div className="h-10 bg-muted animate-pulse rounded-md"></div>
+                <div className="h-8 sm:h-10 bg-muted animate-pulse rounded-md"></div>
               ) : (
                 <Select 
                   value={articulo.tipoArticuloId.toString()} 
-                  onValueChange={(value) => handleArticuloChange(index, "tipoArticuloId", parseInt(value))}
+                  onValueChange={(value: string) => handleArticuloChange(index, "tipoArticuloId", parseInt(value))}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona un tipo de artículo" />
+                  <SelectTrigger className="text-xs sm:text-sm h-8 sm:h-10">
+                    <SelectValue placeholder="Selecciona un tipo" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="0" disabled>Selecciona un tipo</SelectItem>
+                    <SelectItem value="0" disabled className="text-xs sm:text-sm">Selecciona un tipo</SelectItem>
                     {tiposArticulos.map((tipo) => (
-                      <SelectItem key={tipo.id} value={tipo.id.toString()}>
+                      <SelectItem key={tipo.id} value={tipo.id.toString()} className="text-xs sm:text-sm">
                         {tipo.nombre}
                       </SelectItem>
                     ))}
-                    <SelectItem value="-1">Otro (especificar)</SelectItem>
+                    <SelectItem value="-1" className="text-xs sm:text-sm">Otro (especificar)</SelectItem>
                   </SelectContent>
                 </Select>
               )}
 
               {articulo.tipoArticuloId === -1 && (
-                <div className="mt-2">
+                <div className="mt-1 sm:mt-2">
                   <Input
                     placeholder="Especifica el tipo de artículo"
                     value={articulo.tipoPersonalizado || ""}
                     onChange={(e) => handleArticuloChange(index, "tipoPersonalizado", e.target.value)}
+                    className="text-xs sm:text-sm h-8 sm:h-10"
                   />
                 </div>
               )}
             </div>
 
-            <div className="w-24 space-y-2">
-              <Label>Cantidad</Label>
+            <div className="w-full sm:w-24 space-y-1 sm:space-y-2">
+              <Label className="text-xs sm:text-sm">Cantidad</Label>
               <Input
                 type="number"
                 min="1"
                 value={articulo.cantidad}
                 onChange={(e) => handleArticuloChange(index, "cantidad", parseInt(e.target.value) || 0)}
+                className="text-xs sm:text-sm h-8 sm:h-10"
               />
             </div>
 
@@ -356,16 +368,17 @@ export default function RegistroSolicitud() {
               type="button" 
               variant="ghost" 
               size="icon"
-              className="mt-8"
+              className="absolute top-1 right-1 h-6 w-6 sm:h-8 sm:w-8"
               onClick={() => eliminarArticulo(index)}
+              disabled={articulos.length === 1}
             >
-              <Trash2 className="h-4 w-4 text-destructive" />
+              <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 text-destructive" />
             </Button>
           </div>
         ))}
       </div>
 
-      <Button type="submit" className="w-full mt-6" disabled={loading}>
+      <Button type="submit" className="w-full mt-4 sm:mt-6 h-8 sm:h-10 text-xs sm:text-sm" disabled={loading}>
         {loading ? "Registrando..." : "Registrar Solicitud"}
       </Button>
     </form>

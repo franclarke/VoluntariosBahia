@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import type { PrismaClient } from "@prisma/client";
-import { dynamic, runtime } from "../config";
+import type { PrismaClient, Prisma } from "@prisma/client";
+
+// Configuración para las rutas de API
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 interface ArticuloPeticion {
   tipoArticulo: string;
   cantidad: number;
 }
-
-// Exportar la configuración
-export { dynamic, runtime };
 
 // GET /api/peticiones
 // Obtiene todas las peticiones de donación
@@ -51,9 +51,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     
     // Validar campos requeridos
-    if (!body.direccion || !body.contactoNombre || !body.contactoTel || !body.articulos || body.latitud === undefined || body.longitud === undefined) {
+    if (!body.direccion || !body.contactoNombre || !body.contactoTel || !body.articulos) {
       return NextResponse.json(
-        { error: "Faltan campos requeridos: direccion, contactoNombre, contactoTel, articulos, latitud, longitud" },
+        { error: "Faltan campos requeridos: direccion, contactoNombre, contactoTel, articulos" },
         { status: 400 }
       );
     }
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Crear la petición y sus artículos en una transacción
-    const peticion = await prisma.$transaction(async (tx: Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use">) => {
+    const peticion = await prisma.$transaction(async (tx) => {
       // Crear la petición
       const nuevaPeticion = await tx.peticionDonacion.create({
         data: {
@@ -85,8 +85,8 @@ export async function POST(request: NextRequest) {
           contactoNombre: body.contactoNombre,
           contactoTel: body.contactoTel,
           descripcion: body.descripcion || null,
-          latitud: body.latitud,
-          longitud: body.longitud,
+          latitud: body.latitud || null,
+          longitud: body.longitud || null,
           estado: "Pendiente"
         }
       });
