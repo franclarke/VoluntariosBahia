@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
-const prisma = new PrismaClient();
+
 
 // PUT /api/centros-distribucion/:id/seleccionar
 // Marca un centro como seleccionado para retiro (cambia el estado de sus artículos)
@@ -20,7 +20,7 @@ export async function PUT(
     }
     
     // Actualizar el estado de los artículos del centro
-    const resultado = await prisma.articulo.updateMany({
+    const resultado = await prisma.articuloOferta.updateMany({
       where: {
         centroDistribucionId: parseInt(id),
         estado: "Disponible"

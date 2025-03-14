@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
-const prisma = new PrismaClient();
+
 
 // PUT /api/ofertas/[id]/seleccionar - Marcar una oferta como seleccionada para retiro
 export async function PUT(
@@ -19,7 +19,7 @@ export async function PUT(
     }
     
     // Verificar si la oferta existe
-    const oferta = await prisma.oferta.findUnique({
+    const oferta = await prisma.articuloOferta.findUnique({
       where: { id }
     });
     
@@ -30,9 +30,12 @@ export async function PUT(
       );
     }
     
-    // Eliminar la oferta (o actualizar su estado si se prefiere)
-    await prisma.oferta.delete({
-      where: { id }
+    // Actualizar el estado de la oferta
+    await prisma.articuloOferta.update({
+      where: { id },
+      data: {
+        estado: "Seleccionado"
+      }
     });
     
     return NextResponse.json({ success: true });

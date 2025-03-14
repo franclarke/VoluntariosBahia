@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 // GET /api/tipos-articulos - Obtener todos los tipos de artículos
 export async function GET() {
@@ -30,34 +28,34 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     
-    // Validar datos requeridos
+    // Validar campos requeridos
     if (!body.nombre) {
       return NextResponse.json(
-        { error: "Falta el nombre del tipo de artículo" },
+        { error: "El nombre es requerido" },
         { status: 400 }
       );
     }
     
-    // Verificar si ya existe un tipo de artículo con ese nombre
-    const tipoExistente = await prisma.tipoArticulo.findUnique({
+    // Verificar si ya existe un tipo de artículo con el mismo nombre
+    const existente = await prisma.tipoArticulo.findUnique({
       where: { nombre: body.nombre }
     });
     
-    if (tipoExistente) {
+    if (existente) {
       return NextResponse.json(
         { error: "Ya existe un tipo de artículo con ese nombre" },
-        { status: 400 }
+        { status: 409 }
       );
     }
     
-    // Crear el tipo de artículo
-    const tipoArticulo = await prisma.tipoArticulo.create({
+    // Crear el nuevo tipo de artículo
+    const nuevoTipoArticulo = await prisma.tipoArticulo.create({
       data: {
         nombre: body.nombre
       }
     });
     
-    return NextResponse.json(tipoArticulo, { status: 201 });
+    return NextResponse.json(nuevoTipoArticulo, { status: 201 });
   } catch (error) {
     console.error("Error al crear tipo de artículo:", error);
     return NextResponse.json(

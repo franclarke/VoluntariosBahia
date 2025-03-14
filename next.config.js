@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Configurar paquetes externos para componentes del servidor
-  serverExternalPackages: ["bcrypt", "jsonwebtoken"],
+  experimental: {
+    serverComponentsExternalPackages: ["bcrypt", "jsonwebtoken"]
+  },
   
   // Ignorar las advertencias de ESLint durante la compilación
   eslint: {
@@ -10,7 +12,9 @@ const nextConfig = {
   // Ignorar los errores de TypeScript durante la compilación
   typescript: {
     ignoreBuildErrors: true
-  }
+  },
+  // Deshabilitar la minificación para evitar problemas con caracteres Unicode
+  swcMinify: false
 };
 
 module.exports = nextConfig; 

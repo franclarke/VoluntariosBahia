@@ -26,7 +26,7 @@ const iconoRojo = new L.Icon({
   shadowSize: [41, 41]
 });
 
-// Componente para centrar el mapa en la ubicación actual
+// Componente para centrar el mapa en una ubicación específica
 function CentrarMapa({ posicion }: { posicion: [number, number] }) {
   const map = useMap();
   
@@ -79,13 +79,16 @@ interface Solicitud {
 
 interface MapaVoluntarioProps {
   tiposArticulos: string[];
-  ubicacionActual: [number, number];
 }
 
-export default function MapaVoluntario({ tiposArticulos, ubicacionActual }: MapaVoluntarioProps) {
+// Coordenadas por defecto para Bahía Blanca
+const BAHIA_BLANCA_COORDS: [number, number] = [-38.7196, -62.2724];
+
+export default function MapaVoluntario({ tiposArticulos }: MapaVoluntarioProps) {
   const [centrosDistribucion, setCentrosDistribucion] = useState<CentroDistribucion[]>([]);
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
   const [cargando, setCargando] = useState(true);
+  const [centroMapa, setCentroMapa] = useState<[number, number]>(BAHIA_BLANCA_COORDS);
 
   // Cargar datos de centros de distribución y solicitudes
   useEffect(() => {
@@ -101,6 +104,15 @@ export default function MapaVoluntario({ tiposArticulos, ubicacionActual }: Mapa
         
         setCentrosDistribucion(dataCentros);
         setSolicitudes(dataSolicitudes);
+        
+        // Ajustar el centro del mapa si hay datos
+        if (dataCentros.length > 0) {
+          // Usar el primer centro de distribución como centro del mapa
+          setCentroMapa([dataCentros[0].latitud, dataCentros[0].longitud]);
+        } else if (dataSolicitudes.length > 0) {
+          // Si no hay centros pero hay solicitudes, usar la primera solicitud
+          setCentroMapa([dataSolicitudes[0].latitud, dataSolicitudes[0].longitud]);
+        }
       } catch (error) {
         console.error("Error cargando datos:", error);
         toast.error("Error al cargar los puntos en el mapa");
@@ -111,26 +123,6 @@ export default function MapaVoluntario({ tiposArticulos, ubicacionActual }: Mapa
 
     cargarDatos();
   }, [tiposArticulos]);
-
-  // Función para marcar un centro de distribución como seleccionado para retiro
-  const seleccionarParaRetiro = async (centroId: number) => {
-    try {
-      const response = await fetch(`/api/centros-distribucion/${centroId}/seleccionar`, {
-        method: "PUT",
-      });
-      
-      if (!response.ok) {
-        throw new Error("Error al seleccionar el centro de distribución");
-      }
-      
-      // Actualizar la lista de centros
-      setCentrosDistribucion(prev => prev.filter(centro => centro.id !== centroId));
-      toast.success("Centro seleccionado para retiro");
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Error al seleccionar el centro de distribución");
-    }
-  };
 
   // Función para marcar una solicitud como entregada
   const marcarComoEntregada = async (solicitudId: number) => {
@@ -152,87 +144,6 @@ export default function MapaVoluntario({ tiposArticulos, ubicacionActual }: Mapa
     }
   };
 
-  // Datos de ejemplo para desarrollo
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development" && centrosDistribucion.length === 0 && solicitudes.length === 0) {
-      // Datos de ejemplo para centros de distribución
-      setCentrosDistribucion([
-        {
-          id: 1,
-          direccion: "Av. Colón 80, Bahía Blanca",
-          latitud: ubicacionActual[0] + 0.01,
-          longitud: ubicacionActual[1] + 0.01,
-          horarioApertura: "09:00",
-          horarioCierre: "18:00",
-          activo: true,
-          articulos: tiposArticulos.map((tipo, index) => ({
-            id: index + 1,
-            tipoArticulo: {
-              id: index + 1,
-              nombre: tipo
-            }
-          })).slice(0, 3) // Solo algunos tipos para este centro
-        },
-        {
-          id: 2,
-          direccion: "Av. Alem 1000, Bahía Blanca",
-          latitud: ubicacionActual[0] - 0.01,
-          longitud: ubicacionActual[1] + 0.01,
-          horarioApertura: "10:00",
-          horarioCierre: "17:00",
-          activo: true,
-          articulos: tiposArticulos.map((tipo, index) => ({
-            id: index + 10,
-            tipoArticulo: {
-              id: index + 1,
-              nombre: tipo
-            }
-          })).slice(2, 5) // Diferentes tipos para este centro
-        }
-      ]);
-      
-      // Datos de ejemplo para solicitudes
-      setSolicitudes([
-        {
-          id: 1,
-          direccion: "Sarmiento 200, Bahía Blanca",
-          contactoNombre: "Juan Pérez",
-          contactoTel: "291-4123456",
-          estado: "Pendiente",
-          latitud: ubicacionActual[0] + 0.02,
-          longitud: ubicacionActual[1] - 0.01,
-          articulos: tiposArticulos.map((tipo, index) => ({
-            id: index + 1,
-            tipoArticulo: {
-              id: index + 1,
-              nombre: tipo
-            },
-            cantidad: index + 1
-          })).slice(0, 2) // Solo algunos tipos para esta solicitud
-        },
-        {
-          id: 2,
-          direccion: "Estomba 500, Bahía Blanca",
-          contactoNombre: "María López",
-          contactoTel: "291-4567890",
-          estado: "Pendiente",
-          latitud: ubicacionActual[0] - 0.02,
-          longitud: ubicacionActual[1] - 0.02,
-          articulos: tiposArticulos.map((tipo, index) => ({
-            id: index + 10,
-            tipoArticulo: {
-              id: index + 1,
-              nombre: tipo
-            },
-            cantidad: (index + 1) * 2
-          })).slice(1, 4) // Diferentes tipos para esta solicitud
-        }
-      ]);
-      
-      setCargando(false);
-    }
-  }, [tiposArticulos, ubicacionActual, centrosDistribucion.length, solicitudes.length]);
-
   // Función para formatear el horario
   const formatearHorario = (apertura: string | null, cierre: string | null) => {
     if (!apertura || !cierre) return "Horario no especificado";
@@ -243,9 +154,17 @@ export default function MapaVoluntario({ tiposArticulos, ubicacionActual }: Mapa
     return <div className="h-full w-full flex items-center justify-center">Cargando puntos en el mapa...</div>;
   }
 
+  if (centrosDistribucion.length === 0 && solicitudes.length === 0) {
+    return (
+      <div className="h-full w-full flex items-center justify-center flex-col p-4 text-center">
+        <p className="text-muted-foreground">No se encontraron centros de distribución ni solicitudes para los tipos de artículos seleccionados.</p>
+      </div>
+    );
+  }
+
   return (
     <MapContainer
-      center={ubicacionActual}
+      center={centroMapa}
       zoom={13}
       style={{ height: "100%", width: "100%" }}
     >
@@ -254,92 +173,79 @@ export default function MapaVoluntario({ tiposArticulos, ubicacionActual }: Mapa
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       
-      <CentrarMapa posicion={ubicacionActual} />
-      
-      {/* Marcador de la ubicación actual */}
-      <Marker position={ubicacionActual}>
-        <Popup>
-          Tu ubicación actual
-        </Popup>
-      </Marker>
+      <CentrarMapa posicion={centroMapa} />
       
       {/* Marcadores de centros de distribución (puntos azules) */}
-      {centrosDistribucion.filter(centro => centro.activo).map((centro) => (
-        <Marker
-          key={`centro-${centro.id}`}
-          position={[centro.latitud, centro.longitud]}
-          icon={iconoAzul}
-        >
-          <Popup>
-            <div className="space-y-2">
-              <h3 className="font-bold">Centro de Distribución</h3>
-              <p><strong>Dirección:</strong> {centro.direccion}</p>
-              <p><strong>Horario:</strong> {formatearHorario(centro.horarioApertura, centro.horarioCierre)}</p>
-              
-              <div>
-                <strong>Artículos disponibles:</strong>
-                <ul className="list-disc list-inside mt-1">
-                  {centro.articulos
-                    .filter(art => tiposArticulos.includes(art.tipoArticulo.nombre))
-                    .map(art => (
-                      <li key={art.id}>{art.tipoArticulo.nombre}</li>
-                    ))
-                  }
-                </ul>
+      {centrosDistribucion
+        .filter(centro => centro.activo)
+        .filter(centro => centro.articulos.some(art => tiposArticulos.includes(art.tipoArticulo.nombre)))
+        .map((centro) => (
+          <Marker 
+            key={`centro-${centro.id}`}
+            position={[centro.latitud, centro.longitud]}
+            icon={iconoAzul}
+          >
+            <Popup>
+              <div className="space-y-2">
+                <h3 className="font-bold text-lg">{centro.direccion}</h3>
+                <p><strong>Horario:</strong> {formatearHorario(centro.horarioApertura, centro.horarioCierre)}</p>
+                <div>
+                  <p className="font-medium">Artículos disponibles:</p>
+                  <ul className="list-disc list-inside">
+                    {centro.articulos
+                      .filter(art => tiposArticulos.includes(art.tipoArticulo.nombre))
+                      .map(art => (
+                        <li key={art.id}>{art.tipoArticulo.nombre}</li>
+                      ))
+                    }
+                  </ul>
+                </div>
               </div>
-              
-              <Button 
-                size="sm" 
-                className="w-full"
-                onClick={() => seleccionarParaRetiro(centro.id)}
-              >
-                Seleccionar para retiro
-              </Button>
-            </div>
-          </Popup>
-        </Marker>
-      ))}
+            </Popup>
+          </Marker>
+        ))
+      }
       
       {/* Marcadores de solicitudes (puntos rojos) */}
-      {solicitudes.map((solicitud) => (
-        <Marker
-          key={`solicitud-${solicitud.id}`}
-          position={[solicitud.latitud, solicitud.longitud]}
-          icon={iconoRojo}
-        >
-          <Popup>
-            <div className="space-y-2">
-              <h3 className="font-bold">Solicitud de Donación</h3>
-              <p><strong>Dirección:</strong> {solicitud.direccion}</p>
-              
-              <div>
-                <strong>Artículos necesarios:</strong>
-                <ul className="list-disc list-inside mt-1">
-                  {solicitud.articulos
-                    .filter(art => tiposArticulos.includes(art.tipoArticulo.nombre))
-                    .map(art => (
-                      <li key={art.id}>
-                        {art.tipoArticulo.nombre} ({art.cantidad})
-                      </li>
-                    ))
-                  }
-                </ul>
+      {solicitudes
+        .filter(solicitud => solicitud.estado === "Pendiente")
+        .filter(solicitud => solicitud.articulos.some(art => tiposArticulos.includes(art.tipoArticulo.nombre)))
+        .map((solicitud) => (
+          <Marker 
+            key={`solicitud-${solicitud.id}`}
+            position={[solicitud.latitud, solicitud.longitud]}
+            icon={iconoRojo}
+          >
+            <Popup>
+              <div className="space-y-2">
+                <h3 className="font-bold text-lg">{solicitud.direccion}</h3>
+                <p><strong>Contacto:</strong> {solicitud.contactoNombre}</p>
+                {solicitud.contactoTel && (
+                  <p><strong>Teléfono:</strong> {solicitud.contactoTel}</p>
+                )}
+                <div>
+                  <p className="font-medium">Artículos solicitados:</p>
+                  <ul className="list-disc list-inside">
+                    {solicitud.articulos
+                      .filter(art => tiposArticulos.includes(art.tipoArticulo.nombre))
+                      .map(art => (
+                        <li key={art.id}>{art.tipoArticulo.nombre} (x{art.cantidad})</li>
+                      ))
+                    }
+                  </ul>
+                </div>
+                <Button 
+                  className="w-full mt-2" 
+                  size="sm"
+                  onClick={() => marcarComoEntregada(solicitud.id)}
+                >
+                  Marcar como entregada
+                </Button>
               </div>
-              
-              <p><strong>Contacto:</strong> {solicitud.contactoNombre}</p>
-              <p><strong>Teléfono:</strong> {solicitud.contactoTel}</p>
-              
-              <Button 
-                size="sm" 
-                className="w-full"
-                onClick={() => marcarComoEntregada(solicitud.id)}
-              >
-                Marcar como entregada
-              </Button>
-            </div>
-          </Popup>
-        </Marker>
-      ))}
+            </Popup>
+          </Marker>
+        ))
+      }
     </MapContainer>
   );
 } 

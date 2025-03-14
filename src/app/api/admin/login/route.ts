@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 
-const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "voluntarios-bahia-secret-key";
 
 // POST /api/admin/login
@@ -15,12 +14,12 @@ export async function POST(request: NextRequest) {
     // Validar campos requeridos
     if (!body.email || !body.password) {
       return NextResponse.json(
-        { error: "Email y contraseña son requeridos" },
+        { error: "Usuario y contraseña son requeridos" },
         { status: 400 }
       );
     }
     
-    // Buscar el administrador por email
+    // Buscar el administrador por email (ahora usado como nombre de usuario)
     const admin = await prisma.administrador.findUnique({
       where: { email: body.email }
     });

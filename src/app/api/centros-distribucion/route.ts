@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 // GET /api/centros-distribucion
 // Obtiene todos los centros de distribución activos con artículos disponibles
@@ -70,14 +68,22 @@ export async function GET(request: NextRequest) {
 // Crea un nuevo centro de distribución (solo para administradores)
 export async function POST(request: NextRequest) {
   try {
-    // TODO: Verificar autenticación de administrador
+    // Verificar si el usuario está autenticado como administrador
+    const token = request.cookies.get("admin_token")?.value;
     
+    if (!token) {
+      return NextResponse.json(
+        { error: "No autorizado" },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     
     // Validar campos requeridos
-    if (!body.direccion || !body.latitud || !body.longitud) {
+    if (!body.direccion || !body.latitud || !body.longitud || !body.responsable) {
       return NextResponse.json(
-        { error: "Faltan campos requeridos: direccion, latitud, longitud" },
+        { error: "Faltan campos requeridos: direccion, latitud, longitud, responsable" },
         { status: 400 }
       );
     }
@@ -88,8 +94,11 @@ export async function POST(request: NextRequest) {
         direccion: body.direccion,
         latitud: body.latitud,
         longitud: body.longitud,
+        responsable: body.responsable,
+        telefono: body.telefono || null,
         horarioApertura: body.horarioApertura || null,
         horarioCierre: body.horarioCierre || null,
+        descripcion: body.descripcion || null,
         activo: true
       }
     });

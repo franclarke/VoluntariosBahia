@@ -14,7 +14,7 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
         <Card className="flex flex-col h-full">
           <CardHeader>
             <CardTitle>Soy Voluntario</CardTitle>
@@ -61,6 +61,36 @@ export default function Home() {
             <Button asChild variant="outline" className="w-full">
               <Link href="/solicitar">
                 Solicitar Donaciones
+              </Link>
+            </Button>
+          </CardFooter>
+        </Card>
+
+        <Card className="flex flex-col h-full">
+          <CardHeader>
+            <CardTitle>Centro de Entrega</CardTitle>
+            <CardDescription>
+              Quiero solicitar el registro de un centro para recibir donaciones
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex-grow">
+            <p className="text-sm text-muted-foreground">
+              Solicita el registro de tu centro de entrega para:
+            </p>
+            <ul className="list-disc list-inside mt-2 text-sm text-muted-foreground">
+              <li>Recibir donaciones de voluntarios</li>
+              <li>Especificar qué artículos aceptas</li>
+              <li>Indicar horarios de atención</li>
+              <li>Aparecer en el mapa de voluntarios</li>
+            </ul>
+            <p className="text-xs text-muted-foreground mt-2">
+              *Tu solicitud será revisada por un administrador antes de ser aprobada
+            </p>
+          </CardContent>
+          <CardFooter>
+            <Button asChild variant="secondary" className="w-full">
+              <Link href="/solicitar-centro">
+                Solicitar Registro
               </Link>
             </Button>
           </CardFooter>

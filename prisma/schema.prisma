@@ -15,15 +15,19 @@ model TipoArticulo {
   articulosOferta    ArticuloOferta[]
   articulosPeticion  ArticuloPeticion[]
   articulosSolicitud ArticuloSolicitud[]
+  articulosSolicitados ArticuloSolicitado[]
 }
 
 model CentroDistribucion {
   id              Int              @id @default(autoincrement())
   direccion       String
+  responsable     String
+  telefono        String?
   latitud         Float
   longitud        Float
   horarioApertura String?
   horarioCierre   String?
+  descripcion     String?
   activo          Boolean          @default(true)
   creadoEn        DateTime         @default(now())
   actualizadoEn   DateTime         @updatedAt
@@ -52,6 +56,7 @@ model Solicitud {
   estado         String              @default("Pendiente")
   latitud        Float
   longitud       Float
+  descripcion    String?
   creadoEn       DateTime            @default(now())
   actualizadoEn  DateTime            @updatedAt
   articulos      ArticuloSolicitud[]
@@ -76,6 +81,7 @@ model PeticionDonacion {
   contactoTel    String
   latitud        Float?
   longitud       Float?
+  descripcion    String?
   estado         String             @default("Pendiente")
   creadoEn       DateTime           @default(now())
   actualizadoEn  DateTime           @updatedAt
@@ -100,4 +106,29 @@ model Administrador {
   password String
   nombre   String?
   creadoEn DateTime @default(now())
+}
+
+model SolicitudCentro {
+  id                  Int                  @id @default(autoincrement())
+  direccion           String
+  responsable         String
+  telefono            String?
+  horarioApertura     String?
+  horarioCierre       String?
+  latitud             Float
+  longitud            Float
+  descripcion         String?
+  estado              String               // "Pendiente", "Aprobada", "Rechazada"
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  articulosSolicitados ArticuloSolicitado[]
+}
+
+model ArticuloSolicitado {
+  id                Int             @id @default(autoincrement())
+  solicitudCentroId Int
+  tipoArticuloId    Int
+  cantidad          Int
+  solicitudCentro   SolicitudCentro @relation(fields: [solicitudCentroId], references: [id], onDelete: Cascade)
+  tipoArticulo      TipoArticulo    @relation(fields: [tipoArticuloId], references: [id])
 }

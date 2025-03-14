@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
-const prisma = new PrismaClient();
+
 
 // PUT /api/solicitudes/:id/entregar
 // Marca una solicitud como entregada
@@ -20,7 +20,7 @@ export async function PUT(
     }
     
     // Actualizar el estado de la solicitud
-    const solicitud = await prisma.solicitud.update({
+    const solicitud = await prisma.Solicitud.update({
       where: {
         id: parseInt(id)
       },

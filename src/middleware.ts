@@ -10,8 +10,18 @@ const ADMIN_ROUTES = [
   "/api/centros-distribucion/crear"
 ];
 
+// Rutas excluidas de la autenticación
+const EXCLUDED_ROUTES = [
+  "/admin/login"
+];
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  
+  // Verificar si la ruta está excluida de la autenticación
+  if (EXCLUDED_ROUTES.some(route => pathname === route)) {
+    return NextResponse.next();
+  }
   
   // Verificar si la ruta requiere autenticación de administrador
   const requiresAuth = ADMIN_ROUTES.some(route => pathname.startsWith(route));
@@ -39,10 +49,6 @@ export function middleware(request: NextRequest) {
   try {
     // En lugar de verificar el token con jsonwebtoken, simplemente verificamos que exista
     // La verificación completa se realizará en las rutas API
-    if (!token) {
-      throw new Error("Token inválido");
-    }
-    
     return NextResponse.next();
   } catch {
     // Token inválido

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient, Prisma } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
+import type { PrismaClient } from "@prisma/client";
 
 interface ArticuloPeticion {
   tipoArticulo: string;
@@ -74,13 +73,14 @@ export async function POST(request: NextRequest) {
     }
     
     // Crear la petición y sus artículos en una transacción
-    const peticion = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+    const peticion = await prisma.$transaction(async (tx: Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use">) => {
       // Crear la petición
       const nuevaPeticion = await tx.peticionDonacion.create({
         data: {
           direccion: body.direccion,
           contactoNombre: body.contactoNombre,
           contactoTel: body.contactoTel,
+          descripcion: body.descripcion || null,
           latitud: body.latitud || null,
           longitud: body.longitud || null,
           estado: "Pendiente"
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
       // Crear los artículos de la petición
       for (const art of body.articulos as ArticuloPeticion[]) {
         // Buscar o crear el tipo de artículo
-        let tipoArticulo = await tx.tipoArticulo.findUnique({
+        let tipoArticulo = await tx.tipoArticulo.findFirst({
           where: { nombre: art.tipoArticulo }
         });
         
