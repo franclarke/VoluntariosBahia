@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import prisma from "@/lib/db";
+import { prisma } from "@/lib/prisma";
+
+// Configuración para las rutas de API
+export const dynamic = 'force-dynamic';
 
 // DELETE /api/peticiones/[id]
 // Elimina una petición de donación (solo para administradores)
@@ -10,41 +11,58 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    // Verificar autenticación como administrador
-    const session = await getServerSession(authOptions);
+    // Verificar si el usuario está autenticado como administrador
+    const token = request.cookies.get("admin_token")?.value;
     
-    if (!session?.user?.email || !session?.user?.role || session.user.role !== "admin") {
-      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+    if (!token) {
+      return NextResponse.json(
+        { error: "No autorizado" },
+        { status: 401 }
+      );
     }
 
-    const id = parseInt(params.id);
+    // Usar desestructuración para obtener el ID
+    const { id } = params;
+    const peticionId = parseInt(id);
     
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    if (isNaN(peticionId)) {
+      return NextResponse.json(
+        { error: "ID inválido" },
+        { status: 400 }
+      );
     }
 
     // Verificar que la petición existe
-    const peticion = await prisma.peticion.findUnique({
-      where: { id }
+    const peticion = await prisma.peticionDonacion.findUnique({
+      where: { id: peticionId }
     });
     
     if (!peticion) {
-      return NextResponse.json({ error: "Petición no encontrada" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Petición no encontrada" },
+        { status: 404 }
+      );
     }
 
     // Eliminar los artículos asociados a la petición
     await prisma.articuloPeticion.deleteMany({
-      where: { peticionId: id }
+      where: { peticionDonacionId: peticionId }
     });
 
     // Eliminar la petición
-    await prisma.peticion.delete({
-      where: { id }
+    await prisma.peticionDonacion.delete({
+      where: { id: peticionId }
     });
 
-    return NextResponse.json({ message: "Petición eliminada correctamente" });
+    return NextResponse.json({
+      success: true,
+      message: "Petición eliminada correctamente"
+    });
   } catch (error) {
     console.error("Error al eliminar petición:", error);
-    return NextResponse.json({ error: "Error al eliminar la petición" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Error al eliminar la petición" },
+      { status: 500 }
+    );
   }
 } 

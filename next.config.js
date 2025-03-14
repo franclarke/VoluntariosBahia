@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Configurar paquetes externos para componentes del servidor
-  experimental: {
-    serverComponentsExternalPackages: ["bcrypt", "jsonwebtoken"]
-  },
+  serverExternalPackages: ["bcrypt", "jsonwebtoken"],
   
   // Ignorar las advertencias de ESLint durante la compilación
   eslint: {
