@@ -20,6 +20,7 @@ model TipoArticulo {
 
 model CentroDistribucion {
   id              Int              @id @default(autoincrement())
+  nombre          String?          // Campo opcional para el nombre del centro
   direccion       String
   responsable     String
   telefono        String?
@@ -110,6 +111,7 @@ model Administrador {
 
 model SolicitudCentro {
   id                  Int                  @id @default(autoincrement())
+  nombre              String?
   direccion           String
   responsable         String
   telefono            String?

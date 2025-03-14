@@ -5,7 +5,8 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, Phone, Clock, Package } from "lucide-react";
+import { MapPin, Phone, Clock, Package, Edit } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Articulo {
   id: number;
@@ -20,6 +21,7 @@ interface Articulo {
 
 interface Centro {
   id: number;
+  nombre: string | null;
   direccion: string;
   responsable: string;
   telefono: string | null;
@@ -40,6 +42,7 @@ export default function ListadoCentros({ activoFiltro = true }: ListadoCentrosPr
   const [centros, setCentros] = useState<Centro[]>([]);
   const [loading, setLoading] = useState(true);
   const [centrosFiltrados, setCentrosFiltrados] = useState<Centro[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const cargarCentros = async () => {
@@ -125,7 +128,14 @@ export default function ListadoCentros({ activoFiltro = true }: ListadoCentrosPr
           <Card key={centro.id} className={centro.activo ? "" : "opacity-70"}>
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start">
-                <CardTitle className="text-lg">{centro.responsable}</CardTitle>
+                {centro.nombre ? (
+                  <div>
+                    <CardTitle className="text-lg">{centro.nombre}</CardTitle>
+                    <p className="text-sm text-muted-foreground">Responsable: {centro.responsable}</p>
+                  </div>
+                ) : (
+                  <CardTitle className="text-lg">{centro.responsable}</CardTitle>
+                )}
                 <Badge variant={centro.activo ? "default" : "secondary"}>
                   {centro.activo ? "Activo" : "Inactivo"}
                 </Badge>
@@ -183,14 +193,25 @@ export default function ListadoCentros({ activoFiltro = true }: ListadoCentrosPr
               </div>
               
               <div className="pt-2">
-                <Button
-                  variant={centro.activo ? "destructive" : "default"}
-                  size="sm"
-                  onClick={() => handleToggleActivo(centro.id, centro.activo)}
-                  className="w-full"
-                >
-                  {centro.activo ? "Desactivar centro" : "Activar centro"}
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => router.push(`/admin/editar-centro/${centro.id}`)}
+                    className="flex-1"
+                  >
+                    <Edit className="h-4 w-4 mr-2" />
+                    Editar
+                  </Button>
+                  <Button
+                    variant={centro.activo ? "destructive" : "default"}
+                    size="sm"
+                    onClick={() => handleToggleActivo(centro.id, centro.activo)}
+                    className="flex-1"
+                  >
+                    {centro.activo ? "Desactivar centro" : "Activar centro"}
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>

@@ -121,7 +121,7 @@ Este proyecto está licenciado bajo [MIT License](LICENSE).
 
 ## Contacto
 
-Para más información o soporte, contacta a [tu-email@ejemplo.com].
+Para más información o soporte, contacta a [franclarke00@hotmail.com].
 
 ---
 

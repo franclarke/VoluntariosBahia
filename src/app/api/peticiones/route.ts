@@ -51,9 +51,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     
     // Validar campos requeridos
-    if (!body.direccion || !body.contactoNombre || !body.contactoTel || !body.articulos) {
+    if (!body.direccion || !body.contactoNombre || !body.contactoTel || !body.articulos || body.latitud === undefined || body.longitud === undefined) {
       return NextResponse.json(
-        { error: "Faltan campos requeridos: direccion, contactoNombre, contactoTel, articulos" },
+        { error: "Faltan campos requeridos: direccion, contactoNombre, contactoTel, articulos, latitud, longitud" },
         { status: 400 }
       );
     }
@@ -85,8 +85,8 @@ export async function POST(request: NextRequest) {
           contactoNombre: body.contactoNombre,
           contactoTel: body.contactoTel,
           descripcion: body.descripcion || null,
-          latitud: body.latitud || null,
-          longitud: body.longitud || null,
+          latitud: body.latitud,
+          longitud: body.longitud,
           estado: "Pendiente"
         }
       });

@@ -32,7 +32,10 @@ export default function SolicitarCentroPage() {
     telefono: "",
     horarioApertura: "",
     horarioCierre: "",
-    descripcion: ""
+    latitud: "-38.7196", // Valor predeterminado para Bahía Blanca
+    longitud: "-62.2724", // Valor predeterminado para Bahía Blanca
+    descripcion: "",
+    nombre: ""
   });
   const [articulos, setArticulos] = useState<ArticuloDisponible[]>([
     { tipoArticuloId: 0, cantidad: 1 }
@@ -135,7 +138,10 @@ export default function SolicitarCentroPage() {
           telefono: formData.telefono || null,
           horarioApertura: formData.horarioApertura || null,
           horarioCierre: formData.horarioCierre || null,
+          latitud: formData.latitud,
+          longitud: formData.longitud,
           descripcion: formData.descripcion || null,
+          nombre: formData.nombre || null,
           articulos: articulos
         }),
       });
@@ -163,7 +169,10 @@ export default function SolicitarCentroPage() {
       telefono: "",
       horarioApertura: "",
       horarioCierre: "",
-      descripcion: ""
+      latitud: "-38.7196", // Valor predeterminado para Bahía Blanca
+      longitud: "-62.2724", // Valor predeterminado para Bahía Blanca
+      descripcion: "",
+      nombre: ""
     });
     setArticulos([{ tipoArticuloId: 0, cantidad: 1 }]);
     setEnviado(false);
@@ -229,6 +238,17 @@ export default function SolicitarCentroPage() {
                 </div>
 
                 <div className="space-y-2">
+                  <Label htmlFor="nombre">Nombre del centro (opcional)</Label>
+                  <Input
+                    id="nombre"
+                    name="nombre"
+                    placeholder="Ej: Centro Comunitario San Roque"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="responsable">Nombre del responsable *</Label>
                   <Input
                     id="responsable"
@@ -272,6 +292,28 @@ export default function SolicitarCentroPage() {
                       onChange={handleChange}
                     />
                   </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="latitud">Latitud</Label>
+                  <Input
+                    id="latitud"
+                    name="latitud"
+                    type="text"
+                    value={formData.latitud}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="longitud">Longitud</Label>
+                  <Input
+                    id="longitud"
+                    name="longitud"
+                    type="text"
+                    value={formData.longitud}
+                    onChange={handleChange}
+                  />
                 </div>
 
                 <div className="space-y-2">

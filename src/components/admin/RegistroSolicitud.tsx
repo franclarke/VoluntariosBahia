@@ -216,27 +216,6 @@ export default function RegistroSolicitud() {
     }
   };
 
-  const handleUseCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setFormData(prev => ({
-            ...prev,
-            latitud: position.coords.latitude.toString(),
-            longitud: position.coords.longitude.toString()
-          }));
-          toast.success("Ubicación actual obtenida");
-        },
-        (error) => {
-          console.error("Error obteniendo ubicación:", error);
-          toast.error("No se pudo obtener la ubicación actual");
-        }
-      );
-    } else {
-      toast.error("Tu navegador no soporta geolocalización");
-    }
-  };
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
@@ -249,20 +228,6 @@ export default function RegistroSolicitud() {
           onChange={handleChange}
           required
         />
-      </div>
-
-      <div className="flex items-center gap-2">
-        <Button 
-          type="button" 
-          variant="outline" 
-          size="sm"
-          onClick={handleUseCurrentLocation}
-        >
-          Usar mi ubicación actual
-        </Button>
-        <span className="text-xs text-muted-foreground">
-          (Opcional)
-        </span>
       </div>
 
       <div className="space-y-2">
@@ -287,6 +252,31 @@ export default function RegistroSolicitud() {
           onChange={handleChange}
           required
         />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="latitud">Latitud *</Label>
+          <Input
+            id="latitud"
+            name="latitud"
+            placeholder="Ej: -38.7196"
+            value={formData.latitud}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="longitud">Longitud *</Label>
+          <Input
+            id="longitud"
+            name="longitud"
+            placeholder="Ej: -62.2724"
+            value={formData.longitud}
+            onChange={handleChange}
+            required
+          />
+        </div>
       </div>
 
       <div className="space-y-2">

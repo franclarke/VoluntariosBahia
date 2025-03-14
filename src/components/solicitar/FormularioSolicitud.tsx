@@ -33,6 +33,8 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
     direccion: "",
     contactoNombre: "",
     contactoTel: "",
+    latitud: "-38.7196", // Valor predeterminado para Bahía Blanca
+    longitud: "-62.2724", // Valor predeterminado para Bahía Blanca
     descripcion: ""
   });
   const [articulos, setArticulos] = useState<ArticuloSolicitado[]>([
@@ -144,7 +146,12 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
+          direccion: formData.direccion,
+          contactoNombre: formData.contactoNombre,
+          contactoTel: formData.contactoTel,
+          latitud: parseFloat(formData.latitud),
+          longitud: parseFloat(formData.longitud),
+          descripcion: formData.descripcion,
           articulos: articulosParaEnviar
         }),
       });
@@ -210,6 +217,28 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
                 name="contactoTel"
                 placeholder="Ej: 291-4123456"
                 value={formData.contactoTel}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="latitud">Latitud</Label>
+              <Input
+                id="latitud"
+                name="latitud"
+                placeholder="Latitud"
+                value={formData.latitud}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="longitud">Longitud</Label>
+              <Input
+                id="longitud"
+                name="longitud"
+                placeholder="Longitud"
+                value={formData.longitud}
                 onChange={handleChange}
               />
             </div>

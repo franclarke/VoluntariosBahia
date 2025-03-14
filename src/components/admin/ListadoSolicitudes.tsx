@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/navigation";
+import { Edit, CheckCircle, XCircle } from "lucide-react";
 
 interface ArticuloSolicitud {
   id: number;
@@ -36,6 +38,7 @@ export default function ListadoSolicitudes({ estadoFiltro = "Pendiente" }: Lista
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
   const [loading, setLoading] = useState(true);
   const [solicitudesFiltradas, setSolicitudesFiltradas] = useState<Solicitud[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const cargarSolicitudes = async () => {
@@ -149,21 +152,32 @@ export default function ListadoSolicitudes({ estadoFiltro = "Pendiente" }: Lista
           </div>
 
           {solicitud.estado === "Pendiente" && (
-            <div className="mt-4 flex gap-2">
+            <div className="flex gap-2 mt-4">
               <Button
-                size="sm"
                 variant="outline"
+                size="sm"
+                onClick={() => router.push(`/admin/editar-solicitud/${solicitud.id}`)}
                 className="flex-1"
-                onClick={() => cambiarEstado(solicitud.id, "Entregada")}
               >
-                Marcar como Entregada
+                <Edit className="h-4 w-4 mr-2" />
+                Editar
               </Button>
               <Button
+                variant="default"
                 size="sm"
-                variant="outline"
+                onClick={() => cambiarEstado(solicitud.id, "Entregada")}
                 className="flex-1"
-                onClick={() => cambiarEstado(solicitud.id, "Cancelada")}
               >
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Entregada
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => cambiarEstado(solicitud.id, "Cancelada")}
+                className="flex-1"
+              >
+                <XCircle className="h-4 w-4 mr-2" />
                 Cancelar
               </Button>
             </div>

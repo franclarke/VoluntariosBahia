@@ -48,6 +48,7 @@ interface ArticuloOferta {
 
 interface CentroDistribucion {
   id: number;
+  nombre: string | null;
   direccion: string;
   latitud: number;
   longitud: number;
@@ -187,7 +188,14 @@ export default function MapaVoluntario({ tiposArticulos }: MapaVoluntarioProps) 
           >
             <Popup>
               <div className="space-y-2">
-                <h3 className="font-bold text-lg">{centro.direccion}</h3>
+                {centro.nombre ? (
+                  <>
+                    <h3 className="font-bold text-lg">{centro.nombre}</h3>
+                    <p className="text-sm text-muted-foreground">{centro.direccion}</p>
+                  </>
+                ) : (
+                  <h3 className="font-bold text-lg">{centro.direccion}</h3>
+                )}
                 <p><strong>Horario:</strong> {formatearHorario(centro.horarioApertura, centro.horarioCierre)}</p>
                 <div>
                   <p className="font-medium">Artículos disponibles:</p>

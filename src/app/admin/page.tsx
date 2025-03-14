@@ -77,7 +77,7 @@ export default function AdminPage() {
 
       {/* Paneles principales */}
       <ResizablePanelGroup direction="horizontal" className="min-h-[300px] rounded-lg border">
-        <ResizablePanel defaultSize={50}>
+        <ResizablePanel defaultSize={50} minSize={20}>
           <Tabs 
             defaultValue="solicitudes" 
             className="w-full" 
@@ -132,7 +132,7 @@ export default function AdminPage() {
         
         <ResizableHandle withHandle />
         
-        <ResizablePanel defaultSize={50}>
+        <ResizablePanel defaultSize={50} minSize={20} maxSize={80}>
           <Tabs 
             defaultValue="registroSolicitudes" 
             className="w-full" 
@@ -184,7 +184,7 @@ export default function AdminPage() {
 
       {/* Paneles inferiores */}
       <ResizablePanelGroup direction="horizontal" className="min-h-[400px] rounded-lg border">
-        <ResizablePanel defaultSize={50}>
+        <ResizablePanel defaultSize={50} minSize={20}>
           <div className="p-4 h-full">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">Listado de Solicitudes</h2>
@@ -227,7 +227,7 @@ export default function AdminPage() {
         
         <ResizableHandle withHandle />
         
-        <ResizablePanel defaultSize={50}>
+        <ResizablePanel defaultSize={50} minSize={20} maxSize={80}>
           <div className="p-4 h-full">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">Listado de Centros</h2>

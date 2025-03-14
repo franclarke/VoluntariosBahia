@@ -94,27 +94,6 @@ export default function RegistroOferta() {
     }
   };
 
-  const handleUseCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setFormData(prev => ({
-            ...prev,
-            latitud: position.coords.latitude.toString(),
-            longitud: position.coords.longitude.toString()
-          }));
-          toast.success("Ubicación actual obtenida");
-        },
-        (error) => {
-          console.error("Error obteniendo ubicación:", error);
-          toast.error("No se pudo obtener la ubicación actual");
-        }
-      );
-    } else {
-      toast.error("Tu navegador no soporta geolocalización");
-    }
-  };
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
@@ -127,20 +106,6 @@ export default function RegistroOferta() {
           onChange={handleChange}
           required
         />
-      </div>
-
-      <div className="flex items-center gap-2">
-        <Button 
-          type="button" 
-          variant="outline" 
-          size="sm"
-          onClick={handleUseCurrentLocation}
-        >
-          Usar mi ubicación actual
-        </Button>
-        <span className="text-xs text-muted-foreground">
-          (Opcional)
-        </span>
       </div>
 
       <div className="space-y-2">

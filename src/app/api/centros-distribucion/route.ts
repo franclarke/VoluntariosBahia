@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { dynamic, runtime } from "../config";
 
-// Exportar la configuración
-export { dynamic, runtime };
+// Configuración para las rutas de API
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 // GET /api/centros-distribucion
 // Obtiene todos los centros de distribución activos con artículos disponibles
@@ -106,6 +106,11 @@ export async function POST(request: NextRequest) {
         activo: true
       }
     });
+    
+    // Si el nombre se proporcionó, actualizarlo con una consulta SQL directa
+    if (body.nombre) {
+      await prisma.$executeRaw`UPDATE "CentroDistribucion" SET "nombre" = ${body.nombre} WHERE "id" = ${centro.id}`;
+    }
     
     return NextResponse.json(centro, { status: 201 });
   } catch (error) {

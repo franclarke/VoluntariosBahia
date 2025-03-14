@@ -66,9 +66,15 @@ export async function POST(
         horarioCierre: solicitud.horarioCierre,
         latitud: solicitud.latitud,
         longitud: solicitud.longitud,
+        descripcion: solicitud.descripcion,
         activo: true
       }
     });
+
+    // Si el nombre se proporcionó, actualizarlo con una consulta SQL directa
+    if (solicitud.nombre) {
+      await prisma.$executeRaw`UPDATE "CentroDistribucion" SET "nombre" = ${solicitud.nombre} WHERE "id" = ${centro.id}`;
+    }
 
     // Crear los artículos disponibles
     for (const articuloSolicitado of solicitud.articulosSolicitados) {

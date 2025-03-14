@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Trash2, Plus } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
 
 interface ArticuloDisponible {
   tipoArticuloId: number;
@@ -20,8 +21,14 @@ interface TipoArticulo {
   nombre: string;
 }
 
-export default function RegistroCentro() {
+interface EditarCentroProps {
+  centroId: number;
+}
+
+export default function EditarCentro({ centroId }: EditarCentroProps) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [cargandoCentro, setCargandoCentro] = useState(true);
   const [tiposArticulos, setTiposArticulos] = useState<TipoArticulo[]>([]);
   const [cargandoTipos, setCargandoTipos] = useState(true);
   const [formData, setFormData] = useState({
@@ -30,14 +37,58 @@ export default function RegistroCentro() {
     telefono: "",
     horarioApertura: "",
     horarioCierre: "",
-    latitud: "-38.7196", // Valor predeterminado para Bahía Blanca
-    longitud: "-62.2724", // Valor predeterminado para Bahía Blanca
+    latitud: "-38.7196",
+    longitud: "-62.2724",
     descripcion: "",
     nombre: ""
   });
   const [articulos, setArticulos] = useState<ArticuloDisponible[]>([
     { tipoArticuloId: 0, cantidad: 1 }
   ]);
+
+  // Cargar datos del centro
+  useEffect(() => {
+    const cargarCentro = async () => {
+      setCargandoCentro(true);
+      try {
+        const response = await fetch(`/api/centros-distribucion/${centroId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setFormData({
+            direccion: data.direccion,
+            responsable: data.responsable,
+            telefono: data.telefono || "",
+            horarioApertura: data.horarioApertura || "",
+            horarioCierre: data.horarioCierre || "",
+            latitud: data.latitud.toString(),
+            longitud: data.longitud.toString(),
+            descripcion: data.descripcion || "",
+            nombre: data.nombre || ""
+          });
+          
+          // Transformar artículos
+          if (data.articulos && data.articulos.length > 0) {
+            const articulosFormateados = data.articulos.map((art: { tipoArticuloId: number; cantidad: number }) => ({
+              tipoArticuloId: art.tipoArticuloId,
+              cantidad: art.cantidad
+            }));
+            setArticulos(articulosFormateados);
+          }
+        } else {
+          toast.error("Error al cargar los datos del centro");
+          router.push("/admin");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        toast.error("Error al cargar los datos del centro");
+        router.push("/admin");
+      } finally {
+        setCargandoCentro(false);
+      }
+    };
+
+    cargarCentro();
+  }, [centroId, router]);
 
   // Cargar tipos de artículos desde la API
   useEffect(() => {
@@ -53,11 +104,11 @@ export default function RegistroCentro() {
             toast.error("No se encontraron tipos de artículos");
           }
         } else {
-          toast.error("Error al cargar tipos de artículos");
+          toast.error("Error al cargar los tipos de artículos");
         }
       } catch (error) {
-        console.error("Error al cargar tipos de artículos:", error);
-        toast.error("Error al cargar tipos de artículos");
+        console.error("Error:", error);
+        toast.error("Error al cargar los tipos de artículos");
       } finally {
         setCargandoTipos(false);
       }
@@ -68,24 +119,18 @@ export default function RegistroCentro() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    
-    // Validación para el teléfono (solo números y guiones)
-    if (name === "telefono" && !/^[0-9-]*$/.test(value)) {
-      return;
-    }
-    
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleArticuloChange = (index: number, field: keyof ArticuloDisponible, value: number | string) => {
     const nuevosArticulos = [...articulos];
-    nuevosArticulos[index] = { ...nuevosArticulos[index], [field]: value };
-    
-    // Si cambia el tipo de artículo a algo que no es -1 (Otro), eliminar el tipo personalizado
-    if (field === "tipoArticuloId" && value !== -1) {
-      delete nuevosArticulos[index].tipoPersonalizado;
-    }
-    
+    nuevosArticulos[index] = {
+      ...nuevosArticulos[index],
+      [field]: value
+    };
     setArticulos(nuevosArticulos);
   };
 
@@ -96,8 +141,6 @@ export default function RegistroCentro() {
   const eliminarArticulo = (index: number) => {
     if (articulos.length > 1) {
       setArticulos(articulos.filter((_, i) => i !== index));
-    } else {
-      toast.error("Debes tener al menos un artículo disponible");
     }
   };
 
@@ -105,8 +148,8 @@ export default function RegistroCentro() {
     e.preventDefault();
     
     // Validar datos requeridos
-    if (!formData.direccion || !formData.responsable || !formData.latitud || !formData.longitud) {
-      toast.error("Por favor completa los campos obligatorios (dirección, responsable, latitud y longitud)");
+    if (!formData.direccion || !formData.responsable) {
+      toast.error("Por favor completa los campos obligatorios");
       return;
     }
 
@@ -117,57 +160,25 @@ export default function RegistroCentro() {
       return;
     }
 
+    // Validar que latitud y longitud sean números válidos
+    const latitud = parseFloat(formData.latitud);
+    const longitud = parseFloat(formData.longitud);
+    
+    if (isNaN(latitud) || isNaN(longitud)) {
+      toast.error("La latitud y longitud deben ser números válidos");
+      return;
+    }
+
+    // Filtrar artículos personalizados
+    const articulosFinales = articulos.filter(art => art.tipoArticuloId !== -1);
+    
     try {
       setLoading(true);
       
-      // Primero, registrar los tipos de artículos personalizados si existen
-      const articulosFinales = [...articulos];
-      
-      for (let i = 0; i < articulosFinales.length; i++) {
-        const articulo = articulosFinales[i];
-        if (articulo.tipoArticuloId === -1 && articulo.tipoPersonalizado) {
-          // Verificar si ya existe un tipo de artículo con ese nombre
-          const tipoExistente = tiposArticulos.find(
-            tipo => tipo.nombre.toLowerCase() === articulo.tipoPersonalizado?.toLowerCase()
-          );
-
-          if (!tipoExistente) {
-            // Crear nuevo tipo de artículo
-            const responseTipo = await fetch("/api/tipos-articulos", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ nombre: articulo.tipoPersonalizado }),
-            });
-
-            if (!responseTipo.ok) {
-              throw new Error("Error al registrar nuevo tipo de artículo");
-            }
-
-            const nuevoTipo = await responseTipo.json();
-            
-            // Actualizar el ID del tipo de artículo en el arreglo de artículos
-            articulosFinales[i] = {
-              ...articulo,
-              tipoArticuloId: nuevoTipo.id
-            };
-            
-            // Actualizar la lista de tipos de artículos
-            setTiposArticulos(prev => [...prev, nuevoTipo]);
-          } else {
-            // Usar el ID del tipo existente
-            articulosFinales[i] = {
-              ...articulo,
-              tipoArticuloId: tipoExistente.id
-            };
-          }
-        }
-      }
-      
-      // Crear el centro de distribución
-      const responseCentro = await fetch("/api/centros-distribucion", {
-        method: "POST",
+      // Actualizar el centro de distribución
+      console.log("Actualizando centro de distribución:", centroId);
+      const responseCentro = await fetch(`/api/centros-distribucion/${centroId}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -177,8 +188,8 @@ export default function RegistroCentro() {
           telefono: formData.telefono || null,
           horarioApertura: formData.horarioApertura || null,
           horarioCierre: formData.horarioCierre || null,
-          latitud: parseFloat(formData.latitud),
-          longitud: parseFloat(formData.longitud),
+          latitud: latitud,
+          longitud: longitud,
           descripcion: formData.descripcion || null,
           nombre: formData.nombre || null
         }),
@@ -186,54 +197,59 @@ export default function RegistroCentro() {
 
       if (!responseCentro.ok) {
         const errorData = await responseCentro.json();
-        throw new Error(errorData.error || "Error al crear el centro de distribución");
+        console.error("Error en la respuesta del servidor:", errorData);
+        throw new Error(errorData.error || "Error al actualizar el centro de distribución");
       }
-
-      const centroDatos = await responseCentro.json();
       
-      // Registrar los artículos disponibles
-      for (const articulo of articulosFinales) {
-        const responseArticulo = await fetch("/api/ofertas", {
+      // Eliminar artículos existentes
+      console.log("Eliminando artículos existentes");
+      const responseEliminar = await fetch(`/api/centros-distribucion/${centroId}/articulos`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      
+      if (!responseEliminar.ok) {
+        const errorData = await responseEliminar.json();
+        console.error("Error al eliminar artículos:", errorData);
+        throw new Error(errorData.error || "Error al actualizar los artículos disponibles");
+      }
+      
+      // Registrar los artículos disponibles usando el nuevo endpoint
+      if (articulosFinales.length > 0) {
+        console.log("Agregando nuevos artículos:", articulosFinales);
+        const responseArticulos = await fetch(`/api/centros-distribucion/${centroId}/articulos`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            centroDistribucionId: centroDatos.id,
-            tipoArticuloId: articulo.tipoArticuloId,
-            cantidad: articulo.cantidad
+            articulos: articulosFinales
           }),
         });
 
-        if (!responseArticulo.ok) {
-          const errorData = await responseArticulo.json();
+        if (!responseArticulos.ok) {
+          const errorData = await responseArticulos.json();
+          console.error("Error al agregar artículos:", errorData);
           throw new Error(errorData.error || "Error al registrar artículos disponibles");
         }
       }
 
-      toast.success("Centro de distribución registrado correctamente");
-      
-      // Limpiar formulario
-      setFormData({
-        direccion: "",
-        responsable: "",
-        telefono: "",
-        horarioApertura: "",
-        horarioCierre: "",
-        latitud: "-38.7196",
-        longitud: "-62.2724",
-        descripcion: "",
-        nombre: ""
-      });
-      setArticulos([{ tipoArticuloId: 0, cantidad: 1 }]);
+      toast.success("Centro de distribución actualizado correctamente");
+      router.push("/admin");
       
     } catch (error) {
-      console.error("Error:", error);
-      toast.error(error instanceof Error ? error.message : "Error al registrar el centro de distribución");
+      console.error("Error completo:", error);
+      toast.error(error instanceof Error ? error.message : "Error al actualizar el centro de distribución");
     } finally {
       setLoading(false);
     }
   };
+
+  if (cargandoCentro || cargandoTipos) {
+    return <div className="flex justify-center items-center p-8">Cargando datos...</div>;
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -284,13 +300,13 @@ export default function RegistroCentro() {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="horarioApertura">Horario de apertura</Label>
             <Input
               id="horarioApertura"
               name="horarioApertura"
-              type="time"
+              placeholder="Ej: 9:00"
               value={formData.horarioApertura}
               onChange={handleChange}
             />
@@ -300,14 +316,14 @@ export default function RegistroCentro() {
             <Input
               id="horarioCierre"
               name="horarioCierre"
-              type="time"
+              placeholder="Ej: 18:00"
               value={formData.horarioCierre}
               onChange={handleChange}
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="latitud">Latitud *</Label>
             <Input
@@ -337,97 +353,94 @@ export default function RegistroCentro() {
           <Textarea
             id="descripcion"
             name="descripcion"
-            placeholder="Información adicional sobre el centro"
+            placeholder="Describe brevemente este centro de distribución"
             value={formData.descripcion}
             onChange={handleChange}
             rows={3}
           />
         </div>
 
-        <div className="pt-4">
-          <h3 className="text-lg font-medium mb-2">Artículos disponibles</h3>
-          {cargandoTipos ? (
-            <div className="flex justify-center items-center py-4">
-              <p>Cargando tipos de artículos...</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {articulos.map((articulo, index) => (
-                <div key={index} className="flex flex-row gap-2 items-start border p-3 rounded-md">
-                  <div className={`flex-grow space-y-2 ${articulo.tipoArticuloId === -1 ? "w-1/2" : "w-full"}`}>
-                    <Label htmlFor={`tipoArticulo-${index}`}>Tipo de artículo *</Label>
+        <div className="pt-4 border-t">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-medium">Artículos disponibles</h3>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={agregarArticulo}
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Agregar artículo
+            </Button>
+          </div>
+          
+          <div className="space-y-4">
+            {articulos.map((articulo, index) => (
+              <div key={index} className="flex flex-col gap-2 border p-3 rounded-md bg-muted/30">
+                <div className="flex justify-between items-center">
+                  <h4 className="font-medium">Artículo {index + 1}</h4>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => eliminarArticulo(index)}
+                    disabled={articulos.length === 1}
+                  >
+                    <Trash2 className="h-4 w-4 text-destructive" />
+                  </Button>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor={`tipo-${index}`}>Tipo de artículo *</Label>
                     <Select
                       value={articulo.tipoArticuloId.toString()}
                       onValueChange={(value) => handleArticuloChange(index, "tipoArticuloId", parseInt(value))}
                     >
-                      <SelectTrigger id={`tipoArticulo-${index}`}>
-                        <SelectValue placeholder="Selecciona un tipo de artículo" />
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona un tipo" />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="0">Selecciona un tipo</SelectItem>
                         {tiposArticulos.map((tipo) => (
                           <SelectItem key={tipo.id} value={tipo.id.toString()}>
                             {tipo.nombre}
                           </SelectItem>
                         ))}
-                        <SelectItem value="-1">Otro</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   
-                  {articulo.tipoArticuloId === -1 && (
-                    <div className="flex-grow space-y-2 w-1/2">
-                      <Label htmlFor={`tipoPersonalizado-${index}`}>Especificar *</Label>
-                      <Input
-                        id={`tipoPersonalizado-${index}`}
-                        value={articulo.tipoPersonalizado || ""}
-                        onChange={(e) => handleArticuloChange(index, "tipoPersonalizado", e.target.value)}
-                        placeholder="Ej: Pañales"
-                        required
-                      />
-                    </div>
-                  )}
-                  
-                  <div className="space-y-2 w-24">
+                  <div className="space-y-2">
                     <Label htmlFor={`cantidad-${index}`}>Cantidad *</Label>
                     <Input
                       id={`cantidad-${index}`}
                       type="number"
                       min="1"
                       value={articulo.cantidad}
-                      onChange={(e) => handleArticuloChange(index, "cantidad", parseInt(e.target.value) || 1)}
+                      onChange={(e) => handleArticuloChange(index, "cantidad", parseInt(e.target.value) || 0)}
                       required
                     />
                   </div>
-                  
-                  <div className="pt-8">
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => eliminarArticulo(index)}
-                      className="flex-shrink-0"
-                    >
-                      <Trash2 className="h-5 w-5" />
-                    </Button>
-                  </div>
                 </div>
-              ))}
-              <Button
-                type="button"
-                variant="outline"
-                onClick={agregarArticulo}
-                className="w-full"
-              >
-                <Plus className="h-4 w-4 mr-2" /> Agregar otro artículo
-              </Button>
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      <Button type="submit" className="w-full" disabled={loading || cargandoTipos}>
-        {loading ? "Registrando centro..." : "Registrar centro de distribución"}
-      </Button>
+      <div className="pt-2 flex justify-end gap-2">
+        <Button 
+          type="button" 
+          variant="outline" 
+          onClick={() => router.push("/admin")}
+        >
+          Cancelar
+        </Button>
+        <Button type="submit" disabled={loading}>
+          {loading ? "Guardando..." : "Guardar cambios"}
+        </Button>
+      </div>
     </form>
   );
 } 

@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import type { PrismaClient } from "@prisma/client";
-import { dynamic, runtime } from "../config";
+
+// Configuración para las rutas de API
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 interface ArticuloSolicitado {
   tipoArticuloId: number;
   cantidad: number;
   tipoPersonalizado?: string;
 }
-
-// Exportar la configuración
-export { dynamic, runtime };
 
 // GET /api/solicitudes-centro
 // Obtiene todas las solicitudes de centros de distribución (solo para administradores)
@@ -83,6 +83,7 @@ export async function POST(request: NextRequest) {
           horarioApertura: body.horarioApertura,
           horarioCierre: body.horarioCierre,
           descripcion: body.descripcion || null,
+          nombre: body.nombre || null,
           latitud: body.latitud,
           longitud: body.longitud,
           estado: "Pendiente"
