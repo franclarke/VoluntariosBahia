@@ -16,7 +16,7 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Voluntarios Bahía",
+  title: "Voluntarios Donaciones Bahía",
   description: "Plataforma para conectar voluntarios y personas necesitadas en Bahía Blanca",
 };
 
