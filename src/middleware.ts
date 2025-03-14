@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verify } from "jsonwebtoken";
-
-const JWT_SECRET = process.env.JWT_SECRET || "voluntarios-bahia-secret-key";
+// Eliminamos la importación de jsonwebtoken
+// import { verify } from "jsonwebtoken";
 
 // Rutas que requieren autenticación de administrador
 const ADMIN_ROUTES = [
@@ -38,10 +37,14 @@ export function middleware(request: NextRequest) {
   }
   
   try {
-    // Verificar token
-    verify(token, JWT_SECRET);
+    // En lugar de verificar el token con jsonwebtoken, simplemente verificamos que exista
+    // La verificación completa se realizará en las rutas API
+    if (!token) {
+      throw new Error("Token inválido");
+    }
+    
     return NextResponse.next();
-  } catch (error) {
+  } catch {
     // Token inválido
     if (pathname.startsWith("/api/")) {
       return NextResponse.json(

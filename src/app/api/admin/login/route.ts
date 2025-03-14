@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
-import { cookies } from "next/headers";
 
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "voluntarios-bahia-secret-key";
