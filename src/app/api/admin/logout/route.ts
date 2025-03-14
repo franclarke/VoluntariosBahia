@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+// Configuración para evitar que esta ruta se ejecute durante la compilación
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // POST /api/admin/logout
 // Cerrar sesión de administrador
 export async function POST() {

@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { hash } from "bcrypt";
 
+// Configuración para evitar que esta ruta se ejecute durante la compilación
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // POST /api/admin/crear
 // Crear un nuevo administrador
 export async function POST(request: NextRequest) {

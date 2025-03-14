@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import type { PrismaClient } from "@prisma/client";
+import { dynamic, runtime } from "../config";
 
 interface ArticuloSolicitado {
   tipoArticuloId: number;
   cantidad: number;
   tipoPersonalizado?: string;
 }
+
+// Exportar la configuración
+export { dynamic, runtime };
 
 // GET /api/solicitudes-centro
 // Obtiene todas las solicitudes de centros de distribución (solo para administradores)

@@ -3,6 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 
+// Configuración para evitar que esta ruta se ejecute durante la compilación
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const JWT_SECRET = process.env.JWT_SECRET || "voluntarios-bahia-secret-key";
 
 // POST /api/admin/login

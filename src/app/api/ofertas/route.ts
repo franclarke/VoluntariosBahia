@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { dynamic, runtime } from "../config";
+
+// Exportar la configuración
+export { dynamic, runtime };
 
 // GET /api/ofertas
 // Obtiene todas las ofertas de artículos disponibles

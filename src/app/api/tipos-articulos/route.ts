@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { dynamic, runtime } from "../config";
+
+// Exportar la configuración
+export { dynamic, runtime };
 
 // GET /api/tipos-articulos - Obtener todos los tipos de artículos
 export async function GET() {

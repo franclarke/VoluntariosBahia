@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import type { PrismaClient } from "@prisma/client";
+import { dynamic, runtime } from "../config";
 
 interface ArticuloPeticion {
   tipoArticulo: string;
   cantidad: number;
 }
+
+// Exportar la configuración
+export { dynamic, runtime };
 
 // GET /api/peticiones
 // Obtiene todas las peticiones de donación
