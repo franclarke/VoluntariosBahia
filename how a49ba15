@@ -1,0 +1,5 @@
+[33mfb32802[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Merge branch 'main' of https://github.com/franclarke/VoluntariosBahia
+[33m739d64d[m Corregir error de compilación en Vercel añadiendo configuración de API Routes
+[33ma49ba15[m Delete Especificacion.md
+[33mf1b821e[m Actualizar .gitignore para excluir src/scripts y Especificacion.md, y crear README.md completo
+[33m06d1b26[m Optimización para producción: Eliminación de campos de latitud/longitud en formularios, ajuste del mapa para cargar solo datos de la BD, adición de botón de WhatsApp
