@@ -445,14 +445,17 @@ export default function MapaClienteWrapper({
                           <p className="text-sm">{punto.descripcion}</p>
                         </div>
                       )}
-
-                      <Button
-                        size="sm"
-                        className="w-full mt-2 py-2 font-medium"
-                        onClick={() => marcarPuntoComoInactivo(punto.id)}
-                      >
-                        Marcar como inactivo
-                      </Button>
+                      
+                      <div className="flex flex-col gap-2">
+                        <WhatsAppButton phoneNumber={punto.telefono || ''} message={'Hola, me gustaría donar artículos'} />
+                        <Button
+                          size="sm"
+                          className="w-full py-2 font-medium"
+                          onClick={() => marcarPuntoComoInactivo(punto.id)}
+                        >
+                          Marcar como inactivo
+                        </Button>
+                      </div>
                     </div>
                   </Popup>
                 </Marker>
@@ -514,14 +517,17 @@ export default function MapaClienteWrapper({
                           <p className="text-sm">{solicitud.descripcion}</p>
                         </div>
                       )}
-                      <WhatsAppButton phoneNumber={solicitud.contactoTel} message={'Hola, me gustaría entregar los artículos solicitados'} />
-                      <Button
-                        size="sm"
-                        className="w-full mt-2 py-2 font-medium"
-                        onClick={() => marcarComoEntregada(solicitud.id)}
-                      >
-                        Marcar como entregada
-                      </Button>
+                      
+                      <div className="flex flex-col gap-2">
+                        <WhatsAppButton phoneNumber={solicitud.contactoTel} message={'Hola, me gustaría entregar los artículos solicitados'} />
+                        <Button
+                          size="sm"
+                          className="w-full py-2 font-medium"
+                          onClick={() => marcarComoEntregada(solicitud.id)}
+                        >
+                          Marcar como entregada
+                        </Button>
+                      </div>
                     </div>
                   </Popup>
                 </Marker>
@@ -570,14 +576,17 @@ export default function MapaClienteWrapper({
                           <p className="text-sm">{solicitud.descripcion}</p>
                         </div>
                       )}
-
-                      <Button
-                        size="sm"
-                        className="w-full mt-2 py-2 font-medium"
-                        onClick={() => marcarLimpiezaComoAtendida(solicitud.id)}
-                      >
-                        Marcar como atendida
-                      </Button>
+                      
+                      <div className="flex flex-col gap-2">
+                        <WhatsAppButton phoneNumber={solicitud.contactoTel} message={'Hola, me gustaría limpiar el lugar'} />
+                        <Button
+                          size="sm"
+                          className="w-full py-2 font-medium"
+                          onClick={() => marcarLimpiezaComoAtendida(solicitud.id)}
+                        >
+                          Marcar como atendida
+                        </Button>
+                      </div>
                     </div>
                   </Popup>
                 </Marker>
