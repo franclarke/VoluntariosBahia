@@ -17,6 +17,7 @@ import {
 } from "@/lib/leaflet-config"
 import { Loader2, MapPin, ZoomIn, ZoomOut, Minus, Plus } from "lucide-react"
 import L from "leaflet"
+import WhatsAppButton from "./WhatsAppButton"
 
 // Component to center the map on a specific location
 function CentrarMapa({ posicion }: { posicion: [number, number] }) {
@@ -560,10 +561,10 @@ export default function MapaVoluntario({
       <li className="flex items-start justify-between relative">
         <span className="mr-1">{articulo.tipoArticulo.nombre}</span>
         <div className="flex items-center gap-1">
-          <span className="text-muted-foreground">({articulo.cantidad})</span>
+          <span className="text-muted-foreground text-[10px]">({articulo.cantidad})</span>
           <button 
             onClick={() => setShowEntregaSelector(true)}
-            className="text-xs bg-green-100 hover:bg-green-200 text-green-700 px-2 py-0.5 rounded ml-2"
+            className="text-[10px] bg-green-100 hover:bg-green-200 text-green-700 px-1.5 py-0.5 rounded"
           >
             Entregar
           </button>
@@ -663,10 +664,10 @@ export default function MapaVoluntario({
                   eventHandlers={eventHandlers}
                 >
                   <Popup className="custom-popup">
-                    <div className="text-xs sm:text-sm space-y-3 max-w-[280px] sm:max-w-[320px] p-3">
-                      <div className="flex items-center gap-2 mb-2 border-b pb-2">
-                        <div className="w-4 h-4 rounded-full bg-blue-500 flex-shrink-0"></div>
-                        <h3 className="font-semibold text-sm sm:text-base">Punto de donación</h3>
+                    <div className="text-xs sm:text-sm space-y-2 max-w-[280px] sm:max-w-[320px] p-2">
+                      <div className="flex items-center gap-2 border-b pb-1.5">
+                        <div className="w-3 h-3 rounded-full bg-blue-500 flex-shrink-0"></div>
+                        <h3 className="font-semibold text-sm">Punto de donación</h3>
                         <button 
                           className="ml-auto text-gray-400 hover:text-gray-600 transition-colors" 
                           onClick={(e) => {
@@ -682,19 +683,19 @@ export default function MapaVoluntario({
                         </button>
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                      <div className="flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         <p className="text-muted-foreground font-medium">{punto.direccion}</p>
                       </div>
 
-                      <div className="bg-muted/30 p-3 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"></path><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"></path><path d="M12 3v6"></path></svg>
-                          <p className="font-medium text-sm sm:text-base">{punto.nombre || "Establecimiento"}</p>
+                      <div className="bg-muted/30 p-2 rounded-md">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"></path><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"></path><path d="M12 3v6"></path></svg>
+                          <p className="font-medium text-sm">{punto.nombre || "Establecimiento"}</p>
                         </div>
                         {punto.telefono && (
-                          <div className="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                          <div className="flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                             <a href={`tel:${punto.telefono}`} className="text-primary font-medium underline underline-offset-2">
                               {punto.telefono}
                             </a>
@@ -702,9 +703,9 @@ export default function MapaVoluntario({
                         )}
                       </div>
 
-                      <div className="bg-muted/30 p-3 rounded-lg">
-                        <p className="font-medium text-sm mb-2">Artículos disponibles:</p>
-                        <ul className="list-disc list-inside text-sm pl-1 space-y-1">
+                      <div className="bg-muted/30 p-2 rounded-md">
+                        <p className="font-medium text-xs mb-1">Artículos disponibles:</p>
+                        <ul className="list-disc list-inside text-xs pl-1 space-y-0.5">
                           {punto.articulos && punto.articulos.length > 0 ? (
                             punto.articulos
                               .filter(articulo => articulo.estado !== "Agotado")
@@ -713,7 +714,7 @@ export default function MapaVoluntario({
                                   <span>{articulo.tipoArticulo.nombre}</span>
                                   <button 
                                     onClick={() => marcarArticuloComoAgotado(punto.id, articulo.id)}
-                                    className="text-xs bg-red-100 hover:bg-red-200 text-red-700 px-2 py-0.5 rounded ml-2"
+                                    className="text-[10px] bg-red-100 hover:bg-red-200 text-red-700 px-1.5 py-0.5 rounded"
                                   >
                                     Marcar agotado
                                   </button>
@@ -724,9 +725,9 @@ export default function MapaVoluntario({
                           )}
                           {punto.articulos && 
                             punto.articulos.filter(articulo => articulo.estado === "Agotado").length > 0 && (
-                              <div className="mt-2 pt-2 border-t border-gray-200">
-                                <p className="font-medium text-sm mb-2 text-gray-500">Artículos agotados:</p>
-                                <ul className="list-disc list-inside text-sm pl-1 space-y-1 text-gray-500">
+                              <div className="mt-1 pt-1 border-t border-gray-200">
+                                <p className="font-medium text-xs mb-1 text-gray-500">Artículos agotados:</p>
+                                <ul className="list-disc list-inside text-xs pl-1 space-y-0.5 text-gray-500">
                                   {punto.articulos
                                     .filter(articulo => articulo.estado === "Agotado")
                                     .map((articulo) => (
@@ -743,9 +744,9 @@ export default function MapaVoluntario({
                       </div>
 
                       {(punto.horarioApertura || punto.horarioCierre) && (
-                        <div className="bg-muted/30 p-3 rounded-lg flex items-center gap-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                          <p className="text-sm">
+                        <div className="bg-muted/30 p-2 rounded-md flex items-center gap-1.5">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                          <p className="text-xs">
                             <span className="font-medium">Horario:</span>{" "}
                             {formatearHorario(punto.horarioApertura, punto.horarioCierre)}
                           </p>
@@ -753,19 +754,22 @@ export default function MapaVoluntario({
                       )}
 
                       {punto.descripcion && (
-                        <div className="bg-muted/30 p-3 rounded-lg">
-                          <p className="font-medium text-sm mb-2">Descripción:</p>
-                          <p className="text-sm">{punto.descripcion}</p>
+                        <div className="bg-muted/30 p-2 rounded-md">
+                          <p className="font-medium text-xs mb-1">Descripción:</p>
+                          <p className="text-xs">{punto.descripcion}</p>
                         </div>
                       )}
-
-                      <Button
-                        size="sm"
-                        className="w-full mt-2 py-2 font-medium"
-                        onClick={() => marcarPuntoComoInactivo(punto.id)}
-                      >
-                        Marcar como inactivo
-                      </Button>
+                      
+                      <div className="flex flex-col gap-1.5">
+                        <WhatsAppButton phoneNumber={punto.telefono || ''} message={'Hola, me gustaría donar artículos'} />
+                        <Button
+                          size="sm"
+                          className="w-full py-1 text-xs font-medium"
+                          onClick={() => marcarPuntoComoInactivo(punto.id)}
+                        >
+                          Marcar como inactivo
+                        </Button>
+                      </div>
                     </div>
                   </Popup>
                 </Marker>
@@ -787,10 +791,10 @@ export default function MapaVoluntario({
                   eventHandlers={eventHandlers}
                 >
                   <Popup className="custom-popup">
-                    <div className="text-xs sm:text-sm space-y-3 max-w-[280px] sm:max-w-[320px] p-3">
-                      <div className="flex items-center gap-2 mb-2 border-b pb-2">
-                        <div className="w-4 h-4 rounded-full bg-red-500 flex-shrink-0"></div>
-                        <h3 className="font-semibold text-sm sm:text-base">Solicitud de donación</h3>
+                    <div className="text-xs sm:text-sm space-y-2 max-w-[280px] sm:max-w-[320px] p-2">
+                      <div className="flex items-center gap-2 border-b pb-1.5">
+                        <div className="w-3 h-3 rounded-full bg-red-500 flex-shrink-0"></div>
+                        <h3 className="font-semibold text-sm">Solicitud de donación</h3>
                         <button 
                           className="ml-auto text-gray-400 hover:text-gray-600 transition-colors" 
                           onClick={(e) => {
@@ -806,27 +810,27 @@ export default function MapaVoluntario({
                         </button>
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                      <div className="flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         <p className="text-muted-foreground font-medium">{solicitud.direccion}</p>
                       </div>
 
-                      <div className="bg-muted/30 p-3 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                          <p className="font-medium text-sm sm:text-base">{solicitud.contactoNombre}</p>
+                      <div className="bg-muted/30 p-2 rounded-md">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                          <p className="font-medium text-sm">{solicitud.contactoNombre}</p>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <div className="flex items-center gap-1.5">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                           <a href={`tel:${solicitud.contactoTel}`} className="text-primary font-medium underline underline-offset-2">
                             {solicitud.contactoTel}
                           </a>
                         </div>
                       </div>
 
-                      <div className="bg-muted/30 p-3 rounded-lg">
-                        <p className="font-medium text-sm mb-2">Artículos solicitados:</p>
-                        <ul className="list-disc list-inside text-sm pl-1 space-y-1">
+                      <div className="bg-muted/30 p-2 rounded-md">
+                        <p className="font-medium text-xs mb-1">Artículos solicitados:</p>
+                        <ul className="list-disc list-inside text-xs pl-1 space-y-0.5">
                           {solicitud.articulos
                             .filter(articulo => articulo.cantidad > 0)
                             .map((articulo) => (
@@ -841,26 +845,29 @@ export default function MapaVoluntario({
                             .map((articulo) => (
                               <li key={`articulo-entregado-${articulo.id}`} className="text-gray-500">
                                 <span className="line-through">{articulo.tipoArticulo.nombre}</span>
-                                <span className="ml-2 text-xs text-green-600">(Entregado)</span>
+                                <span className="ml-2 text-[10px] text-green-600">(Entregado)</span>
                               </li>
                             ))}
                         </ul>
                       </div>
 
                       {solicitud.descripcion && (
-                        <div className="bg-muted/30 p-3 rounded-lg">
-                          <p className="font-medium text-sm mb-2">Descripción:</p>
-                          <p className="text-sm">{solicitud.descripcion}</p>
+                        <div className="bg-muted/30 p-2 rounded-md">
+                          <p className="font-medium text-xs mb-1">Descripción:</p>
+                          <p className="text-xs">{solicitud.descripcion}</p>
                         </div>
                       )}
-
-                      <Button
-                        size="sm"
-                        className="w-full mt-2 py-2 font-medium"
-                        onClick={() => marcarComoEntregada(solicitud.id)}
-                      >
-                        Marcar como entregada
-                      </Button>
+                      
+                      <div className="flex flex-col gap-1.5">
+                        <WhatsAppButton phoneNumber={solicitud.contactoTel} message={'Hola, me gustaría entregar los artículos solicitados'} />
+                        <Button
+                          size="sm"
+                          className="w-full py-1 text-xs font-medium"
+                          onClick={() => marcarComoEntregada(solicitud.id)}
+                        >
+                          Marcar como entregada
+                        </Button>
+                      </div>
                     </div>
                   </Popup>
                 </Marker>
@@ -882,10 +889,10 @@ export default function MapaVoluntario({
                   eventHandlers={eventHandlers}
                 >
                   <Popup className="custom-popup">
-                    <div className="text-xs sm:text-sm space-y-3 max-w-[280px] sm:max-w-[320px] p-3">
-                      <div className="flex items-center gap-2 mb-2 border-b pb-2">
-                        <div className="w-4 h-4 rounded-full bg-green-500 flex-shrink-0"></div>
-                        <h3 className="font-semibold text-sm sm:text-base">Solicitud de limpieza</h3>
+                    <div className="text-xs sm:text-sm space-y-2 max-w-[280px] sm:max-w-[320px] p-2">
+                      <div className="flex items-center gap-2 border-b pb-1.5">
+                        <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></div>
+                        <h3 className="font-semibold text-sm">Solicitud de limpieza</h3>
                         <button 
                           className="ml-auto text-gray-400 hover:text-gray-600 transition-colors" 
                           onClick={(e) => {
@@ -901,18 +908,18 @@ export default function MapaVoluntario({
                         </button>
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                      <div className="flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         <p className="text-muted-foreground font-medium">{solicitud.direccion}</p>
                       </div>
 
-                      <div className="bg-muted/30 p-3 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                          <p className="font-medium text-sm sm:text-base">{solicitud.contactoNombre}</p>
+                      <div className="bg-muted/30 p-2 rounded-md">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                          <p className="font-medium text-sm">{solicitud.contactoNombre}</p>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <div className="flex items-center gap-1.5">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                           <a href={`tel:${solicitud.contactoTel}`} className="text-primary font-medium underline underline-offset-2">
                             {solicitud.contactoTel}
                           </a>
@@ -920,19 +927,22 @@ export default function MapaVoluntario({
                       </div>
 
                       {solicitud.descripcion && (
-                        <div className="bg-muted/30 p-3 rounded-lg">
-                          <p className="font-medium text-sm mb-2">Descripción:</p>
-                          <p className="text-sm">{solicitud.descripcion}</p>
+                        <div className="bg-muted/30 p-2 rounded-md">
+                          <p className="font-medium text-xs mb-1">Descripción:</p>
+                          <p className="text-xs">{solicitud.descripcion}</p>
                         </div>
                       )}
-
-                      <Button
-                        size="sm"
-                        className="w-full mt-2 py-2 font-medium"
-                        onClick={() => marcarLimpiezaComoAtendida(solicitud.id)}
-                      >
-                        Marcar como atendida
-                      </Button>
+                      
+                      <div className="flex flex-col gap-1.5">
+                        <WhatsAppButton phoneNumber={solicitud.contactoTel} message={'Hola, me gustaría limpiar el lugar'} />
+                        <Button
+                          size="sm"
+                          className="w-full py-1 text-xs font-medium"
+                          onClick={() => marcarLimpiezaComoAtendida(solicitud.id)}
+                        >
+                          Marcar como atendida
+                        </Button>
+                      </div>
                     </div>
                   </Popup>
                 </Marker>
@@ -969,7 +979,9 @@ styleElement.textContent = `
   }
   .leaflet-popup-content {
     margin: 0;
-    min-width: 250px;
+    min-width: 220px;
+    max-height: 60vh;
+    overflow-y: auto;
   }
   .custom-popup .leaflet-popup-content-wrapper {
     background-color: white;
@@ -983,7 +995,8 @@ styleElement.textContent = `
   }
   @media (max-width: 640px) {
     .leaflet-popup-content {
-      min-width: 220px;
+      min-width: 200px;
+      max-height: 50vh;
     }
   }
   
