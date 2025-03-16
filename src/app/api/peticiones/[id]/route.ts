@@ -1,22 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import prisma from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 
 // DELETE /api/peticiones/[id]
-// Elimina una petición de donación (solo para administradores)
+// Elimina una petición de donación
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    // Verificar autenticación como administrador
-    const session = await getServerSession(authOptions);
-    
-    if (!session?.user?.email || !session?.user?.role || session.user.role !== "admin") {
-      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-    }
-
     const id = parseInt(params.id);
     
     if (isNaN(id)) {
@@ -24,7 +15,7 @@ export async function DELETE(
     }
 
     // Verificar que la petición existe
-    const peticion = await prisma.peticion.findUnique({
+    const peticion = await prisma.peticionDonacion.findUnique({
       where: { id }
     });
     
@@ -34,11 +25,11 @@ export async function DELETE(
 
     // Eliminar los artículos asociados a la petición
     await prisma.articuloPeticion.deleteMany({
-      where: { peticionId: id }
+      where: { peticionDonacionId: id }
     });
 
     // Eliminar la petición
-    await prisma.peticion.delete({
+    await prisma.peticionDonacion.delete({
       where: { id }
     });
 
