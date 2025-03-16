@@ -229,7 +229,7 @@ export default function MapaVoluntario({
     const cargarDatos = async () => {
       try {
         // Load donation points
-        const respPuntos = await fetch(`/api/puntos-donacion`)
+        const respPuntos = await fetch(`/api/puntos-donacion?incluirPendientes=true`)
 
         if (!respPuntos.ok) {
           throw new Error("Error al cargar puntos de donación")

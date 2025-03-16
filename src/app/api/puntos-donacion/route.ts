@@ -11,9 +11,11 @@ export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url);
     const soloActivos = url.searchParams.get("soloActivos") === "true";
+    const incluirPendientes = url.searchParams.get("incluirPendientes") === "true";
     
     console.log("GET /api/puntos-donacion - Parámetros:", {
-      soloActivos
+      soloActivos,
+      incluirPendientes
     });
     
     // Construir el filtro para la consulta
@@ -23,6 +25,8 @@ export async function GET(request: NextRequest) {
     
     if (soloActivos) {
       where.activo = true;
+    } else if (incluirPendientes) {
+      // No aplicar filtro de activo para incluir todos
     } else {
       // Por defecto, solo mostrar puntos activos
       where.activo = true;

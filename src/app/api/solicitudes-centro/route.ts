@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Crear el punto de donación en la base de datos
+    // Crear el punto de donación en la base de datos (como ACTIVO)
     const nuevoPunto = await prisma.puntoDonacion.create({
       data: {
         nombre: nombre || null,
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         horarioApertura: horarioApertura || null,
         horarioCierre: horarioCierre || null,
         descripcion: descripcion || null,
-        activo: false // El punto se crea inactivo hasta que un administrador lo active
+        activo: true // El punto se crea como ACTIVO para que aparezca inmediatamente en el mapa
       }
     });
 
