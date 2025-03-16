@@ -9,7 +9,9 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const paramId = await Promise.resolve(params.id);
+    const id = parseInt(paramId);
     
     if (isNaN(id)) {
       return NextResponse.json(

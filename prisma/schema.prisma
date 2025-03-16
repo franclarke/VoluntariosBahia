@@ -19,34 +19,38 @@ model TipoArticulo {
 }
 
 model PuntoDonacion {
-  id              Int              @id @default(autoincrement())
-  nombre          String? // Campo opcional para el nombre del centro
-  direccion       String
-  responsable     String
-  telefono        String?
-  latitud         Float
-  longitud        Float
-  horarioApertura String?
-  horarioCierre   String?
-  descripcion     String?
-  activo          Boolean          @default(true)
-  creadoEn        DateTime         @default(now())
-  actualizadoEn   DateTime         @updatedAt
-  articulos       ArticuloOferta[]
+  id                               Int                               @id @default(autoincrement())
+  nombre                           String? // Campo opcional para el nombre del centro
+  direccion                        String
+  responsable                      String
+  telefono                         String?
+  latitud                          Float
+  longitud                         Float
+  horarioApertura                  String?
+  horarioCierre                    String?
+  descripcion                      String?
+  activo                           Boolean                           @default(true)
+  creadoEn                         DateTime                          @default(now())
+  actualizadoEn                    DateTime                          @updatedAt
+  articulos                        ArticuloOferta[]
+  tiposArticuloPersonalizadosOferta TipoArticuloPersonalizadoOferta[]
 }
 
 model ArticuloOferta {
-  id              Int           @id @default(autoincrement())
-  puntoDonacionId Int
-  tipoArticuloId  Int
-  cantidad        Int?
-  estado          String        @default("Disponible")
-  creadoEn        DateTime      @default(now())
-  actualizadoEn   DateTime      @updatedAt
-  puntoDonacion   PuntoDonacion @relation(fields: [puntoDonacionId], references: [id], onDelete: Cascade)
-  tipoArticulo    TipoArticulo  @relation(fields: [tipoArticuloId], references: [id])
+  id                                Int                            @id @default(autoincrement())
+  puntoDonacionId                   Int
+  tipoArticuloId                    Int?
+  tipoArticuloPersonalizadoOfertaId Int?
+  cantidad                          Int?
+  estado                            String                         @default("Disponible")
+  creadoEn                          DateTime                       @default(now())
+  actualizadoEn                     DateTime                       @updatedAt
+  puntoDonacion                     PuntoDonacion                  @relation(fields: [puntoDonacionId], references: [id], onDelete: Cascade)
+  tipoArticulo                      TipoArticulo?                  @relation(fields: [tipoArticuloId], references: [id], onDelete: SetNull)
+  tipoArticuloPersonalizadoOferta   TipoArticuloPersonalizadoOferta? @relation(fields: [tipoArticuloPersonalizadoOfertaId], references: [id], onDelete: SetNull)
 
   @@unique([puntoDonacionId, tipoArticuloId])
+  @@unique([puntoDonacionId, tipoArticuloPersonalizadoOfertaId])
 }
 
 model Solicitud {
@@ -163,4 +167,14 @@ model TipoArticuloPersonalizado {
   creadoEn          DateTime            @default(now())
   solicitud         Solicitud           @relation(fields: [solicitudId], references: [id], onDelete: Cascade)
   ArticuloSolicitud ArticuloSolicitud[]
+}
+
+// Agregar nuevo modelo para artículos personalizados de oferta
+model TipoArticuloPersonalizadoOferta {
+  id                Int                 @id @default(autoincrement())
+  nombre            String              @unique
+  puntoDonacionId   Int // Relación con el punto de donación donde se creó este tipo personalizado
+  creadoEn          DateTime            @default(now())
+  puntoDonacion     PuntoDonacion       @relation(fields: [puntoDonacionId], references: [id], onDelete: Cascade)
+  ArticuloOferta    ArticuloOferta[]
 }

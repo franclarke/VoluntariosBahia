@@ -10,7 +10,8 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const id = await Promise.resolve(params.id);
     
     if (!id) {
       return NextResponse.json(

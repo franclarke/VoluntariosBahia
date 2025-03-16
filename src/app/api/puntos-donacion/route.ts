@@ -40,7 +40,8 @@ export async function GET(request: NextRequest) {
       include: {
         articulos: {
           include: {
-            tipoArticulo: true
+            tipoArticulo: true,
+            tipoArticuloPersonalizadoOferta: true
           }
         }
       },
@@ -49,8 +50,36 @@ export async function GET(request: NextRequest) {
       }
     });
 
+    // Formatear los puntos para incluir información de artículos personalizados
+    const puntosFormateados = puntos.map(punto => {
+      const articulosFormateados = punto.articulos.map(articulo => {
+        // Determinar el nombre y el ID del tipo de artículo (estándar o personalizado)
+        const tipoArticuloNombre = articulo.tipoArticulo?.nombre ?? 
+                                  articulo.tipoArticuloPersonalizadoOferta?.nombre ?? 
+                                  "Desconocido";
+        
+        const tipoArticuloId = articulo.tipoArticulo?.id ?? 
+                              articulo.tipoArticuloPersonalizadoOferta?.id ?? 
+                              0;
+        
+        // Crear un objeto con la estructura esperada por el frontend
+        return {
+          ...articulo,
+          tipoArticulo: {
+            id: tipoArticuloId,
+            nombre: tipoArticuloNombre
+          }
+        };
+      });
+      
+      return {
+        ...punto,
+        articulos: articulosFormateados
+      };
+    });
+
     console.log(`Puntos de donación encontrados: ${puntos.length}`);
-    return NextResponse.json(puntos);
+    return NextResponse.json(puntosFormateados);
   } catch (error) {
     console.error("Error al obtener puntos de donación:", error);
     return NextResponse.json(

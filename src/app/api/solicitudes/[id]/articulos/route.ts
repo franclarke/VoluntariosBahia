@@ -58,13 +58,70 @@ export async function DELETE(
   }
 }
 
+// GET /api/solicitudes/[id]/articulos
+// Obtiene todos los artículos de una solicitud específica
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const paramId = await Promise.resolve(params.id);
+    const id = parseInt(paramId);
+
+    // Verificar si el usuario está autenticado como administrador
+    const token = request.cookies.get("admin_token")?.value;
+    
+    if (!token) {
+      return NextResponse.json(
+        { error: "No autorizado" },
+        { status: 401 }
+      );
+    }
+    
+    // Verificar que la solicitud existe
+    const solicitudExistente = await prisma.solicitud.findUnique({
+      where: { id }
+    });
+    
+    if (!solicitudExistente) {
+      return NextResponse.json(
+        { error: "Solicitud no encontrada" },
+        { status: 404 }
+      );
+    }
+    
+    // Obtener todos los artículos de la solicitud
+    const articulos = await prisma.articuloSolicitud.findMany({
+      where: {
+        solicitudId: id
+      },
+      include: {
+        tipoArticulo: true
+      }
+    });
+    
+    return NextResponse.json(articulos);
+  } catch (error) {
+    console.error("Error al obtener artículos de la solicitud:", error);
+    return NextResponse.json(
+      { error: "Error al obtener artículos de la solicitud" },
+      { status: 500 }
+    );
+  }
+}
+
 // POST /api/solicitudes/[id]/articulos
-// Agrega un artículo a una solicitud existente
+// Agrega un nuevo artículo a una solicitud existente
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const paramId = await Promise.resolve(params.id);
+    const id = parseInt(paramId);
+
     // Verificar si el usuario está autenticado como administrador
     const token = request.cookies.get("admin_token")?.value;
     
@@ -75,7 +132,6 @@ export async function POST(
       );
     }
 
-    const id = parseInt(params.id);
     if (isNaN(id)) {
       return NextResponse.json(
         { error: "ID inválido" },

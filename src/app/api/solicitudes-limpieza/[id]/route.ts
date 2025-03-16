@@ -5,22 +5,23 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = 'force-dynamic';
 
 // GET /api/solicitudes-limpieza/[id]
-// Obtiene una solicitud de limpieza específica
+// Obtiene una solicitud de limpieza específica por ID
 export async function GET(
   request: NextRequest,
   context: { params: { id: string } }
 ) {
   try {
-    const id = context.params.id;
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const paramId = await Promise.resolve(context.params.id);
     
-    if (!id) {
+    if (!paramId) {
       return NextResponse.json(
         { error: "ID de solicitud no proporcionado" },
         { status: 400 }
       );
     }
     
-    const solicitudId = parseInt(id);
+    const solicitudId = parseInt(paramId);
     if (isNaN(solicitudId)) {
       return NextResponse.json(
         { error: "ID inválido" },
@@ -28,7 +29,7 @@ export async function GET(
       );
     }
     
-    // Obtener la solicitud de limpieza
+    // Buscar la solicitud de limpieza
     const solicitud = await prisma.solicitudLimpieza.findUnique({
       where: { id: solicitudId }
     });
@@ -51,22 +52,23 @@ export async function GET(
 }
 
 // PUT /api/solicitudes-limpieza/[id]
-// Actualiza una solicitud de limpieza
+// Actualiza una solicitud de limpieza existente
 export async function PUT(
   request: NextRequest,
   context: { params: { id: string } }
 ) {
   try {
-    const id = context.params.id;
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const paramId = await Promise.resolve(context.params.id);
     
-    if (!id) {
+    if (!paramId) {
       return NextResponse.json(
         { error: "ID de solicitud no proporcionado" },
         { status: 400 }
       );
     }
     
-    const solicitudId = parseInt(id);
+    const solicitudId = parseInt(paramId);
     if (isNaN(solicitudId)) {
       return NextResponse.json(
         { error: "ID inválido" },
@@ -74,7 +76,19 @@ export async function PUT(
       );
     }
     
-    // Verificar que la solicitud existe
+    // Verificar si el usuario está autenticado como administrador
+    const token = request.cookies.get("admin_token")?.value;
+    
+    if (!token) {
+      return NextResponse.json(
+        { error: "No autorizado" },
+        { status: 401 }
+      );
+    }
+    
+    const body = await request.json();
+    
+    // Verificar que la solicitud de limpieza existe
     const solicitudExistente = await prisma.solicitudLimpieza.findUnique({
       where: { id: solicitudId }
     });
@@ -86,20 +100,14 @@ export async function PUT(
       );
     }
     
-    // Obtener los datos a actualizar
-    const body = await request.json();
-    
-    // Actualizar la solicitud
+    // Actualizar la solicitud de limpieza
     const solicitud = await prisma.solicitudLimpieza.update({
       where: { id: solicitudId },
       data: {
-        estado: body.estado || solicitudExistente.estado,
-        direccion: body.direccion || solicitudExistente.direccion,
-        contactoNombre: body.contactoNombre || solicitudExistente.contactoNombre,
-        contactoTel: body.contactoTel || solicitudExistente.contactoTel,
-        latitud: body.latitud ? parseFloat(body.latitud) : solicitudExistente.latitud,
-        longitud: body.longitud ? parseFloat(body.longitud) : solicitudExistente.longitud,
-        descripcion: body.descripcion !== undefined ? body.descripcion : solicitudExistente.descripcion
+        direccion: body.direccion,
+        latitud: body.latitud,
+        longitud: body.longitud,
+        descripcion: body.descripcion
       }
     });
     
@@ -120,16 +128,17 @@ export async function DELETE(
   context: { params: { id: string } }
 ) {
   try {
-    const id = context.params.id;
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const paramId = await Promise.resolve(context.params.id);
     
-    if (!id) {
+    if (!paramId) {
       return NextResponse.json(
         { error: "ID de solicitud no proporcionado" },
         { status: 400 }
       );
     }
     
-    const solicitudId = parseInt(id);
+    const solicitudId = parseInt(paramId);
     if (isNaN(solicitudId)) {
       return NextResponse.json(
         { error: "ID inválido" },

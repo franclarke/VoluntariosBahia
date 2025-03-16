@@ -49,11 +49,44 @@ export async function POST(request: NextRequest) {
     // Si hay artículos para agregar al punto de donación
     if (articulos && articulos.length > 0) {
       for (const articulo of articulos) {
-        if (articulo.tipoArticuloId && articulo.cantidad) {
+        // Si el tipo es "Otro" (indicado por tipoArticuloId === -1)
+        if (articulo.tipoArticuloId === -1 && articulo.tipoPersonalizado) {
+          try {
+            // Crear el tipo de artículo personalizado
+            const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizadoOferta.create({
+              data: {
+                nombre: articulo.tipoPersonalizado,
+                puntoDonacionId: nuevoPunto.id
+              }
+            });
+
+            // Crear el artículo de oferta con el tipo personalizado
+            await prisma.articuloOferta.create({
+              data: {
+                puntoDonacionId: nuevoPunto.id,
+                tipoArticuloId: null, // Explícitamente establecer como null para evitar violación de clave externa
+                tipoArticuloPersonalizadoOfertaId: tipoArticuloPersonalizado.id,
+                cantidad: articulo.cantidad,
+                estado: "Disponible"
+              }
+            });
+          } catch (error) {
+            console.error('Error al crear tipo de artículo personalizado de oferta:', error);
+            console.error('Datos del artículo:', JSON.stringify({
+              tipoArticuloId: articulo.tipoArticuloId,
+              personalizado: articulo.tipoPersonalizado,
+              cantidad: articulo.cantidad
+            }, null, 2));
+            // Continuar con el siguiente artículo si hay un error
+            continue;
+          }
+        } else if (articulo.tipoArticuloId && articulo.tipoArticuloId > 0 && articulo.cantidad) {
+          // Caso normal con tipo de artículo existente
           await prisma.articuloOferta.create({
             data: {
               puntoDonacionId: nuevoPunto.id,
               tipoArticuloId: articulo.tipoArticuloId,
+              tipoArticuloPersonalizadoOfertaId: null,
               cantidad: articulo.cantidad,
               estado: "Disponible"
             }

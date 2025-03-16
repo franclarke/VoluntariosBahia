@@ -8,7 +8,11 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const paramId = await Promise.resolve(params.id);
+    
+    const id = parseInt(paramId);
+    
     if (isNaN(id)) {
       return NextResponse.json(
         { error: "ID inválido" },
@@ -89,7 +93,10 @@ export async function PUT(
       );
     }
 
-    const id = parseInt(params.id);
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const paramId = await Promise.resolve(params.id);
+    const id = parseInt(paramId);
+    
     if (isNaN(id)) {
       return NextResponse.json(
         { error: "ID inválido" },
@@ -129,6 +136,55 @@ export async function PUT(
     console.error("Error al actualizar solicitud:", error);
     return NextResponse.json(
       { error: "Error al actualizar solicitud" },
+      { status: 500 }
+    );
+  }
+}
+
+// DELETE /api/solicitudes/[id]
+// Elimina una solicitud
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const paramId = await Promise.resolve(params.id);
+    
+    const id = parseInt(paramId);
+    
+    // Verificar si el usuario está autenticado como administrador
+    const token = request.cookies.get("admin_token")?.value;
+    
+    if (!token) {
+      return NextResponse.json(
+        { error: "No autorizado" },
+        { status: 401 }
+      );
+    }
+
+    // Verificar que la solicitud existe
+    const solicitudExistente = await prisma.solicitud.findUnique({
+      where: { id }
+    });
+    
+    if (!solicitudExistente) {
+      return NextResponse.json(
+        { error: "Solicitud no encontrada" },
+        { status: 404 }
+      );
+    }
+    
+    // Eliminar la solicitud
+    const solicitud = await prisma.solicitud.delete({
+      where: { id }
+    });
+    
+    return NextResponse.json(solicitud);
+  } catch (error) {
+    console.error("Error al eliminar solicitud:", error);
+    return NextResponse.json(
+      { error: "Error al eliminar solicitud" },
       { status: 500 }
     );
   }

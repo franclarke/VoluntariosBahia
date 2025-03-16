@@ -11,7 +11,8 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const id = await Promise.resolve(params.id);
     
     const solicitudId = parseInt(id);
     if (isNaN(solicitudId)) {
@@ -25,7 +26,12 @@ export async function PUT(
     const solicitud = await prisma.solicitud.findUnique({
       where: { id: solicitudId },
       include: {
-        articulos: true
+        articulos: {
+          include: {
+            tipoArticulo: true,
+            tipoArticuloPersonalizado: true
+          }
+        }
       }
     });
     

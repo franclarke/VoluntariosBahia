@@ -156,7 +156,10 @@ interface ArticuloOferta {
     id: number
     nombre: string
   }
+  tipoArticuloId: number | null
+  tipoArticuloPersonalizadoOfertaId: number | null
   estado: string
+  cantidad: number | null
 }
 
 interface PuntoDonacion {
@@ -334,7 +337,23 @@ export default function MapaVoluntario({
       }
 
       // Actualizar la lista de puntos de donación
-      setPuntosDonacion(prev => prev.filter(punto => punto.id !== puntoId))
+      setPuntosDonacion(prev => prev.map(punto => {
+        if (punto.id === puntoId) {
+          return {
+            ...punto,
+            activo: false,
+            articulos: punto.articulos.map(art => ({
+              ...art,
+              estado: "Agotado",
+              tipoArticulo: {
+                id: art.tipoArticuloId || art.tipoArticuloPersonalizadoOfertaId || 0,
+                nombre: art.tipoArticulo?.nombre || "Desconocido"
+              }
+            }))
+          };
+        }
+        return punto;
+      }))
       toast.success("Punto de donación marcado como inactivo")
     } catch (error) {
       console.error("Error:", error)
@@ -366,7 +385,16 @@ export default function MapaVoluntario({
                 activo: false,
                 articulos: punto.articulos.map(art => {
                   if (art.id === articuloId) {
-                    return { ...art, estado: "Agotado" };
+                    // Preservar la estructura completa del artículo
+                    return { 
+                      ...art, 
+                      estado: "Agotado",
+                      // Asegurarse de que tipoArticulo tiene la estructura correcta 
+                      tipoArticulo: {
+                        id: art.tipoArticuloId || art.tipoArticuloPersonalizadoOfertaId || 0,
+                        nombre: art.tipoArticulo?.nombre || "Desconocido"
+                      }
+                    };
                   }
                   return art;
                 })
@@ -377,7 +405,16 @@ export default function MapaVoluntario({
               ...punto,
               articulos: punto.articulos.map(art => {
                 if (art.id === articuloId) {
-                  return { ...art, estado: "Agotado" };
+                  // Preservar la estructura completa del artículo
+                  return { 
+                    ...art, 
+                    estado: "Agotado",
+                    // Asegurarse de que tipoArticulo tiene la estructura correcta
+                    tipoArticulo: {
+                      id: art.tipoArticuloId || art.tipoArticuloPersonalizadoOfertaId || 0,
+                      nombre: art.tipoArticulo?.nombre || "Desconocido"
+                    }
+                  };
                 }
                 return art;
               })
@@ -716,7 +753,7 @@ export default function MapaVoluntario({
                               .filter(articulo => articulo.estado !== "Agotado")
                               .map((articulo) => (
                                 <li key={`articulo-${articulo.id}`} className="flex items-center justify-between">
-                                  <span>{articulo.tipoArticulo.nombre}</span>
+                                  <span>{articulo.tipoArticulo?.nombre || "Desconocido"}</span>
                                   <button 
                                     onClick={() => marcarArticuloComoAgotado(punto.id, articulo.id)}
                                     className="text-[10px] bg-red-100 hover:bg-red-200 text-red-700 px-1.5 py-0.5 rounded"
@@ -737,7 +774,7 @@ export default function MapaVoluntario({
                                     .filter(articulo => articulo.estado === "Agotado")
                                     .map((articulo) => (
                                       <li key={`articulo-agotado-${articulo.id}`}>
-                                        {articulo.tipoArticulo.nombre}
+                                        {articulo.tipoArticulo?.nombre || "Desconocido"}
                                       </li>
                                     ))
                                   }

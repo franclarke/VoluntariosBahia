@@ -143,6 +143,7 @@ exports.Prisma.ArticuloOfertaScalarFieldEnum = {
   id: 'id',
   puntoDonacionId: 'puntoDonacionId',
   tipoArticuloId: 'tipoArticuloId',
+  tipoArticuloPersonalizadoOfertaId: 'tipoArticuloPersonalizadoOfertaId',
   cantidad: 'cantidad',
   estado: 'estado',
   creadoEn: 'creadoEn',
@@ -244,6 +245,13 @@ exports.Prisma.TipoArticuloPersonalizadoScalarFieldEnum = {
   creadoEn: 'creadoEn'
 };
 
+exports.Prisma.TipoArticuloPersonalizadoOfertaScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  puntoDonacionId: 'puntoDonacionId',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -272,7 +280,8 @@ exports.Prisma.ModelName = {
   MensajeContacto: 'MensajeContacto',
   InformacionUtil: 'InformacionUtil',
   Mensaje: 'Mensaje',
-  TipoArticuloPersonalizado: 'TipoArticuloPersonalizado'
+  TipoArticuloPersonalizado: 'TipoArticuloPersonalizado',
+  TipoArticuloPersonalizadoOferta: 'TipoArticuloPersonalizadoOferta'
 };
 
 /**

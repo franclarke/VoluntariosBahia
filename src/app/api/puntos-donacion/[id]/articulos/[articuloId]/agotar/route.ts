@@ -11,8 +11,9 @@ export async function PUT(
   { params }: { params: { id: string, articuloId: string } }
 ) {
   try {
-    const id = params.id;
-    const articuloId = params.articuloId;
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const id = await Promise.resolve(params.id);
+    const articuloId = await Promise.resolve(params.articuloId);
     
     const puntoId = parseInt(id);
     const artId = parseInt(articuloId);
@@ -29,6 +30,10 @@ export async function PUT(
       where: { 
         id: artId,
         puntoDonacionId: puntoId
+      },
+      include: {
+        tipoArticulo: true,
+        tipoArticuloPersonalizadoOferta: true
       }
     });
     
@@ -44,6 +49,10 @@ export async function PUT(
       where: { id: artId },
       data: {
         estado: "Agotado"
+      },
+      include: {
+        tipoArticulo: true,
+        tipoArticuloPersonalizadoOferta: true
       }
     });
     
@@ -52,6 +61,10 @@ export async function PUT(
       where: {
         puntoDonacionId: puntoId,
         estado: { not: "Agotado" }
+      },
+      include: {
+        tipoArticulo: true,
+        tipoArticuloPersonalizadoOferta: true
       }
     });
     
@@ -67,9 +80,26 @@ export async function PUT(
       });
     }
     
+    // Formatear el artículo actualizado para mantener compatibilidad con el frontend
+    const tipoArticuloNombre = articuloActualizado.tipoArticulo?.nombre ?? 
+                               articuloActualizado.tipoArticuloPersonalizadoOferta?.nombre ?? 
+                               "Desconocido";
+    
+    const tipoArticuloId = articuloActualizado.tipoArticulo?.id ?? 
+                           articuloActualizado.tipoArticuloPersonalizadoOferta?.id ?? 
+                           0;
+    
+    const articuloFormateado = {
+      ...articuloActualizado,
+      tipoArticulo: {
+        id: tipoArticuloId,
+        nombre: tipoArticuloNombre
+      }
+    };
+    
     return NextResponse.json({
       message: "Artículo marcado como agotado correctamente",
-      articulo: articuloActualizado,
+      articulo: articuloFormateado,
       puntoInactivado: articulosDisponibles.length === 0,
       puntoDonacion: puntoActualizado
     });

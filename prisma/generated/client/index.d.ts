@@ -73,6 +73,11 @@ export type Mensaje = $Result.DefaultSelection<Prisma.$MensajePayload>
  * 
  */
 export type TipoArticuloPersonalizado = $Result.DefaultSelection<Prisma.$TipoArticuloPersonalizadoPayload>
+/**
+ * Model TipoArticuloPersonalizadoOferta
+ * 
+ */
+export type TipoArticuloPersonalizadoOferta = $Result.DefaultSelection<Prisma.$TipoArticuloPersonalizadoOfertaPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -318,6 +323,16 @@ export class PrismaClient<
     * ```
     */
   get tipoArticuloPersonalizado(): Prisma.TipoArticuloPersonalizadoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tipoArticuloPersonalizadoOferta`: Exposes CRUD operations for the **TipoArticuloPersonalizadoOferta** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TipoArticuloPersonalizadoOfertas
+    * const tipoArticuloPersonalizadoOfertas = await prisma.tipoArticuloPersonalizadoOferta.findMany()
+    * ```
+    */
+  get tipoArticuloPersonalizadoOferta(): Prisma.TipoArticuloPersonalizadoOfertaDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -769,7 +784,8 @@ export namespace Prisma {
     MensajeContacto: 'MensajeContacto',
     InformacionUtil: 'InformacionUtil',
     Mensaje: 'Mensaje',
-    TipoArticuloPersonalizado: 'TipoArticuloPersonalizado'
+    TipoArticuloPersonalizado: 'TipoArticuloPersonalizado',
+    TipoArticuloPersonalizadoOferta: 'TipoArticuloPersonalizadoOferta'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -788,7 +804,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "tipoArticulo" | "puntoDonacion" | "articuloOferta" | "solicitud" | "articuloSolicitud" | "peticionDonacion" | "articuloPeticion" | "solicitudLimpieza" | "mensajeContacto" | "informacionUtil" | "mensaje" | "tipoArticuloPersonalizado"
+      modelProps: "tipoArticulo" | "puntoDonacion" | "articuloOferta" | "solicitud" | "articuloSolicitud" | "peticionDonacion" | "articuloPeticion" | "solicitudLimpieza" | "mensajeContacto" | "informacionUtil" | "mensaje" | "tipoArticuloPersonalizado" | "tipoArticuloPersonalizadoOferta"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1680,6 +1696,80 @@ export namespace Prisma {
           }
         }
       }
+      TipoArticuloPersonalizadoOferta: {
+        payload: Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>
+        fields: Prisma.TipoArticuloPersonalizadoOfertaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload>
+          }
+          findFirst: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload>
+          }
+          findMany: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload>[]
+          }
+          create: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload>
+          }
+          createMany: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload>[]
+          }
+          delete: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload>
+          }
+          update: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload>
+          }
+          deleteMany: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload>[]
+          }
+          upsert: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload>
+          }
+          aggregate: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTipoArticuloPersonalizadoOferta>
+          }
+          groupBy: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TipoArticuloPersonalizadoOfertaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TipoArticuloPersonalizadoOfertaCountArgs<ExtArgs>
+            result: $Utils.Optional<TipoArticuloPersonalizadoOfertaCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1776,6 +1866,7 @@ export namespace Prisma {
     informacionUtil?: InformacionUtilOmit
     mensaje?: MensajeOmit
     tipoArticuloPersonalizado?: TipoArticuloPersonalizadoOmit
+    tipoArticuloPersonalizadoOferta?: TipoArticuloPersonalizadoOfertaOmit
   }
 
   /* Types for Logging */
@@ -1920,10 +2011,12 @@ export namespace Prisma {
 
   export type PuntoDonacionCountOutputType = {
     articulos: number
+    tiposArticuloPersonalizadosOferta: number
   }
 
   export type PuntoDonacionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     articulos?: boolean | PuntoDonacionCountOutputTypeCountArticulosArgs
+    tiposArticuloPersonalizadosOferta?: boolean | PuntoDonacionCountOutputTypeCountTiposArticuloPersonalizadosOfertaArgs
   }
 
   // Custom InputTypes
@@ -1942,6 +2035,13 @@ export namespace Prisma {
    */
   export type PuntoDonacionCountOutputTypeCountArticulosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ArticuloOfertaWhereInput
+  }
+
+  /**
+   * PuntoDonacionCountOutputType without action
+   */
+  export type PuntoDonacionCountOutputTypeCountTiposArticuloPersonalizadosOfertaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
   }
 
 
@@ -2044,6 +2144,37 @@ export namespace Prisma {
    */
   export type TipoArticuloPersonalizadoCountOutputTypeCountArticuloSolicitudArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ArticuloSolicitudWhereInput
+  }
+
+
+  /**
+   * Count Type TipoArticuloPersonalizadoOfertaCountOutputType
+   */
+
+  export type TipoArticuloPersonalizadoOfertaCountOutputType = {
+    ArticuloOferta: number
+  }
+
+  export type TipoArticuloPersonalizadoOfertaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ArticuloOferta?: boolean | TipoArticuloPersonalizadoOfertaCountOutputTypeCountArticuloOfertaArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TipoArticuloPersonalizadoOfertaCountOutputType without action
+   */
+  export type TipoArticuloPersonalizadoOfertaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOfertaCountOutputType
+     */
+    select?: TipoArticuloPersonalizadoOfertaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOfertaCountOutputType without action
+   */
+  export type TipoArticuloPersonalizadoOfertaCountOutputTypeCountArticuloOfertaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ArticuloOfertaWhereInput
   }
 
 
@@ -3456,6 +3587,7 @@ export namespace Prisma {
     creadoEn?: boolean
     actualizadoEn?: boolean
     articulos?: boolean | PuntoDonacion$articulosArgs<ExtArgs>
+    tiposArticuloPersonalizadosOferta?: boolean | PuntoDonacion$tiposArticuloPersonalizadosOfertaArgs<ExtArgs>
     _count?: boolean | PuntoDonacionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["puntoDonacion"]>
 
@@ -3510,6 +3642,7 @@ export namespace Prisma {
   export type PuntoDonacionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "direccion" | "responsable" | "telefono" | "latitud" | "longitud" | "horarioApertura" | "horarioCierre" | "descripcion" | "activo" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["puntoDonacion"]>
   export type PuntoDonacionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     articulos?: boolean | PuntoDonacion$articulosArgs<ExtArgs>
+    tiposArticuloPersonalizadosOferta?: boolean | PuntoDonacion$tiposArticuloPersonalizadosOfertaArgs<ExtArgs>
     _count?: boolean | PuntoDonacionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PuntoDonacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3519,6 +3652,7 @@ export namespace Prisma {
     name: "PuntoDonacion"
     objects: {
       articulos: Prisma.$ArticuloOfertaPayload<ExtArgs>[]
+      tiposArticuloPersonalizadosOferta: Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3929,6 +4063,7 @@ export namespace Prisma {
   export interface Prisma__PuntoDonacionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     articulos<T extends PuntoDonacion$articulosArgs<ExtArgs> = {}>(args?: Subset<T, PuntoDonacion$articulosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticuloOfertaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tiposArticuloPersonalizadosOferta<T extends PuntoDonacion$tiposArticuloPersonalizadosOfertaArgs<ExtArgs> = {}>(args?: Subset<T, PuntoDonacion$tiposArticuloPersonalizadosOfertaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4383,6 +4518,30 @@ export namespace Prisma {
   }
 
   /**
+   * PuntoDonacion.tiposArticuloPersonalizadosOferta
+   */
+  export type PuntoDonacion$tiposArticuloPersonalizadosOfertaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+    orderBy?: TipoArticuloPersonalizadoOfertaOrderByWithRelationInput | TipoArticuloPersonalizadoOfertaOrderByWithRelationInput[]
+    cursor?: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TipoArticuloPersonalizadoOfertaScalarFieldEnum | TipoArticuloPersonalizadoOfertaScalarFieldEnum[]
+  }
+
+  /**
    * PuntoDonacion without action
    */
   export type PuntoDonacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4417,6 +4576,7 @@ export namespace Prisma {
     id: number | null
     puntoDonacionId: number | null
     tipoArticuloId: number | null
+    tipoArticuloPersonalizadoOfertaId: number | null
     cantidad: number | null
   }
 
@@ -4424,6 +4584,7 @@ export namespace Prisma {
     id: number | null
     puntoDonacionId: number | null
     tipoArticuloId: number | null
+    tipoArticuloPersonalizadoOfertaId: number | null
     cantidad: number | null
   }
 
@@ -4431,6 +4592,7 @@ export namespace Prisma {
     id: number | null
     puntoDonacionId: number | null
     tipoArticuloId: number | null
+    tipoArticuloPersonalizadoOfertaId: number | null
     cantidad: number | null
     estado: string | null
     creadoEn: Date | null
@@ -4441,6 +4603,7 @@ export namespace Prisma {
     id: number | null
     puntoDonacionId: number | null
     tipoArticuloId: number | null
+    tipoArticuloPersonalizadoOfertaId: number | null
     cantidad: number | null
     estado: string | null
     creadoEn: Date | null
@@ -4451,6 +4614,7 @@ export namespace Prisma {
     id: number
     puntoDonacionId: number
     tipoArticuloId: number
+    tipoArticuloPersonalizadoOfertaId: number
     cantidad: number
     estado: number
     creadoEn: number
@@ -4463,6 +4627,7 @@ export namespace Prisma {
     id?: true
     puntoDonacionId?: true
     tipoArticuloId?: true
+    tipoArticuloPersonalizadoOfertaId?: true
     cantidad?: true
   }
 
@@ -4470,6 +4635,7 @@ export namespace Prisma {
     id?: true
     puntoDonacionId?: true
     tipoArticuloId?: true
+    tipoArticuloPersonalizadoOfertaId?: true
     cantidad?: true
   }
 
@@ -4477,6 +4643,7 @@ export namespace Prisma {
     id?: true
     puntoDonacionId?: true
     tipoArticuloId?: true
+    tipoArticuloPersonalizadoOfertaId?: true
     cantidad?: true
     estado?: true
     creadoEn?: true
@@ -4487,6 +4654,7 @@ export namespace Prisma {
     id?: true
     puntoDonacionId?: true
     tipoArticuloId?: true
+    tipoArticuloPersonalizadoOfertaId?: true
     cantidad?: true
     estado?: true
     creadoEn?: true
@@ -4497,6 +4665,7 @@ export namespace Prisma {
     id?: true
     puntoDonacionId?: true
     tipoArticuloId?: true
+    tipoArticuloPersonalizadoOfertaId?: true
     cantidad?: true
     estado?: true
     creadoEn?: true
@@ -4593,7 +4762,8 @@ export namespace Prisma {
   export type ArticuloOfertaGroupByOutputType = {
     id: number
     puntoDonacionId: number
-    tipoArticuloId: number
+    tipoArticuloId: number | null
+    tipoArticuloPersonalizadoOfertaId: number | null
     cantidad: number | null
     estado: string
     creadoEn: Date
@@ -4623,72 +4793,84 @@ export namespace Prisma {
     id?: boolean
     puntoDonacionId?: boolean
     tipoArticuloId?: boolean
+    tipoArticuloPersonalizadoOfertaId?: boolean
     cantidad?: boolean
     estado?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
     puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloOferta$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizadoOferta?: boolean | ArticuloOferta$tipoArticuloPersonalizadoOfertaArgs<ExtArgs>
   }, ExtArgs["result"]["articuloOferta"]>
 
   export type ArticuloOfertaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     puntoDonacionId?: boolean
     tipoArticuloId?: boolean
+    tipoArticuloPersonalizadoOfertaId?: boolean
     cantidad?: boolean
     estado?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
     puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloOferta$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizadoOferta?: boolean | ArticuloOferta$tipoArticuloPersonalizadoOfertaArgs<ExtArgs>
   }, ExtArgs["result"]["articuloOferta"]>
 
   export type ArticuloOfertaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     puntoDonacionId?: boolean
     tipoArticuloId?: boolean
+    tipoArticuloPersonalizadoOfertaId?: boolean
     cantidad?: boolean
     estado?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
     puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloOferta$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizadoOferta?: boolean | ArticuloOferta$tipoArticuloPersonalizadoOfertaArgs<ExtArgs>
   }, ExtArgs["result"]["articuloOferta"]>
 
   export type ArticuloOfertaSelectScalar = {
     id?: boolean
     puntoDonacionId?: boolean
     tipoArticuloId?: boolean
+    tipoArticuloPersonalizadoOfertaId?: boolean
     cantidad?: boolean
     estado?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
   }
 
-  export type ArticuloOfertaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "puntoDonacionId" | "tipoArticuloId" | "cantidad" | "estado" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["articuloOferta"]>
+  export type ArticuloOfertaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "puntoDonacionId" | "tipoArticuloId" | "tipoArticuloPersonalizadoOfertaId" | "cantidad" | "estado" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["articuloOferta"]>
   export type ArticuloOfertaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloOferta$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizadoOferta?: boolean | ArticuloOferta$tipoArticuloPersonalizadoOfertaArgs<ExtArgs>
   }
   export type ArticuloOfertaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloOferta$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizadoOferta?: boolean | ArticuloOferta$tipoArticuloPersonalizadoOfertaArgs<ExtArgs>
   }
   export type ArticuloOfertaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloOferta$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizadoOferta?: boolean | ArticuloOferta$tipoArticuloPersonalizadoOfertaArgs<ExtArgs>
   }
 
   export type $ArticuloOfertaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ArticuloOferta"
     objects: {
       puntoDonacion: Prisma.$PuntoDonacionPayload<ExtArgs>
-      tipoArticulo: Prisma.$TipoArticuloPayload<ExtArgs>
+      tipoArticulo: Prisma.$TipoArticuloPayload<ExtArgs> | null
+      tipoArticuloPersonalizadoOferta: Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       puntoDonacionId: number
-      tipoArticuloId: number
+      tipoArticuloId: number | null
+      tipoArticuloPersonalizadoOfertaId: number | null
       cantidad: number | null
       estado: string
       creadoEn: Date
@@ -5088,7 +5270,8 @@ export namespace Prisma {
   export interface Prisma__ArticuloOfertaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     puntoDonacion<T extends PuntoDonacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PuntoDonacionDefaultArgs<ExtArgs>>): Prisma__PuntoDonacionClient<$Result.GetResult<Prisma.$PuntoDonacionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tipoArticulo<T extends TipoArticuloDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TipoArticuloDefaultArgs<ExtArgs>>): Prisma__TipoArticuloClient<$Result.GetResult<Prisma.$TipoArticuloPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tipoArticulo<T extends ArticuloOferta$tipoArticuloArgs<ExtArgs> = {}>(args?: Subset<T, ArticuloOferta$tipoArticuloArgs<ExtArgs>>): Prisma__TipoArticuloClient<$Result.GetResult<Prisma.$TipoArticuloPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    tipoArticuloPersonalizadoOferta<T extends ArticuloOferta$tipoArticuloPersonalizadoOfertaArgs<ExtArgs> = {}>(args?: Subset<T, ArticuloOferta$tipoArticuloPersonalizadoOfertaArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoOfertaClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5121,6 +5304,7 @@ export namespace Prisma {
     readonly id: FieldRef<"ArticuloOferta", 'Int'>
     readonly puntoDonacionId: FieldRef<"ArticuloOferta", 'Int'>
     readonly tipoArticuloId: FieldRef<"ArticuloOferta", 'Int'>
+    readonly tipoArticuloPersonalizadoOfertaId: FieldRef<"ArticuloOferta", 'Int'>
     readonly cantidad: FieldRef<"ArticuloOferta", 'Int'>
     readonly estado: FieldRef<"ArticuloOferta", 'String'>
     readonly creadoEn: FieldRef<"ArticuloOferta", 'DateTime'>
@@ -5518,6 +5702,44 @@ export namespace Prisma {
      * Limit how many ArticuloOfertas to delete.
      */
     limit?: number
+  }
+
+  /**
+   * ArticuloOferta.tipoArticulo
+   */
+  export type ArticuloOferta$tipoArticuloArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticulo
+     */
+    select?: TipoArticuloSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticulo
+     */
+    omit?: TipoArticuloOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloInclude<ExtArgs> | null
+    where?: TipoArticuloWhereInput
+  }
+
+  /**
+   * ArticuloOferta.tipoArticuloPersonalizadoOferta
+   */
+  export type ArticuloOferta$tipoArticuloPersonalizadoOfertaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
   }
 
   /**
@@ -15615,6 +15837,1119 @@ export namespace Prisma {
 
 
   /**
+   * Model TipoArticuloPersonalizadoOferta
+   */
+
+  export type AggregateTipoArticuloPersonalizadoOferta = {
+    _count: TipoArticuloPersonalizadoOfertaCountAggregateOutputType | null
+    _avg: TipoArticuloPersonalizadoOfertaAvgAggregateOutputType | null
+    _sum: TipoArticuloPersonalizadoOfertaSumAggregateOutputType | null
+    _min: TipoArticuloPersonalizadoOfertaMinAggregateOutputType | null
+    _max: TipoArticuloPersonalizadoOfertaMaxAggregateOutputType | null
+  }
+
+  export type TipoArticuloPersonalizadoOfertaAvgAggregateOutputType = {
+    id: number | null
+    puntoDonacionId: number | null
+  }
+
+  export type TipoArticuloPersonalizadoOfertaSumAggregateOutputType = {
+    id: number | null
+    puntoDonacionId: number | null
+  }
+
+  export type TipoArticuloPersonalizadoOfertaMinAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    puntoDonacionId: number | null
+    creadoEn: Date | null
+  }
+
+  export type TipoArticuloPersonalizadoOfertaMaxAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    puntoDonacionId: number | null
+    creadoEn: Date | null
+  }
+
+  export type TipoArticuloPersonalizadoOfertaCountAggregateOutputType = {
+    id: number
+    nombre: number
+    puntoDonacionId: number
+    creadoEn: number
+    _all: number
+  }
+
+
+  export type TipoArticuloPersonalizadoOfertaAvgAggregateInputType = {
+    id?: true
+    puntoDonacionId?: true
+  }
+
+  export type TipoArticuloPersonalizadoOfertaSumAggregateInputType = {
+    id?: true
+    puntoDonacionId?: true
+  }
+
+  export type TipoArticuloPersonalizadoOfertaMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    puntoDonacionId?: true
+    creadoEn?: true
+  }
+
+  export type TipoArticuloPersonalizadoOfertaMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    puntoDonacionId?: true
+    creadoEn?: true
+  }
+
+  export type TipoArticuloPersonalizadoOfertaCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    puntoDonacionId?: true
+    creadoEn?: true
+    _all?: true
+  }
+
+  export type TipoArticuloPersonalizadoOfertaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TipoArticuloPersonalizadoOferta to aggregate.
+     */
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipoArticuloPersonalizadoOfertas to fetch.
+     */
+    orderBy?: TipoArticuloPersonalizadoOfertaOrderByWithRelationInput | TipoArticuloPersonalizadoOfertaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipoArticuloPersonalizadoOfertas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipoArticuloPersonalizadoOfertas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TipoArticuloPersonalizadoOfertas
+    **/
+    _count?: true | TipoArticuloPersonalizadoOfertaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TipoArticuloPersonalizadoOfertaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TipoArticuloPersonalizadoOfertaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TipoArticuloPersonalizadoOfertaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TipoArticuloPersonalizadoOfertaMaxAggregateInputType
+  }
+
+  export type GetTipoArticuloPersonalizadoOfertaAggregateType<T extends TipoArticuloPersonalizadoOfertaAggregateArgs> = {
+        [P in keyof T & keyof AggregateTipoArticuloPersonalizadoOferta]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTipoArticuloPersonalizadoOferta[P]>
+      : GetScalarType<T[P], AggregateTipoArticuloPersonalizadoOferta[P]>
+  }
+
+
+
+
+  export type TipoArticuloPersonalizadoOfertaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+    orderBy?: TipoArticuloPersonalizadoOfertaOrderByWithAggregationInput | TipoArticuloPersonalizadoOfertaOrderByWithAggregationInput[]
+    by: TipoArticuloPersonalizadoOfertaScalarFieldEnum[] | TipoArticuloPersonalizadoOfertaScalarFieldEnum
+    having?: TipoArticuloPersonalizadoOfertaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TipoArticuloPersonalizadoOfertaCountAggregateInputType | true
+    _avg?: TipoArticuloPersonalizadoOfertaAvgAggregateInputType
+    _sum?: TipoArticuloPersonalizadoOfertaSumAggregateInputType
+    _min?: TipoArticuloPersonalizadoOfertaMinAggregateInputType
+    _max?: TipoArticuloPersonalizadoOfertaMaxAggregateInputType
+  }
+
+  export type TipoArticuloPersonalizadoOfertaGroupByOutputType = {
+    id: number
+    nombre: string
+    puntoDonacionId: number
+    creadoEn: Date
+    _count: TipoArticuloPersonalizadoOfertaCountAggregateOutputType | null
+    _avg: TipoArticuloPersonalizadoOfertaAvgAggregateOutputType | null
+    _sum: TipoArticuloPersonalizadoOfertaSumAggregateOutputType | null
+    _min: TipoArticuloPersonalizadoOfertaMinAggregateOutputType | null
+    _max: TipoArticuloPersonalizadoOfertaMaxAggregateOutputType | null
+  }
+
+  type GetTipoArticuloPersonalizadoOfertaGroupByPayload<T extends TipoArticuloPersonalizadoOfertaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TipoArticuloPersonalizadoOfertaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TipoArticuloPersonalizadoOfertaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TipoArticuloPersonalizadoOfertaGroupByOutputType[P]>
+            : GetScalarType<T[P], TipoArticuloPersonalizadoOfertaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TipoArticuloPersonalizadoOfertaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    puntoDonacionId?: boolean
+    creadoEn?: boolean
+    puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
+    ArticuloOferta?: boolean | TipoArticuloPersonalizadoOferta$ArticuloOfertaArgs<ExtArgs>
+    _count?: boolean | TipoArticuloPersonalizadoOfertaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tipoArticuloPersonalizadoOferta"]>
+
+  export type TipoArticuloPersonalizadoOfertaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    puntoDonacionId?: boolean
+    creadoEn?: boolean
+    puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tipoArticuloPersonalizadoOferta"]>
+
+  export type TipoArticuloPersonalizadoOfertaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    puntoDonacionId?: boolean
+    creadoEn?: boolean
+    puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tipoArticuloPersonalizadoOferta"]>
+
+  export type TipoArticuloPersonalizadoOfertaSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    puntoDonacionId?: boolean
+    creadoEn?: boolean
+  }
+
+  export type TipoArticuloPersonalizadoOfertaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "puntoDonacionId" | "creadoEn", ExtArgs["result"]["tipoArticuloPersonalizadoOferta"]>
+  export type TipoArticuloPersonalizadoOfertaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
+    ArticuloOferta?: boolean | TipoArticuloPersonalizadoOferta$ArticuloOfertaArgs<ExtArgs>
+    _count?: boolean | TipoArticuloPersonalizadoOfertaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TipoArticuloPersonalizadoOfertaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
+  }
+  export type TipoArticuloPersonalizadoOfertaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    puntoDonacion?: boolean | PuntoDonacionDefaultArgs<ExtArgs>
+  }
+
+  export type $TipoArticuloPersonalizadoOfertaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TipoArticuloPersonalizadoOferta"
+    objects: {
+      puntoDonacion: Prisma.$PuntoDonacionPayload<ExtArgs>
+      ArticuloOferta: Prisma.$ArticuloOfertaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      nombre: string
+      puntoDonacionId: number
+      creadoEn: Date
+    }, ExtArgs["result"]["tipoArticuloPersonalizadoOferta"]>
+    composites: {}
+  }
+
+  type TipoArticuloPersonalizadoOfertaGetPayload<S extends boolean | null | undefined | TipoArticuloPersonalizadoOfertaDefaultArgs> = $Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload, S>
+
+  type TipoArticuloPersonalizadoOfertaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TipoArticuloPersonalizadoOfertaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TipoArticuloPersonalizadoOfertaCountAggregateInputType | true
+    }
+
+  export interface TipoArticuloPersonalizadoOfertaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TipoArticuloPersonalizadoOferta'], meta: { name: 'TipoArticuloPersonalizadoOferta' } }
+    /**
+     * Find zero or one TipoArticuloPersonalizadoOferta that matches the filter.
+     * @param {TipoArticuloPersonalizadoOfertaFindUniqueArgs} args - Arguments to find a TipoArticuloPersonalizadoOferta
+     * @example
+     * // Get one TipoArticuloPersonalizadoOferta
+     * const tipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TipoArticuloPersonalizadoOfertaFindUniqueArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoOfertaFindUniqueArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoOfertaClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TipoArticuloPersonalizadoOferta that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TipoArticuloPersonalizadoOfertaFindUniqueOrThrowArgs} args - Arguments to find a TipoArticuloPersonalizadoOferta
+     * @example
+     * // Get one TipoArticuloPersonalizadoOferta
+     * const tipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TipoArticuloPersonalizadoOfertaFindUniqueOrThrowArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoOfertaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoOfertaClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TipoArticuloPersonalizadoOferta that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoOfertaFindFirstArgs} args - Arguments to find a TipoArticuloPersonalizadoOferta
+     * @example
+     * // Get one TipoArticuloPersonalizadoOferta
+     * const tipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TipoArticuloPersonalizadoOfertaFindFirstArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoOfertaFindFirstArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoOfertaClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TipoArticuloPersonalizadoOferta that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoOfertaFindFirstOrThrowArgs} args - Arguments to find a TipoArticuloPersonalizadoOferta
+     * @example
+     * // Get one TipoArticuloPersonalizadoOferta
+     * const tipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TipoArticuloPersonalizadoOfertaFindFirstOrThrowArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoOfertaFindFirstOrThrowArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoOfertaClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TipoArticuloPersonalizadoOfertas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoOfertaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TipoArticuloPersonalizadoOfertas
+     * const tipoArticuloPersonalizadoOfertas = await prisma.tipoArticuloPersonalizadoOferta.findMany()
+     * 
+     * // Get first 10 TipoArticuloPersonalizadoOfertas
+     * const tipoArticuloPersonalizadoOfertas = await prisma.tipoArticuloPersonalizadoOferta.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tipoArticuloPersonalizadoOfertaWithIdOnly = await prisma.tipoArticuloPersonalizadoOferta.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TipoArticuloPersonalizadoOfertaFindManyArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoOfertaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TipoArticuloPersonalizadoOferta.
+     * @param {TipoArticuloPersonalizadoOfertaCreateArgs} args - Arguments to create a TipoArticuloPersonalizadoOferta.
+     * @example
+     * // Create one TipoArticuloPersonalizadoOferta
+     * const TipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.create({
+     *   data: {
+     *     // ... data to create a TipoArticuloPersonalizadoOferta
+     *   }
+     * })
+     * 
+     */
+    create<T extends TipoArticuloPersonalizadoOfertaCreateArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoOfertaCreateArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoOfertaClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TipoArticuloPersonalizadoOfertas.
+     * @param {TipoArticuloPersonalizadoOfertaCreateManyArgs} args - Arguments to create many TipoArticuloPersonalizadoOfertas.
+     * @example
+     * // Create many TipoArticuloPersonalizadoOfertas
+     * const tipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TipoArticuloPersonalizadoOfertaCreateManyArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoOfertaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TipoArticuloPersonalizadoOfertas and returns the data saved in the database.
+     * @param {TipoArticuloPersonalizadoOfertaCreateManyAndReturnArgs} args - Arguments to create many TipoArticuloPersonalizadoOfertas.
+     * @example
+     * // Create many TipoArticuloPersonalizadoOfertas
+     * const tipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TipoArticuloPersonalizadoOfertas and only return the `id`
+     * const tipoArticuloPersonalizadoOfertaWithIdOnly = await prisma.tipoArticuloPersonalizadoOferta.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TipoArticuloPersonalizadoOfertaCreateManyAndReturnArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoOfertaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TipoArticuloPersonalizadoOferta.
+     * @param {TipoArticuloPersonalizadoOfertaDeleteArgs} args - Arguments to delete one TipoArticuloPersonalizadoOferta.
+     * @example
+     * // Delete one TipoArticuloPersonalizadoOferta
+     * const TipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.delete({
+     *   where: {
+     *     // ... filter to delete one TipoArticuloPersonalizadoOferta
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TipoArticuloPersonalizadoOfertaDeleteArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoOfertaDeleteArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoOfertaClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TipoArticuloPersonalizadoOferta.
+     * @param {TipoArticuloPersonalizadoOfertaUpdateArgs} args - Arguments to update one TipoArticuloPersonalizadoOferta.
+     * @example
+     * // Update one TipoArticuloPersonalizadoOferta
+     * const tipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TipoArticuloPersonalizadoOfertaUpdateArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoOfertaUpdateArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoOfertaClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TipoArticuloPersonalizadoOfertas.
+     * @param {TipoArticuloPersonalizadoOfertaDeleteManyArgs} args - Arguments to filter TipoArticuloPersonalizadoOfertas to delete.
+     * @example
+     * // Delete a few TipoArticuloPersonalizadoOfertas
+     * const { count } = await prisma.tipoArticuloPersonalizadoOferta.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TipoArticuloPersonalizadoOfertaDeleteManyArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoOfertaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TipoArticuloPersonalizadoOfertas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoOfertaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TipoArticuloPersonalizadoOfertas
+     * const tipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TipoArticuloPersonalizadoOfertaUpdateManyArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoOfertaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TipoArticuloPersonalizadoOfertas and returns the data updated in the database.
+     * @param {TipoArticuloPersonalizadoOfertaUpdateManyAndReturnArgs} args - Arguments to update many TipoArticuloPersonalizadoOfertas.
+     * @example
+     * // Update many TipoArticuloPersonalizadoOfertas
+     * const tipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TipoArticuloPersonalizadoOfertas and only return the `id`
+     * const tipoArticuloPersonalizadoOfertaWithIdOnly = await prisma.tipoArticuloPersonalizadoOferta.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TipoArticuloPersonalizadoOfertaUpdateManyAndReturnArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoOfertaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TipoArticuloPersonalizadoOferta.
+     * @param {TipoArticuloPersonalizadoOfertaUpsertArgs} args - Arguments to update or create a TipoArticuloPersonalizadoOferta.
+     * @example
+     * // Update or create a TipoArticuloPersonalizadoOferta
+     * const tipoArticuloPersonalizadoOferta = await prisma.tipoArticuloPersonalizadoOferta.upsert({
+     *   create: {
+     *     // ... data to create a TipoArticuloPersonalizadoOferta
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TipoArticuloPersonalizadoOferta we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TipoArticuloPersonalizadoOfertaUpsertArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoOfertaUpsertArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoOfertaClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoOfertaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TipoArticuloPersonalizadoOfertas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoOfertaCountArgs} args - Arguments to filter TipoArticuloPersonalizadoOfertas to count.
+     * @example
+     * // Count the number of TipoArticuloPersonalizadoOfertas
+     * const count = await prisma.tipoArticuloPersonalizadoOferta.count({
+     *   where: {
+     *     // ... the filter for the TipoArticuloPersonalizadoOfertas we want to count
+     *   }
+     * })
+    **/
+    count<T extends TipoArticuloPersonalizadoOfertaCountArgs>(
+      args?: Subset<T, TipoArticuloPersonalizadoOfertaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TipoArticuloPersonalizadoOfertaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TipoArticuloPersonalizadoOferta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoOfertaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TipoArticuloPersonalizadoOfertaAggregateArgs>(args: Subset<T, TipoArticuloPersonalizadoOfertaAggregateArgs>): Prisma.PrismaPromise<GetTipoArticuloPersonalizadoOfertaAggregateType<T>>
+
+    /**
+     * Group by TipoArticuloPersonalizadoOferta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoOfertaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TipoArticuloPersonalizadoOfertaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TipoArticuloPersonalizadoOfertaGroupByArgs['orderBy'] }
+        : { orderBy?: TipoArticuloPersonalizadoOfertaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TipoArticuloPersonalizadoOfertaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTipoArticuloPersonalizadoOfertaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TipoArticuloPersonalizadoOferta model
+   */
+  readonly fields: TipoArticuloPersonalizadoOfertaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TipoArticuloPersonalizadoOferta.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TipoArticuloPersonalizadoOfertaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    puntoDonacion<T extends PuntoDonacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PuntoDonacionDefaultArgs<ExtArgs>>): Prisma__PuntoDonacionClient<$Result.GetResult<Prisma.$PuntoDonacionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    ArticuloOferta<T extends TipoArticuloPersonalizadoOferta$ArticuloOfertaArgs<ExtArgs> = {}>(args?: Subset<T, TipoArticuloPersonalizadoOferta$ArticuloOfertaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticuloOfertaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TipoArticuloPersonalizadoOferta model
+   */ 
+  interface TipoArticuloPersonalizadoOfertaFieldRefs {
+    readonly id: FieldRef<"TipoArticuloPersonalizadoOferta", 'Int'>
+    readonly nombre: FieldRef<"TipoArticuloPersonalizadoOferta", 'String'>
+    readonly puntoDonacionId: FieldRef<"TipoArticuloPersonalizadoOferta", 'Int'>
+    readonly creadoEn: FieldRef<"TipoArticuloPersonalizadoOferta", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TipoArticuloPersonalizadoOferta findUnique
+   */
+  export type TipoArticuloPersonalizadoOfertaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    /**
+     * Filter, which TipoArticuloPersonalizadoOferta to fetch.
+     */
+    where: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta findUniqueOrThrow
+   */
+  export type TipoArticuloPersonalizadoOfertaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    /**
+     * Filter, which TipoArticuloPersonalizadoOferta to fetch.
+     */
+    where: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta findFirst
+   */
+  export type TipoArticuloPersonalizadoOfertaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    /**
+     * Filter, which TipoArticuloPersonalizadoOferta to fetch.
+     */
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipoArticuloPersonalizadoOfertas to fetch.
+     */
+    orderBy?: TipoArticuloPersonalizadoOfertaOrderByWithRelationInput | TipoArticuloPersonalizadoOfertaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TipoArticuloPersonalizadoOfertas.
+     */
+    cursor?: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipoArticuloPersonalizadoOfertas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipoArticuloPersonalizadoOfertas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TipoArticuloPersonalizadoOfertas.
+     */
+    distinct?: TipoArticuloPersonalizadoOfertaScalarFieldEnum | TipoArticuloPersonalizadoOfertaScalarFieldEnum[]
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta findFirstOrThrow
+   */
+  export type TipoArticuloPersonalizadoOfertaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    /**
+     * Filter, which TipoArticuloPersonalizadoOferta to fetch.
+     */
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipoArticuloPersonalizadoOfertas to fetch.
+     */
+    orderBy?: TipoArticuloPersonalizadoOfertaOrderByWithRelationInput | TipoArticuloPersonalizadoOfertaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TipoArticuloPersonalizadoOfertas.
+     */
+    cursor?: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipoArticuloPersonalizadoOfertas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipoArticuloPersonalizadoOfertas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TipoArticuloPersonalizadoOfertas.
+     */
+    distinct?: TipoArticuloPersonalizadoOfertaScalarFieldEnum | TipoArticuloPersonalizadoOfertaScalarFieldEnum[]
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta findMany
+   */
+  export type TipoArticuloPersonalizadoOfertaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    /**
+     * Filter, which TipoArticuloPersonalizadoOfertas to fetch.
+     */
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipoArticuloPersonalizadoOfertas to fetch.
+     */
+    orderBy?: TipoArticuloPersonalizadoOfertaOrderByWithRelationInput | TipoArticuloPersonalizadoOfertaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TipoArticuloPersonalizadoOfertas.
+     */
+    cursor?: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipoArticuloPersonalizadoOfertas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipoArticuloPersonalizadoOfertas.
+     */
+    skip?: number
+    distinct?: TipoArticuloPersonalizadoOfertaScalarFieldEnum | TipoArticuloPersonalizadoOfertaScalarFieldEnum[]
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta create
+   */
+  export type TipoArticuloPersonalizadoOfertaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TipoArticuloPersonalizadoOferta.
+     */
+    data: XOR<TipoArticuloPersonalizadoOfertaCreateInput, TipoArticuloPersonalizadoOfertaUncheckedCreateInput>
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta createMany
+   */
+  export type TipoArticuloPersonalizadoOfertaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TipoArticuloPersonalizadoOfertas.
+     */
+    data: TipoArticuloPersonalizadoOfertaCreateManyInput | TipoArticuloPersonalizadoOfertaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta createManyAndReturn
+   */
+  export type TipoArticuloPersonalizadoOfertaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * The data used to create many TipoArticuloPersonalizadoOfertas.
+     */
+    data: TipoArticuloPersonalizadoOfertaCreateManyInput | TipoArticuloPersonalizadoOfertaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta update
+   */
+  export type TipoArticuloPersonalizadoOfertaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TipoArticuloPersonalizadoOferta.
+     */
+    data: XOR<TipoArticuloPersonalizadoOfertaUpdateInput, TipoArticuloPersonalizadoOfertaUncheckedUpdateInput>
+    /**
+     * Choose, which TipoArticuloPersonalizadoOferta to update.
+     */
+    where: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta updateMany
+   */
+  export type TipoArticuloPersonalizadoOfertaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TipoArticuloPersonalizadoOfertas.
+     */
+    data: XOR<TipoArticuloPersonalizadoOfertaUpdateManyMutationInput, TipoArticuloPersonalizadoOfertaUncheckedUpdateManyInput>
+    /**
+     * Filter which TipoArticuloPersonalizadoOfertas to update
+     */
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+    /**
+     * Limit how many TipoArticuloPersonalizadoOfertas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta updateManyAndReturn
+   */
+  export type TipoArticuloPersonalizadoOfertaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * The data used to update TipoArticuloPersonalizadoOfertas.
+     */
+    data: XOR<TipoArticuloPersonalizadoOfertaUpdateManyMutationInput, TipoArticuloPersonalizadoOfertaUncheckedUpdateManyInput>
+    /**
+     * Filter which TipoArticuloPersonalizadoOfertas to update
+     */
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+    /**
+     * Limit how many TipoArticuloPersonalizadoOfertas to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta upsert
+   */
+  export type TipoArticuloPersonalizadoOfertaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TipoArticuloPersonalizadoOferta to update in case it exists.
+     */
+    where: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    /**
+     * In case the TipoArticuloPersonalizadoOferta found by the `where` argument doesn't exist, create a new TipoArticuloPersonalizadoOferta with this data.
+     */
+    create: XOR<TipoArticuloPersonalizadoOfertaCreateInput, TipoArticuloPersonalizadoOfertaUncheckedCreateInput>
+    /**
+     * In case the TipoArticuloPersonalizadoOferta was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TipoArticuloPersonalizadoOfertaUpdateInput, TipoArticuloPersonalizadoOfertaUncheckedUpdateInput>
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta delete
+   */
+  export type TipoArticuloPersonalizadoOfertaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+    /**
+     * Filter which TipoArticuloPersonalizadoOferta to delete.
+     */
+    where: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta deleteMany
+   */
+  export type TipoArticuloPersonalizadoOfertaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TipoArticuloPersonalizadoOfertas to delete
+     */
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+    /**
+     * Limit how many TipoArticuloPersonalizadoOfertas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta.ArticuloOferta
+   */
+  export type TipoArticuloPersonalizadoOferta$ArticuloOfertaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticuloOferta
+     */
+    select?: ArticuloOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticuloOferta
+     */
+    omit?: ArticuloOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArticuloOfertaInclude<ExtArgs> | null
+    where?: ArticuloOfertaWhereInput
+    orderBy?: ArticuloOfertaOrderByWithRelationInput | ArticuloOfertaOrderByWithRelationInput[]
+    cursor?: ArticuloOfertaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ArticuloOfertaScalarFieldEnum | ArticuloOfertaScalarFieldEnum[]
+  }
+
+  /**
+   * TipoArticuloPersonalizadoOferta without action
+   */
+  export type TipoArticuloPersonalizadoOfertaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoOferta
+     */
+    select?: TipoArticuloPersonalizadoOfertaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizadoOferta
+     */
+    omit?: TipoArticuloPersonalizadoOfertaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoOfertaInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -15660,6 +16995,7 @@ export namespace Prisma {
     id: 'id',
     puntoDonacionId: 'puntoDonacionId',
     tipoArticuloId: 'tipoArticuloId',
+    tipoArticuloPersonalizadoOfertaId: 'tipoArticuloPersonalizadoOfertaId',
     cantidad: 'cantidad',
     estado: 'estado',
     creadoEn: 'creadoEn',
@@ -15789,6 +17125,16 @@ export namespace Prisma {
   };
 
   export type TipoArticuloPersonalizadoScalarFieldEnum = (typeof TipoArticuloPersonalizadoScalarFieldEnum)[keyof typeof TipoArticuloPersonalizadoScalarFieldEnum]
+
+
+  export const TipoArticuloPersonalizadoOfertaScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    puntoDonacionId: 'puntoDonacionId',
+    creadoEn: 'creadoEn'
+  };
+
+  export type TipoArticuloPersonalizadoOfertaScalarFieldEnum = (typeof TipoArticuloPersonalizadoOfertaScalarFieldEnum)[keyof typeof TipoArticuloPersonalizadoOfertaScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -15957,6 +17303,7 @@ export namespace Prisma {
     creadoEn?: DateTimeFilter<"PuntoDonacion"> | Date | string
     actualizadoEn?: DateTimeFilter<"PuntoDonacion"> | Date | string
     articulos?: ArticuloOfertaListRelationFilter
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaListRelationFilter
   }
 
   export type PuntoDonacionOrderByWithRelationInput = {
@@ -15974,6 +17321,7 @@ export namespace Prisma {
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
     articulos?: ArticuloOfertaOrderByRelationAggregateInput
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaOrderByRelationAggregateInput
   }
 
   export type PuntoDonacionWhereUniqueInput = Prisma.AtLeast<{
@@ -15994,6 +17342,7 @@ export namespace Prisma {
     creadoEn?: DateTimeFilter<"PuntoDonacion"> | Date | string
     actualizadoEn?: DateTimeFilter<"PuntoDonacion"> | Date | string
     articulos?: ArticuloOfertaListRelationFilter
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaListRelationFilter
   }, "id">
 
   export type PuntoDonacionOrderByWithAggregationInput = {
@@ -16042,47 +17391,55 @@ export namespace Prisma {
     NOT?: ArticuloOfertaWhereInput | ArticuloOfertaWhereInput[]
     id?: IntFilter<"ArticuloOferta"> | number
     puntoDonacionId?: IntFilter<"ArticuloOferta"> | number
-    tipoArticuloId?: IntFilter<"ArticuloOferta"> | number
+    tipoArticuloId?: IntNullableFilter<"ArticuloOferta"> | number | null
+    tipoArticuloPersonalizadoOfertaId?: IntNullableFilter<"ArticuloOferta"> | number | null
     cantidad?: IntNullableFilter<"ArticuloOferta"> | number | null
     estado?: StringFilter<"ArticuloOferta"> | string
     creadoEn?: DateTimeFilter<"ArticuloOferta"> | Date | string
     actualizadoEn?: DateTimeFilter<"ArticuloOferta"> | Date | string
     puntoDonacion?: XOR<PuntoDonacionScalarRelationFilter, PuntoDonacionWhereInput>
-    tipoArticulo?: XOR<TipoArticuloScalarRelationFilter, TipoArticuloWhereInput>
+    tipoArticulo?: XOR<TipoArticuloNullableScalarRelationFilter, TipoArticuloWhereInput> | null
+    tipoArticuloPersonalizadoOferta?: XOR<TipoArticuloPersonalizadoOfertaNullableScalarRelationFilter, TipoArticuloPersonalizadoOfertaWhereInput> | null
   }
 
   export type ArticuloOfertaOrderByWithRelationInput = {
     id?: SortOrder
     puntoDonacionId?: SortOrder
-    tipoArticuloId?: SortOrder
+    tipoArticuloId?: SortOrderInput | SortOrder
+    tipoArticuloPersonalizadoOfertaId?: SortOrderInput | SortOrder
     cantidad?: SortOrderInput | SortOrder
     estado?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
     puntoDonacion?: PuntoDonacionOrderByWithRelationInput
     tipoArticulo?: TipoArticuloOrderByWithRelationInput
+    tipoArticuloPersonalizadoOferta?: TipoArticuloPersonalizadoOfertaOrderByWithRelationInput
   }
 
   export type ArticuloOfertaWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     puntoDonacionId_tipoArticuloId?: ArticuloOfertaPuntoDonacionIdTipoArticuloIdCompoundUniqueInput
+    puntoDonacionId_tipoArticuloPersonalizadoOfertaId?: ArticuloOfertaPuntoDonacionIdTipoArticuloPersonalizadoOfertaIdCompoundUniqueInput
     AND?: ArticuloOfertaWhereInput | ArticuloOfertaWhereInput[]
     OR?: ArticuloOfertaWhereInput[]
     NOT?: ArticuloOfertaWhereInput | ArticuloOfertaWhereInput[]
     puntoDonacionId?: IntFilter<"ArticuloOferta"> | number
-    tipoArticuloId?: IntFilter<"ArticuloOferta"> | number
+    tipoArticuloId?: IntNullableFilter<"ArticuloOferta"> | number | null
+    tipoArticuloPersonalizadoOfertaId?: IntNullableFilter<"ArticuloOferta"> | number | null
     cantidad?: IntNullableFilter<"ArticuloOferta"> | number | null
     estado?: StringFilter<"ArticuloOferta"> | string
     creadoEn?: DateTimeFilter<"ArticuloOferta"> | Date | string
     actualizadoEn?: DateTimeFilter<"ArticuloOferta"> | Date | string
     puntoDonacion?: XOR<PuntoDonacionScalarRelationFilter, PuntoDonacionWhereInput>
-    tipoArticulo?: XOR<TipoArticuloScalarRelationFilter, TipoArticuloWhereInput>
-  }, "id" | "puntoDonacionId_tipoArticuloId">
+    tipoArticulo?: XOR<TipoArticuloNullableScalarRelationFilter, TipoArticuloWhereInput> | null
+    tipoArticuloPersonalizadoOferta?: XOR<TipoArticuloPersonalizadoOfertaNullableScalarRelationFilter, TipoArticuloPersonalizadoOfertaWhereInput> | null
+  }, "id" | "puntoDonacionId_tipoArticuloId" | "puntoDonacionId_tipoArticuloPersonalizadoOfertaId">
 
   export type ArticuloOfertaOrderByWithAggregationInput = {
     id?: SortOrder
     puntoDonacionId?: SortOrder
-    tipoArticuloId?: SortOrder
+    tipoArticuloId?: SortOrderInput | SortOrder
+    tipoArticuloPersonalizadoOfertaId?: SortOrderInput | SortOrder
     cantidad?: SortOrderInput | SortOrder
     estado?: SortOrder
     creadoEn?: SortOrder
@@ -16100,7 +17457,8 @@ export namespace Prisma {
     NOT?: ArticuloOfertaScalarWhereWithAggregatesInput | ArticuloOfertaScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"ArticuloOferta"> | number
     puntoDonacionId?: IntWithAggregatesFilter<"ArticuloOferta"> | number
-    tipoArticuloId?: IntWithAggregatesFilter<"ArticuloOferta"> | number
+    tipoArticuloId?: IntNullableWithAggregatesFilter<"ArticuloOferta"> | number | null
+    tipoArticuloPersonalizadoOfertaId?: IntNullableWithAggregatesFilter<"ArticuloOferta"> | number | null
     cantidad?: IntNullableWithAggregatesFilter<"ArticuloOferta"> | number | null
     estado?: StringWithAggregatesFilter<"ArticuloOferta"> | string
     creadoEn?: DateTimeWithAggregatesFilter<"ArticuloOferta"> | Date | string
@@ -16741,6 +18099,61 @@ export namespace Prisma {
     creadoEn?: DateTimeWithAggregatesFilter<"TipoArticuloPersonalizado"> | Date | string
   }
 
+  export type TipoArticuloPersonalizadoOfertaWhereInput = {
+    AND?: TipoArticuloPersonalizadoOfertaWhereInput | TipoArticuloPersonalizadoOfertaWhereInput[]
+    OR?: TipoArticuloPersonalizadoOfertaWhereInput[]
+    NOT?: TipoArticuloPersonalizadoOfertaWhereInput | TipoArticuloPersonalizadoOfertaWhereInput[]
+    id?: IntFilter<"TipoArticuloPersonalizadoOferta"> | number
+    nombre?: StringFilter<"TipoArticuloPersonalizadoOferta"> | string
+    puntoDonacionId?: IntFilter<"TipoArticuloPersonalizadoOferta"> | number
+    creadoEn?: DateTimeFilter<"TipoArticuloPersonalizadoOferta"> | Date | string
+    puntoDonacion?: XOR<PuntoDonacionScalarRelationFilter, PuntoDonacionWhereInput>
+    ArticuloOferta?: ArticuloOfertaListRelationFilter
+  }
+
+  export type TipoArticuloPersonalizadoOfertaOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    puntoDonacionId?: SortOrder
+    creadoEn?: SortOrder
+    puntoDonacion?: PuntoDonacionOrderByWithRelationInput
+    ArticuloOferta?: ArticuloOfertaOrderByRelationAggregateInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    nombre?: string
+    AND?: TipoArticuloPersonalizadoOfertaWhereInput | TipoArticuloPersonalizadoOfertaWhereInput[]
+    OR?: TipoArticuloPersonalizadoOfertaWhereInput[]
+    NOT?: TipoArticuloPersonalizadoOfertaWhereInput | TipoArticuloPersonalizadoOfertaWhereInput[]
+    puntoDonacionId?: IntFilter<"TipoArticuloPersonalizadoOferta"> | number
+    creadoEn?: DateTimeFilter<"TipoArticuloPersonalizadoOferta"> | Date | string
+    puntoDonacion?: XOR<PuntoDonacionScalarRelationFilter, PuntoDonacionWhereInput>
+    ArticuloOferta?: ArticuloOfertaListRelationFilter
+  }, "id" | "nombre">
+
+  export type TipoArticuloPersonalizadoOfertaOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    puntoDonacionId?: SortOrder
+    creadoEn?: SortOrder
+    _count?: TipoArticuloPersonalizadoOfertaCountOrderByAggregateInput
+    _avg?: TipoArticuloPersonalizadoOfertaAvgOrderByAggregateInput
+    _max?: TipoArticuloPersonalizadoOfertaMaxOrderByAggregateInput
+    _min?: TipoArticuloPersonalizadoOfertaMinOrderByAggregateInput
+    _sum?: TipoArticuloPersonalizadoOfertaSumOrderByAggregateInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaScalarWhereWithAggregatesInput = {
+    AND?: TipoArticuloPersonalizadoOfertaScalarWhereWithAggregatesInput | TipoArticuloPersonalizadoOfertaScalarWhereWithAggregatesInput[]
+    OR?: TipoArticuloPersonalizadoOfertaScalarWhereWithAggregatesInput[]
+    NOT?: TipoArticuloPersonalizadoOfertaScalarWhereWithAggregatesInput | TipoArticuloPersonalizadoOfertaScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"TipoArticuloPersonalizadoOferta"> | number
+    nombre?: StringWithAggregatesFilter<"TipoArticuloPersonalizadoOferta"> | string
+    puntoDonacionId?: IntWithAggregatesFilter<"TipoArticuloPersonalizadoOferta"> | number
+    creadoEn?: DateTimeWithAggregatesFilter<"TipoArticuloPersonalizadoOferta"> | Date | string
+  }
+
   export type TipoArticuloCreateInput = {
     nombre: string
     creadoEn?: Date | string
@@ -16806,6 +18219,7 @@ export namespace Prisma {
     creadoEn?: Date | string
     actualizadoEn?: Date | string
     articulos?: ArticuloOfertaCreateNestedManyWithoutPuntoDonacionInput
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaCreateNestedManyWithoutPuntoDonacionInput
   }
 
   export type PuntoDonacionUncheckedCreateInput = {
@@ -16823,6 +18237,7 @@ export namespace Prisma {
     creadoEn?: Date | string
     actualizadoEn?: Date | string
     articulos?: ArticuloOfertaUncheckedCreateNestedManyWithoutPuntoDonacionInput
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaUncheckedCreateNestedManyWithoutPuntoDonacionInput
   }
 
   export type PuntoDonacionUpdateInput = {
@@ -16839,6 +18254,7 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     articulos?: ArticuloOfertaUpdateManyWithoutPuntoDonacionNestedInput
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaUpdateManyWithoutPuntoDonacionNestedInput
   }
 
   export type PuntoDonacionUncheckedUpdateInput = {
@@ -16856,6 +18272,7 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     articulos?: ArticuloOfertaUncheckedUpdateManyWithoutPuntoDonacionNestedInput
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaUncheckedUpdateManyWithoutPuntoDonacionNestedInput
   }
 
   export type PuntoDonacionCreateManyInput = {
@@ -16911,13 +18328,15 @@ export namespace Prisma {
     creadoEn?: Date | string
     actualizadoEn?: Date | string
     puntoDonacion: PuntoDonacionCreateNestedOneWithoutArticulosInput
-    tipoArticulo: TipoArticuloCreateNestedOneWithoutArticulosOfertaInput
+    tipoArticulo?: TipoArticuloCreateNestedOneWithoutArticulosOfertaInput
+    tipoArticuloPersonalizadoOferta?: TipoArticuloPersonalizadoOfertaCreateNestedOneWithoutArticuloOfertaInput
   }
 
   export type ArticuloOfertaUncheckedCreateInput = {
     id?: number
     puntoDonacionId: number
-    tipoArticuloId: number
+    tipoArticuloId?: number | null
+    tipoArticuloPersonalizadoOfertaId?: number | null
     cantidad?: number | null
     estado?: string
     creadoEn?: Date | string
@@ -16930,13 +18349,15 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     puntoDonacion?: PuntoDonacionUpdateOneRequiredWithoutArticulosNestedInput
-    tipoArticulo?: TipoArticuloUpdateOneRequiredWithoutArticulosOfertaNestedInput
+    tipoArticulo?: TipoArticuloUpdateOneWithoutArticulosOfertaNestedInput
+    tipoArticuloPersonalizadoOferta?: TipoArticuloPersonalizadoOfertaUpdateOneWithoutArticuloOfertaNestedInput
   }
 
   export type ArticuloOfertaUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     puntoDonacionId?: IntFieldUpdateOperationsInput | number
-    tipoArticuloId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoArticuloPersonalizadoOfertaId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16946,7 +18367,8 @@ export namespace Prisma {
   export type ArticuloOfertaCreateManyInput = {
     id?: number
     puntoDonacionId: number
-    tipoArticuloId: number
+    tipoArticuloId?: number | null
+    tipoArticuloPersonalizadoOfertaId?: number | null
     cantidad?: number | null
     estado?: string
     creadoEn?: Date | string
@@ -16963,7 +18385,8 @@ export namespace Prisma {
   export type ArticuloOfertaUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     puntoDonacionId?: IntFieldUpdateOperationsInput | number
-    tipoArticuloId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoArticuloPersonalizadoOfertaId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17618,6 +19041,55 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TipoArticuloPersonalizadoOfertaCreateInput = {
+    nombre: string
+    creadoEn?: Date | string
+    puntoDonacion: PuntoDonacionCreateNestedOneWithoutTiposArticuloPersonalizadosOfertaInput
+    ArticuloOferta?: ArticuloOfertaCreateNestedManyWithoutTipoArticuloPersonalizadoOfertaInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUncheckedCreateInput = {
+    id?: number
+    nombre: string
+    puntoDonacionId: number
+    creadoEn?: Date | string
+    ArticuloOferta?: ArticuloOfertaUncheckedCreateNestedManyWithoutTipoArticuloPersonalizadoOfertaInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    puntoDonacion?: PuntoDonacionUpdateOneRequiredWithoutTiposArticuloPersonalizadosOfertaNestedInput
+    ArticuloOferta?: ArticuloOfertaUpdateManyWithoutTipoArticuloPersonalizadoOfertaNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    puntoDonacionId?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    ArticuloOferta?: ArticuloOfertaUncheckedUpdateManyWithoutTipoArticuloPersonalizadoOfertaNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaCreateManyInput = {
+    id?: number
+    nombre: string
+    puntoDonacionId: number
+    creadoEn?: Date | string
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    puntoDonacionId?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -17790,9 +19262,19 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type TipoArticuloPersonalizadoOfertaListRelationFilter = {
+    every?: TipoArticuloPersonalizadoOfertaWhereInput
+    some?: TipoArticuloPersonalizadoOfertaWhereInput
+    none?: TipoArticuloPersonalizadoOfertaWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type TipoArticuloPersonalizadoOfertaOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type PuntoDonacionCountOrderByAggregateInput = {
@@ -17913,9 +19395,14 @@ export namespace Prisma {
     isNot?: PuntoDonacionWhereInput
   }
 
-  export type TipoArticuloScalarRelationFilter = {
-    is?: TipoArticuloWhereInput
-    isNot?: TipoArticuloWhereInput
+  export type TipoArticuloNullableScalarRelationFilter = {
+    is?: TipoArticuloWhereInput | null
+    isNot?: TipoArticuloWhereInput | null
+  }
+
+  export type TipoArticuloPersonalizadoOfertaNullableScalarRelationFilter = {
+    is?: TipoArticuloPersonalizadoOfertaWhereInput | null
+    isNot?: TipoArticuloPersonalizadoOfertaWhereInput | null
   }
 
   export type ArticuloOfertaPuntoDonacionIdTipoArticuloIdCompoundUniqueInput = {
@@ -17923,10 +19410,16 @@ export namespace Prisma {
     tipoArticuloId: number
   }
 
+  export type ArticuloOfertaPuntoDonacionIdTipoArticuloPersonalizadoOfertaIdCompoundUniqueInput = {
+    puntoDonacionId: number
+    tipoArticuloPersonalizadoOfertaId: number
+  }
+
   export type ArticuloOfertaCountOrderByAggregateInput = {
     id?: SortOrder
     puntoDonacionId?: SortOrder
     tipoArticuloId?: SortOrder
+    tipoArticuloPersonalizadoOfertaId?: SortOrder
     cantidad?: SortOrder
     estado?: SortOrder
     creadoEn?: SortOrder
@@ -17937,6 +19430,7 @@ export namespace Prisma {
     id?: SortOrder
     puntoDonacionId?: SortOrder
     tipoArticuloId?: SortOrder
+    tipoArticuloPersonalizadoOfertaId?: SortOrder
     cantidad?: SortOrder
   }
 
@@ -17944,6 +19438,7 @@ export namespace Prisma {
     id?: SortOrder
     puntoDonacionId?: SortOrder
     tipoArticuloId?: SortOrder
+    tipoArticuloPersonalizadoOfertaId?: SortOrder
     cantidad?: SortOrder
     estado?: SortOrder
     creadoEn?: SortOrder
@@ -17954,6 +19449,7 @@ export namespace Prisma {
     id?: SortOrder
     puntoDonacionId?: SortOrder
     tipoArticuloId?: SortOrder
+    tipoArticuloPersonalizadoOfertaId?: SortOrder
     cantidad?: SortOrder
     estado?: SortOrder
     creadoEn?: SortOrder
@@ -17964,6 +19460,7 @@ export namespace Prisma {
     id?: SortOrder
     puntoDonacionId?: SortOrder
     tipoArticuloId?: SortOrder
+    tipoArticuloPersonalizadoOfertaId?: SortOrder
     cantidad?: SortOrder
   }
 
@@ -18047,11 +19544,6 @@ export namespace Prisma {
   export type SolicitudScalarRelationFilter = {
     is?: SolicitudWhereInput
     isNot?: SolicitudWhereInput
-  }
-
-  export type TipoArticuloNullableScalarRelationFilter = {
-    is?: TipoArticuloWhereInput | null
-    isNot?: TipoArticuloWhereInput | null
   }
 
   export type TipoArticuloPersonalizadoNullableScalarRelationFilter = {
@@ -18193,6 +19685,11 @@ export namespace Prisma {
   export type PeticionDonacionScalarRelationFilter = {
     is?: PeticionDonacionWhereInput
     isNot?: PeticionDonacionWhereInput
+  }
+
+  export type TipoArticuloScalarRelationFilter = {
+    is?: TipoArticuloWhereInput
+    isNot?: TipoArticuloWhereInput
   }
 
   export type ArticuloPeticionPeticionDonacionIdTipoArticuloIdCompoundUniqueInput = {
@@ -18440,6 +19937,37 @@ export namespace Prisma {
     solicitudId?: SortOrder
   }
 
+  export type TipoArticuloPersonalizadoOfertaCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    puntoDonacionId?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type TipoArticuloPersonalizadoOfertaAvgOrderByAggregateInput = {
+    id?: SortOrder
+    puntoDonacionId?: SortOrder
+  }
+
+  export type TipoArticuloPersonalizadoOfertaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    puntoDonacionId?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type TipoArticuloPersonalizadoOfertaMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    puntoDonacionId?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type TipoArticuloPersonalizadoOfertaSumOrderByAggregateInput = {
+    id?: SortOrder
+    puntoDonacionId?: SortOrder
+  }
+
   export type ArticuloOfertaCreateNestedManyWithoutTipoArticuloInput = {
     create?: XOR<ArticuloOfertaCreateWithoutTipoArticuloInput, ArticuloOfertaUncheckedCreateWithoutTipoArticuloInput> | ArticuloOfertaCreateWithoutTipoArticuloInput[] | ArticuloOfertaUncheckedCreateWithoutTipoArticuloInput[]
     connectOrCreate?: ArticuloOfertaCreateOrConnectWithoutTipoArticuloInput | ArticuloOfertaCreateOrConnectWithoutTipoArticuloInput[]
@@ -18589,11 +20117,25 @@ export namespace Prisma {
     connect?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
   }
 
+  export type TipoArticuloPersonalizadoOfertaCreateNestedManyWithoutPuntoDonacionInput = {
+    create?: XOR<TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput, TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput> | TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput[] | TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput[]
+    connectOrCreate?: TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutPuntoDonacionInput | TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutPuntoDonacionInput[]
+    createMany?: TipoArticuloPersonalizadoOfertaCreateManyPuntoDonacionInputEnvelope
+    connect?: TipoArticuloPersonalizadoOfertaWhereUniqueInput | TipoArticuloPersonalizadoOfertaWhereUniqueInput[]
+  }
+
   export type ArticuloOfertaUncheckedCreateNestedManyWithoutPuntoDonacionInput = {
     create?: XOR<ArticuloOfertaCreateWithoutPuntoDonacionInput, ArticuloOfertaUncheckedCreateWithoutPuntoDonacionInput> | ArticuloOfertaCreateWithoutPuntoDonacionInput[] | ArticuloOfertaUncheckedCreateWithoutPuntoDonacionInput[]
     connectOrCreate?: ArticuloOfertaCreateOrConnectWithoutPuntoDonacionInput | ArticuloOfertaCreateOrConnectWithoutPuntoDonacionInput[]
     createMany?: ArticuloOfertaCreateManyPuntoDonacionInputEnvelope
     connect?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUncheckedCreateNestedManyWithoutPuntoDonacionInput = {
+    create?: XOR<TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput, TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput> | TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput[] | TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput[]
+    connectOrCreate?: TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutPuntoDonacionInput | TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutPuntoDonacionInput[]
+    createMany?: TipoArticuloPersonalizadoOfertaCreateManyPuntoDonacionInputEnvelope
+    connect?: TipoArticuloPersonalizadoOfertaWhereUniqueInput | TipoArticuloPersonalizadoOfertaWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -18626,6 +20168,20 @@ export namespace Prisma {
     deleteMany?: ArticuloOfertaScalarWhereInput | ArticuloOfertaScalarWhereInput[]
   }
 
+  export type TipoArticuloPersonalizadoOfertaUpdateManyWithoutPuntoDonacionNestedInput = {
+    create?: XOR<TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput, TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput> | TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput[] | TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput[]
+    connectOrCreate?: TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutPuntoDonacionInput | TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutPuntoDonacionInput[]
+    upsert?: TipoArticuloPersonalizadoOfertaUpsertWithWhereUniqueWithoutPuntoDonacionInput | TipoArticuloPersonalizadoOfertaUpsertWithWhereUniqueWithoutPuntoDonacionInput[]
+    createMany?: TipoArticuloPersonalizadoOfertaCreateManyPuntoDonacionInputEnvelope
+    set?: TipoArticuloPersonalizadoOfertaWhereUniqueInput | TipoArticuloPersonalizadoOfertaWhereUniqueInput[]
+    disconnect?: TipoArticuloPersonalizadoOfertaWhereUniqueInput | TipoArticuloPersonalizadoOfertaWhereUniqueInput[]
+    delete?: TipoArticuloPersonalizadoOfertaWhereUniqueInput | TipoArticuloPersonalizadoOfertaWhereUniqueInput[]
+    connect?: TipoArticuloPersonalizadoOfertaWhereUniqueInput | TipoArticuloPersonalizadoOfertaWhereUniqueInput[]
+    update?: TipoArticuloPersonalizadoOfertaUpdateWithWhereUniqueWithoutPuntoDonacionInput | TipoArticuloPersonalizadoOfertaUpdateWithWhereUniqueWithoutPuntoDonacionInput[]
+    updateMany?: TipoArticuloPersonalizadoOfertaUpdateManyWithWhereWithoutPuntoDonacionInput | TipoArticuloPersonalizadoOfertaUpdateManyWithWhereWithoutPuntoDonacionInput[]
+    deleteMany?: TipoArticuloPersonalizadoOfertaScalarWhereInput | TipoArticuloPersonalizadoOfertaScalarWhereInput[]
+  }
+
   export type ArticuloOfertaUncheckedUpdateManyWithoutPuntoDonacionNestedInput = {
     create?: XOR<ArticuloOfertaCreateWithoutPuntoDonacionInput, ArticuloOfertaUncheckedCreateWithoutPuntoDonacionInput> | ArticuloOfertaCreateWithoutPuntoDonacionInput[] | ArticuloOfertaUncheckedCreateWithoutPuntoDonacionInput[]
     connectOrCreate?: ArticuloOfertaCreateOrConnectWithoutPuntoDonacionInput | ArticuloOfertaCreateOrConnectWithoutPuntoDonacionInput[]
@@ -18640,6 +20196,20 @@ export namespace Prisma {
     deleteMany?: ArticuloOfertaScalarWhereInput | ArticuloOfertaScalarWhereInput[]
   }
 
+  export type TipoArticuloPersonalizadoOfertaUncheckedUpdateManyWithoutPuntoDonacionNestedInput = {
+    create?: XOR<TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput, TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput> | TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput[] | TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput[]
+    connectOrCreate?: TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutPuntoDonacionInput | TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutPuntoDonacionInput[]
+    upsert?: TipoArticuloPersonalizadoOfertaUpsertWithWhereUniqueWithoutPuntoDonacionInput | TipoArticuloPersonalizadoOfertaUpsertWithWhereUniqueWithoutPuntoDonacionInput[]
+    createMany?: TipoArticuloPersonalizadoOfertaCreateManyPuntoDonacionInputEnvelope
+    set?: TipoArticuloPersonalizadoOfertaWhereUniqueInput | TipoArticuloPersonalizadoOfertaWhereUniqueInput[]
+    disconnect?: TipoArticuloPersonalizadoOfertaWhereUniqueInput | TipoArticuloPersonalizadoOfertaWhereUniqueInput[]
+    delete?: TipoArticuloPersonalizadoOfertaWhereUniqueInput | TipoArticuloPersonalizadoOfertaWhereUniqueInput[]
+    connect?: TipoArticuloPersonalizadoOfertaWhereUniqueInput | TipoArticuloPersonalizadoOfertaWhereUniqueInput[]
+    update?: TipoArticuloPersonalizadoOfertaUpdateWithWhereUniqueWithoutPuntoDonacionInput | TipoArticuloPersonalizadoOfertaUpdateWithWhereUniqueWithoutPuntoDonacionInput[]
+    updateMany?: TipoArticuloPersonalizadoOfertaUpdateManyWithWhereWithoutPuntoDonacionInput | TipoArticuloPersonalizadoOfertaUpdateManyWithWhereWithoutPuntoDonacionInput[]
+    deleteMany?: TipoArticuloPersonalizadoOfertaScalarWhereInput | TipoArticuloPersonalizadoOfertaScalarWhereInput[]
+  }
+
   export type PuntoDonacionCreateNestedOneWithoutArticulosInput = {
     create?: XOR<PuntoDonacionCreateWithoutArticulosInput, PuntoDonacionUncheckedCreateWithoutArticulosInput>
     connectOrCreate?: PuntoDonacionCreateOrConnectWithoutArticulosInput
@@ -18650,6 +20220,12 @@ export namespace Prisma {
     create?: XOR<TipoArticuloCreateWithoutArticulosOfertaInput, TipoArticuloUncheckedCreateWithoutArticulosOfertaInput>
     connectOrCreate?: TipoArticuloCreateOrConnectWithoutArticulosOfertaInput
     connect?: TipoArticuloWhereUniqueInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaCreateNestedOneWithoutArticuloOfertaInput = {
+    create?: XOR<TipoArticuloPersonalizadoOfertaCreateWithoutArticuloOfertaInput, TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutArticuloOfertaInput>
+    connectOrCreate?: TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutArticuloOfertaInput
+    connect?: TipoArticuloPersonalizadoOfertaWhereUniqueInput
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -18668,12 +20244,24 @@ export namespace Prisma {
     update?: XOR<XOR<PuntoDonacionUpdateToOneWithWhereWithoutArticulosInput, PuntoDonacionUpdateWithoutArticulosInput>, PuntoDonacionUncheckedUpdateWithoutArticulosInput>
   }
 
-  export type TipoArticuloUpdateOneRequiredWithoutArticulosOfertaNestedInput = {
+  export type TipoArticuloUpdateOneWithoutArticulosOfertaNestedInput = {
     create?: XOR<TipoArticuloCreateWithoutArticulosOfertaInput, TipoArticuloUncheckedCreateWithoutArticulosOfertaInput>
     connectOrCreate?: TipoArticuloCreateOrConnectWithoutArticulosOfertaInput
     upsert?: TipoArticuloUpsertWithoutArticulosOfertaInput
+    disconnect?: TipoArticuloWhereInput | boolean
+    delete?: TipoArticuloWhereInput | boolean
     connect?: TipoArticuloWhereUniqueInput
     update?: XOR<XOR<TipoArticuloUpdateToOneWithWhereWithoutArticulosOfertaInput, TipoArticuloUpdateWithoutArticulosOfertaInput>, TipoArticuloUncheckedUpdateWithoutArticulosOfertaInput>
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUpdateOneWithoutArticuloOfertaNestedInput = {
+    create?: XOR<TipoArticuloPersonalizadoOfertaCreateWithoutArticuloOfertaInput, TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutArticuloOfertaInput>
+    connectOrCreate?: TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutArticuloOfertaInput
+    upsert?: TipoArticuloPersonalizadoOfertaUpsertWithoutArticuloOfertaInput
+    disconnect?: TipoArticuloPersonalizadoOfertaWhereInput | boolean
+    delete?: TipoArticuloPersonalizadoOfertaWhereInput | boolean
+    connect?: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    update?: XOR<XOR<TipoArticuloPersonalizadoOfertaUpdateToOneWithWhereWithoutArticuloOfertaInput, TipoArticuloPersonalizadoOfertaUpdateWithoutArticuloOfertaInput>, TipoArticuloPersonalizadoOfertaUncheckedUpdateWithoutArticuloOfertaInput>
   }
 
   export type ArticuloSolicitudCreateNestedManyWithoutSolicitudInput = {
@@ -18940,6 +20528,62 @@ export namespace Prisma {
     deleteMany?: ArticuloSolicitudScalarWhereInput | ArticuloSolicitudScalarWhereInput[]
   }
 
+  export type PuntoDonacionCreateNestedOneWithoutTiposArticuloPersonalizadosOfertaInput = {
+    create?: XOR<PuntoDonacionCreateWithoutTiposArticuloPersonalizadosOfertaInput, PuntoDonacionUncheckedCreateWithoutTiposArticuloPersonalizadosOfertaInput>
+    connectOrCreate?: PuntoDonacionCreateOrConnectWithoutTiposArticuloPersonalizadosOfertaInput
+    connect?: PuntoDonacionWhereUniqueInput
+  }
+
+  export type ArticuloOfertaCreateNestedManyWithoutTipoArticuloPersonalizadoOfertaInput = {
+    create?: XOR<ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput, ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput> | ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput[] | ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput[]
+    connectOrCreate?: ArticuloOfertaCreateOrConnectWithoutTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaCreateOrConnectWithoutTipoArticuloPersonalizadoOfertaInput[]
+    createMany?: ArticuloOfertaCreateManyTipoArticuloPersonalizadoOfertaInputEnvelope
+    connect?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+  }
+
+  export type ArticuloOfertaUncheckedCreateNestedManyWithoutTipoArticuloPersonalizadoOfertaInput = {
+    create?: XOR<ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput, ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput> | ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput[] | ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput[]
+    connectOrCreate?: ArticuloOfertaCreateOrConnectWithoutTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaCreateOrConnectWithoutTipoArticuloPersonalizadoOfertaInput[]
+    createMany?: ArticuloOfertaCreateManyTipoArticuloPersonalizadoOfertaInputEnvelope
+    connect?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+  }
+
+  export type PuntoDonacionUpdateOneRequiredWithoutTiposArticuloPersonalizadosOfertaNestedInput = {
+    create?: XOR<PuntoDonacionCreateWithoutTiposArticuloPersonalizadosOfertaInput, PuntoDonacionUncheckedCreateWithoutTiposArticuloPersonalizadosOfertaInput>
+    connectOrCreate?: PuntoDonacionCreateOrConnectWithoutTiposArticuloPersonalizadosOfertaInput
+    upsert?: PuntoDonacionUpsertWithoutTiposArticuloPersonalizadosOfertaInput
+    connect?: PuntoDonacionWhereUniqueInput
+    update?: XOR<XOR<PuntoDonacionUpdateToOneWithWhereWithoutTiposArticuloPersonalizadosOfertaInput, PuntoDonacionUpdateWithoutTiposArticuloPersonalizadosOfertaInput>, PuntoDonacionUncheckedUpdateWithoutTiposArticuloPersonalizadosOfertaInput>
+  }
+
+  export type ArticuloOfertaUpdateManyWithoutTipoArticuloPersonalizadoOfertaNestedInput = {
+    create?: XOR<ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput, ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput> | ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput[] | ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput[]
+    connectOrCreate?: ArticuloOfertaCreateOrConnectWithoutTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaCreateOrConnectWithoutTipoArticuloPersonalizadoOfertaInput[]
+    upsert?: ArticuloOfertaUpsertWithWhereUniqueWithoutTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaUpsertWithWhereUniqueWithoutTipoArticuloPersonalizadoOfertaInput[]
+    createMany?: ArticuloOfertaCreateManyTipoArticuloPersonalizadoOfertaInputEnvelope
+    set?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+    disconnect?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+    delete?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+    connect?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+    update?: ArticuloOfertaUpdateWithWhereUniqueWithoutTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaUpdateWithWhereUniqueWithoutTipoArticuloPersonalizadoOfertaInput[]
+    updateMany?: ArticuloOfertaUpdateManyWithWhereWithoutTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaUpdateManyWithWhereWithoutTipoArticuloPersonalizadoOfertaInput[]
+    deleteMany?: ArticuloOfertaScalarWhereInput | ArticuloOfertaScalarWhereInput[]
+  }
+
+  export type ArticuloOfertaUncheckedUpdateManyWithoutTipoArticuloPersonalizadoOfertaNestedInput = {
+    create?: XOR<ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput, ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput> | ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput[] | ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput[]
+    connectOrCreate?: ArticuloOfertaCreateOrConnectWithoutTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaCreateOrConnectWithoutTipoArticuloPersonalizadoOfertaInput[]
+    upsert?: ArticuloOfertaUpsertWithWhereUniqueWithoutTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaUpsertWithWhereUniqueWithoutTipoArticuloPersonalizadoOfertaInput[]
+    createMany?: ArticuloOfertaCreateManyTipoArticuloPersonalizadoOfertaInputEnvelope
+    set?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+    disconnect?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+    delete?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+    connect?: ArticuloOfertaWhereUniqueInput | ArticuloOfertaWhereUniqueInput[]
+    update?: ArticuloOfertaUpdateWithWhereUniqueWithoutTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaUpdateWithWhereUniqueWithoutTipoArticuloPersonalizadoOfertaInput[]
+    updateMany?: ArticuloOfertaUpdateManyWithWhereWithoutTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaUpdateManyWithWhereWithoutTipoArticuloPersonalizadoOfertaInput[]
+    deleteMany?: ArticuloOfertaScalarWhereInput | ArticuloOfertaScalarWhereInput[]
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -19154,11 +20798,13 @@ export namespace Prisma {
     creadoEn?: Date | string
     actualizadoEn?: Date | string
     puntoDonacion: PuntoDonacionCreateNestedOneWithoutArticulosInput
+    tipoArticuloPersonalizadoOferta?: TipoArticuloPersonalizadoOfertaCreateNestedOneWithoutArticuloOfertaInput
   }
 
   export type ArticuloOfertaUncheckedCreateWithoutTipoArticuloInput = {
     id?: number
     puntoDonacionId: number
+    tipoArticuloPersonalizadoOfertaId?: number | null
     cantidad?: number | null
     estado?: string
     creadoEn?: Date | string
@@ -19245,7 +20891,8 @@ export namespace Prisma {
     NOT?: ArticuloOfertaScalarWhereInput | ArticuloOfertaScalarWhereInput[]
     id?: IntFilter<"ArticuloOferta"> | number
     puntoDonacionId?: IntFilter<"ArticuloOferta"> | number
-    tipoArticuloId?: IntFilter<"ArticuloOferta"> | number
+    tipoArticuloId?: IntNullableFilter<"ArticuloOferta"> | number | null
+    tipoArticuloPersonalizadoOfertaId?: IntNullableFilter<"ArticuloOferta"> | number | null
     cantidad?: IntNullableFilter<"ArticuloOferta"> | number | null
     estado?: StringFilter<"ArticuloOferta"> | string
     creadoEn?: DateTimeFilter<"ArticuloOferta"> | Date | string
@@ -19312,12 +20959,14 @@ export namespace Prisma {
     estado?: string
     creadoEn?: Date | string
     actualizadoEn?: Date | string
-    tipoArticulo: TipoArticuloCreateNestedOneWithoutArticulosOfertaInput
+    tipoArticulo?: TipoArticuloCreateNestedOneWithoutArticulosOfertaInput
+    tipoArticuloPersonalizadoOferta?: TipoArticuloPersonalizadoOfertaCreateNestedOneWithoutArticuloOfertaInput
   }
 
   export type ArticuloOfertaUncheckedCreateWithoutPuntoDonacionInput = {
     id?: number
-    tipoArticuloId: number
+    tipoArticuloId?: number | null
+    tipoArticuloPersonalizadoOfertaId?: number | null
     cantidad?: number | null
     estado?: string
     creadoEn?: Date | string
@@ -19331,6 +20980,29 @@ export namespace Prisma {
 
   export type ArticuloOfertaCreateManyPuntoDonacionInputEnvelope = {
     data: ArticuloOfertaCreateManyPuntoDonacionInput | ArticuloOfertaCreateManyPuntoDonacionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput = {
+    nombre: string
+    creadoEn?: Date | string
+    ArticuloOferta?: ArticuloOfertaCreateNestedManyWithoutTipoArticuloPersonalizadoOfertaInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput = {
+    id?: number
+    nombre: string
+    creadoEn?: Date | string
+    ArticuloOferta?: ArticuloOfertaUncheckedCreateNestedManyWithoutTipoArticuloPersonalizadoOfertaInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutPuntoDonacionInput = {
+    where: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    create: XOR<TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput, TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput>
+  }
+
+  export type TipoArticuloPersonalizadoOfertaCreateManyPuntoDonacionInputEnvelope = {
+    data: TipoArticuloPersonalizadoOfertaCreateManyPuntoDonacionInput | TipoArticuloPersonalizadoOfertaCreateManyPuntoDonacionInput[]
     skipDuplicates?: boolean
   }
 
@@ -19350,6 +21022,32 @@ export namespace Prisma {
     data: XOR<ArticuloOfertaUpdateManyMutationInput, ArticuloOfertaUncheckedUpdateManyWithoutPuntoDonacionInput>
   }
 
+  export type TipoArticuloPersonalizadoOfertaUpsertWithWhereUniqueWithoutPuntoDonacionInput = {
+    where: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    update: XOR<TipoArticuloPersonalizadoOfertaUpdateWithoutPuntoDonacionInput, TipoArticuloPersonalizadoOfertaUncheckedUpdateWithoutPuntoDonacionInput>
+    create: XOR<TipoArticuloPersonalizadoOfertaCreateWithoutPuntoDonacionInput, TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutPuntoDonacionInput>
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUpdateWithWhereUniqueWithoutPuntoDonacionInput = {
+    where: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    data: XOR<TipoArticuloPersonalizadoOfertaUpdateWithoutPuntoDonacionInput, TipoArticuloPersonalizadoOfertaUncheckedUpdateWithoutPuntoDonacionInput>
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUpdateManyWithWhereWithoutPuntoDonacionInput = {
+    where: TipoArticuloPersonalizadoOfertaScalarWhereInput
+    data: XOR<TipoArticuloPersonalizadoOfertaUpdateManyMutationInput, TipoArticuloPersonalizadoOfertaUncheckedUpdateManyWithoutPuntoDonacionInput>
+  }
+
+  export type TipoArticuloPersonalizadoOfertaScalarWhereInput = {
+    AND?: TipoArticuloPersonalizadoOfertaScalarWhereInput | TipoArticuloPersonalizadoOfertaScalarWhereInput[]
+    OR?: TipoArticuloPersonalizadoOfertaScalarWhereInput[]
+    NOT?: TipoArticuloPersonalizadoOfertaScalarWhereInput | TipoArticuloPersonalizadoOfertaScalarWhereInput[]
+    id?: IntFilter<"TipoArticuloPersonalizadoOferta"> | number
+    nombre?: StringFilter<"TipoArticuloPersonalizadoOferta"> | string
+    puntoDonacionId?: IntFilter<"TipoArticuloPersonalizadoOferta"> | number
+    creadoEn?: DateTimeFilter<"TipoArticuloPersonalizadoOferta"> | Date | string
+  }
+
   export type PuntoDonacionCreateWithoutArticulosInput = {
     nombre?: string | null
     direccion: string
@@ -19363,6 +21061,7 @@ export namespace Prisma {
     activo?: boolean
     creadoEn?: Date | string
     actualizadoEn?: Date | string
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaCreateNestedManyWithoutPuntoDonacionInput
   }
 
   export type PuntoDonacionUncheckedCreateWithoutArticulosInput = {
@@ -19379,6 +21078,7 @@ export namespace Prisma {
     activo?: boolean
     creadoEn?: Date | string
     actualizadoEn?: Date | string
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaUncheckedCreateNestedManyWithoutPuntoDonacionInput
   }
 
   export type PuntoDonacionCreateOrConnectWithoutArticulosInput = {
@@ -19406,6 +21106,24 @@ export namespace Prisma {
     create: XOR<TipoArticuloCreateWithoutArticulosOfertaInput, TipoArticuloUncheckedCreateWithoutArticulosOfertaInput>
   }
 
+  export type TipoArticuloPersonalizadoOfertaCreateWithoutArticuloOfertaInput = {
+    nombre: string
+    creadoEn?: Date | string
+    puntoDonacion: PuntoDonacionCreateNestedOneWithoutTiposArticuloPersonalizadosOfertaInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutArticuloOfertaInput = {
+    id?: number
+    nombre: string
+    puntoDonacionId: number
+    creadoEn?: Date | string
+  }
+
+  export type TipoArticuloPersonalizadoOfertaCreateOrConnectWithoutArticuloOfertaInput = {
+    where: TipoArticuloPersonalizadoOfertaWhereUniqueInput
+    create: XOR<TipoArticuloPersonalizadoOfertaCreateWithoutArticuloOfertaInput, TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutArticuloOfertaInput>
+  }
+
   export type PuntoDonacionUpsertWithoutArticulosInput = {
     update: XOR<PuntoDonacionUpdateWithoutArticulosInput, PuntoDonacionUncheckedUpdateWithoutArticulosInput>
     create: XOR<PuntoDonacionCreateWithoutArticulosInput, PuntoDonacionUncheckedCreateWithoutArticulosInput>
@@ -19430,6 +21148,7 @@ export namespace Prisma {
     activo?: BoolFieldUpdateOperationsInput | boolean
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaUpdateManyWithoutPuntoDonacionNestedInput
   }
 
   export type PuntoDonacionUncheckedUpdateWithoutArticulosInput = {
@@ -19446,6 +21165,7 @@ export namespace Prisma {
     activo?: BoolFieldUpdateOperationsInput | boolean
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    tiposArticuloPersonalizadosOferta?: TipoArticuloPersonalizadoOfertaUncheckedUpdateManyWithoutPuntoDonacionNestedInput
   }
 
   export type TipoArticuloUpsertWithoutArticulosOfertaInput = {
@@ -19472,6 +21192,30 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     articulosPeticion?: ArticuloPeticionUncheckedUpdateManyWithoutTipoArticuloNestedInput
     articulosSolicitud?: ArticuloSolicitudUncheckedUpdateManyWithoutTipoArticuloNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUpsertWithoutArticuloOfertaInput = {
+    update: XOR<TipoArticuloPersonalizadoOfertaUpdateWithoutArticuloOfertaInput, TipoArticuloPersonalizadoOfertaUncheckedUpdateWithoutArticuloOfertaInput>
+    create: XOR<TipoArticuloPersonalizadoOfertaCreateWithoutArticuloOfertaInput, TipoArticuloPersonalizadoOfertaUncheckedCreateWithoutArticuloOfertaInput>
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUpdateToOneWithWhereWithoutArticuloOfertaInput = {
+    where?: TipoArticuloPersonalizadoOfertaWhereInput
+    data: XOR<TipoArticuloPersonalizadoOfertaUpdateWithoutArticuloOfertaInput, TipoArticuloPersonalizadoOfertaUncheckedUpdateWithoutArticuloOfertaInput>
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUpdateWithoutArticuloOfertaInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    puntoDonacion?: PuntoDonacionUpdateOneRequiredWithoutTiposArticuloPersonalizadosOfertaNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUncheckedUpdateWithoutArticuloOfertaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    puntoDonacionId?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ArticuloSolicitudCreateWithoutSolicitudInput = {
@@ -19984,9 +21728,137 @@ export namespace Prisma {
     data: XOR<ArticuloSolicitudUpdateManyMutationInput, ArticuloSolicitudUncheckedUpdateManyWithoutTipoArticuloPersonalizadoInput>
   }
 
+  export type PuntoDonacionCreateWithoutTiposArticuloPersonalizadosOfertaInput = {
+    nombre?: string | null
+    direccion: string
+    responsable: string
+    telefono?: string | null
+    latitud: number
+    longitud: number
+    horarioApertura?: string | null
+    horarioCierre?: string | null
+    descripcion?: string | null
+    activo?: boolean
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    articulos?: ArticuloOfertaCreateNestedManyWithoutPuntoDonacionInput
+  }
+
+  export type PuntoDonacionUncheckedCreateWithoutTiposArticuloPersonalizadosOfertaInput = {
+    id?: number
+    nombre?: string | null
+    direccion: string
+    responsable: string
+    telefono?: string | null
+    latitud: number
+    longitud: number
+    horarioApertura?: string | null
+    horarioCierre?: string | null
+    descripcion?: string | null
+    activo?: boolean
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    articulos?: ArticuloOfertaUncheckedCreateNestedManyWithoutPuntoDonacionInput
+  }
+
+  export type PuntoDonacionCreateOrConnectWithoutTiposArticuloPersonalizadosOfertaInput = {
+    where: PuntoDonacionWhereUniqueInput
+    create: XOR<PuntoDonacionCreateWithoutTiposArticuloPersonalizadosOfertaInput, PuntoDonacionUncheckedCreateWithoutTiposArticuloPersonalizadosOfertaInput>
+  }
+
+  export type ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput = {
+    cantidad?: number | null
+    estado?: string
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    puntoDonacion: PuntoDonacionCreateNestedOneWithoutArticulosInput
+    tipoArticulo?: TipoArticuloCreateNestedOneWithoutArticulosOfertaInput
+  }
+
+  export type ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput = {
+    id?: number
+    puntoDonacionId: number
+    tipoArticuloId?: number | null
+    cantidad?: number | null
+    estado?: string
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type ArticuloOfertaCreateOrConnectWithoutTipoArticuloPersonalizadoOfertaInput = {
+    where: ArticuloOfertaWhereUniqueInput
+    create: XOR<ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput, ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput>
+  }
+
+  export type ArticuloOfertaCreateManyTipoArticuloPersonalizadoOfertaInputEnvelope = {
+    data: ArticuloOfertaCreateManyTipoArticuloPersonalizadoOfertaInput | ArticuloOfertaCreateManyTipoArticuloPersonalizadoOfertaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PuntoDonacionUpsertWithoutTiposArticuloPersonalizadosOfertaInput = {
+    update: XOR<PuntoDonacionUpdateWithoutTiposArticuloPersonalizadosOfertaInput, PuntoDonacionUncheckedUpdateWithoutTiposArticuloPersonalizadosOfertaInput>
+    create: XOR<PuntoDonacionCreateWithoutTiposArticuloPersonalizadosOfertaInput, PuntoDonacionUncheckedCreateWithoutTiposArticuloPersonalizadosOfertaInput>
+    where?: PuntoDonacionWhereInput
+  }
+
+  export type PuntoDonacionUpdateToOneWithWhereWithoutTiposArticuloPersonalizadosOfertaInput = {
+    where?: PuntoDonacionWhereInput
+    data: XOR<PuntoDonacionUpdateWithoutTiposArticuloPersonalizadosOfertaInput, PuntoDonacionUncheckedUpdateWithoutTiposArticuloPersonalizadosOfertaInput>
+  }
+
+  export type PuntoDonacionUpdateWithoutTiposArticuloPersonalizadosOfertaInput = {
+    nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: StringFieldUpdateOperationsInput | string
+    responsable?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    latitud?: FloatFieldUpdateOperationsInput | number
+    longitud?: FloatFieldUpdateOperationsInput | number
+    horarioApertura?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioCierre?: NullableStringFieldUpdateOperationsInput | string | null
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    articulos?: ArticuloOfertaUpdateManyWithoutPuntoDonacionNestedInput
+  }
+
+  export type PuntoDonacionUncheckedUpdateWithoutTiposArticuloPersonalizadosOfertaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: StringFieldUpdateOperationsInput | string
+    responsable?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    latitud?: FloatFieldUpdateOperationsInput | number
+    longitud?: FloatFieldUpdateOperationsInput | number
+    horarioApertura?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioCierre?: NullableStringFieldUpdateOperationsInput | string | null
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    articulos?: ArticuloOfertaUncheckedUpdateManyWithoutPuntoDonacionNestedInput
+  }
+
+  export type ArticuloOfertaUpsertWithWhereUniqueWithoutTipoArticuloPersonalizadoOfertaInput = {
+    where: ArticuloOfertaWhereUniqueInput
+    update: XOR<ArticuloOfertaUpdateWithoutTipoArticuloPersonalizadoOfertaInput, ArticuloOfertaUncheckedUpdateWithoutTipoArticuloPersonalizadoOfertaInput>
+    create: XOR<ArticuloOfertaCreateWithoutTipoArticuloPersonalizadoOfertaInput, ArticuloOfertaUncheckedCreateWithoutTipoArticuloPersonalizadoOfertaInput>
+  }
+
+  export type ArticuloOfertaUpdateWithWhereUniqueWithoutTipoArticuloPersonalizadoOfertaInput = {
+    where: ArticuloOfertaWhereUniqueInput
+    data: XOR<ArticuloOfertaUpdateWithoutTipoArticuloPersonalizadoOfertaInput, ArticuloOfertaUncheckedUpdateWithoutTipoArticuloPersonalizadoOfertaInput>
+  }
+
+  export type ArticuloOfertaUpdateManyWithWhereWithoutTipoArticuloPersonalizadoOfertaInput = {
+    where: ArticuloOfertaScalarWhereInput
+    data: XOR<ArticuloOfertaUpdateManyMutationInput, ArticuloOfertaUncheckedUpdateManyWithoutTipoArticuloPersonalizadoOfertaInput>
+  }
+
   export type ArticuloOfertaCreateManyTipoArticuloInput = {
     id?: number
     puntoDonacionId: number
+    tipoArticuloPersonalizadoOfertaId?: number | null
     cantidad?: number | null
     estado?: string
     creadoEn?: Date | string
@@ -20014,11 +21886,13 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     puntoDonacion?: PuntoDonacionUpdateOneRequiredWithoutArticulosNestedInput
+    tipoArticuloPersonalizadoOferta?: TipoArticuloPersonalizadoOfertaUpdateOneWithoutArticuloOfertaNestedInput
   }
 
   export type ArticuloOfertaUncheckedUpdateWithoutTipoArticuloInput = {
     id?: IntFieldUpdateOperationsInput | number
     puntoDonacionId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloPersonalizadoOfertaId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20028,6 +21902,7 @@ export namespace Prisma {
   export type ArticuloOfertaUncheckedUpdateManyWithoutTipoArticuloInput = {
     id?: IntFieldUpdateOperationsInput | number
     puntoDonacionId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloPersonalizadoOfertaId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20079,11 +21954,18 @@ export namespace Prisma {
 
   export type ArticuloOfertaCreateManyPuntoDonacionInput = {
     id?: number
-    tipoArticuloId: number
+    tipoArticuloId?: number | null
+    tipoArticuloPersonalizadoOfertaId?: number | null
     cantidad?: number | null
     estado?: string
     creadoEn?: Date | string
     actualizadoEn?: Date | string
+  }
+
+  export type TipoArticuloPersonalizadoOfertaCreateManyPuntoDonacionInput = {
+    id?: number
+    nombre: string
+    creadoEn?: Date | string
   }
 
   export type ArticuloOfertaUpdateWithoutPuntoDonacionInput = {
@@ -20091,12 +21973,14 @@ export namespace Prisma {
     estado?: StringFieldUpdateOperationsInput | string
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
-    tipoArticulo?: TipoArticuloUpdateOneRequiredWithoutArticulosOfertaNestedInput
+    tipoArticulo?: TipoArticuloUpdateOneWithoutArticulosOfertaNestedInput
+    tipoArticuloPersonalizadoOferta?: TipoArticuloPersonalizadoOfertaUpdateOneWithoutArticuloOfertaNestedInput
   }
 
   export type ArticuloOfertaUncheckedUpdateWithoutPuntoDonacionInput = {
     id?: IntFieldUpdateOperationsInput | number
-    tipoArticuloId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoArticuloPersonalizadoOfertaId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20105,11 +21989,31 @@ export namespace Prisma {
 
   export type ArticuloOfertaUncheckedUpdateManyWithoutPuntoDonacionInput = {
     id?: IntFieldUpdateOperationsInput | number
-    tipoArticuloId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoArticuloPersonalizadoOfertaId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: NullableIntFieldUpdateOperationsInput | number | null
     estado?: StringFieldUpdateOperationsInput | string
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUpdateWithoutPuntoDonacionInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    ArticuloOferta?: ArticuloOfertaUpdateManyWithoutTipoArticuloPersonalizadoOfertaNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUncheckedUpdateWithoutPuntoDonacionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    ArticuloOferta?: ArticuloOfertaUncheckedUpdateManyWithoutTipoArticuloPersonalizadoOfertaNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoOfertaUncheckedUpdateManyWithoutPuntoDonacionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ArticuloSolicitudCreateManySolicitudInput = {
@@ -20224,6 +22128,45 @@ export namespace Prisma {
     tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: IntFieldUpdateOperationsInput | number
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArticuloOfertaCreateManyTipoArticuloPersonalizadoOfertaInput = {
+    id?: number
+    puntoDonacionId: number
+    tipoArticuloId?: number | null
+    cantidad?: number | null
+    estado?: string
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type ArticuloOfertaUpdateWithoutTipoArticuloPersonalizadoOfertaInput = {
+    cantidad?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    puntoDonacion?: PuntoDonacionUpdateOneRequiredWithoutArticulosNestedInput
+    tipoArticulo?: TipoArticuloUpdateOneWithoutArticulosOfertaNestedInput
+  }
+
+  export type ArticuloOfertaUncheckedUpdateWithoutTipoArticuloPersonalizadoOfertaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    puntoDonacionId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    cantidad?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArticuloOfertaUncheckedUpdateManyWithoutTipoArticuloPersonalizadoOfertaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    puntoDonacionId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    cantidad?: NullableIntFieldUpdateOperationsInput | number | null
+    estado?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
