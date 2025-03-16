@@ -13,9 +13,6 @@ const nextConfig = {
     ignoreBuildErrors: true
   },
   
-  // Habilitar la minificación para mejorar el rendimiento
-  swcMinify: true,
-  
   // Opciones para optimizar imágenes
   images: {
     domains: ["unpkg.com"],
