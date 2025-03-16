@@ -18,7 +18,8 @@ export async function GET(request: NextRequest) {
       include: {
         articulos: {
           include: {
-            tipoArticulo: true
+            tipoArticulo: true,
+            tipoArticuloPersonalizado: true
           }
         }
       },
@@ -27,8 +28,36 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    console.log(`Solicitudes encontradas (estado=${estado || 'todas'}):`, solicitudes.length);
-    return NextResponse.json(solicitudes);
+    // Transformar los datos para mantener la compatibilidad con el frontend
+    const solicitudesFormateadas = solicitudes.map(solicitud => {
+      const articulosFormateados = solicitud.articulos.map(articulo => {
+        // Determinar el nombre del tipo de artículo (estándar o personalizado)
+        const tipoArticuloNombre = articulo.tipoArticulo?.nombre ?? 
+                                 articulo.tipoArticuloPersonalizado?.nombre ?? 
+                                 "Desconocido";
+        
+        // Determinar el ID del tipo de artículo (estándar o personalizado)
+        const tipoArticuloId = articulo.tipoArticulo?.id ?? 
+                              articulo.tipoArticuloPersonalizado?.id ?? 
+                              0;
+        
+        return {
+          ...articulo,
+          tipoArticulo: {
+            id: tipoArticuloId,
+            nombre: tipoArticuloNombre
+          }
+        };
+      });
+      
+      return {
+        ...solicitud,
+        articulos: articulosFormateados
+      };
+    });
+
+    console.log(`Solicitudes encontradas (estado=${estado || 'todas'}):`, solicitudesFormateadas.length);
+    return NextResponse.json(solicitudesFormateadas);
   } catch (error) {
     console.error("Error al obtener solicitudes:", error);
     return NextResponse.json(
@@ -99,29 +128,32 @@ export async function POST(request: NextRequest) {
 
     // Procesar artículos
     for (const articulo of articulos) {
-      // Si el tipo es "Otro", primero crear el nuevo tipo de artículo
+      // Si el tipo es "Otro", crear un tipo de artículo personalizado
       if (articulo.tipoArticulo === "Otro" && articulo.tipoPersonalizado) {
-        let tipoArticulo = await prisma.tipoArticulo.findUnique({
-          where: { nombre: articulo.tipoPersonalizado }
-        });
-
-        // Si no existe, crear el nuevo tipo
-        if (!tipoArticulo) {
-          tipoArticulo = await prisma.tipoArticulo.create({
-            data: { nombre: articulo.tipoPersonalizado }
+        try {
+          // Crear el tipo de artículo personalizado
+          const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.create({
+            data: {
+              nombre: articulo.tipoPersonalizado,
+              solicitudId: nuevaSolicitud.id
+            }
           });
-        }
 
-        // Asociar el artículo a la solicitud
-        await prisma.articuloSolicitud.create({
-          data: {
-            solicitudId: nuevaSolicitud.id,
-            tipoArticuloId: tipoArticulo.id,
-            cantidad: articulo.cantidad
-          }
-        });
+          // Asociar el artículo a la solicitud con el tipo personalizado
+          await prisma.articuloSolicitud.create({
+            data: {
+              solicitudId: nuevaSolicitud.id,
+              tipoArticuloPersonalizadoId: tipoArticuloPersonalizado.id,
+              cantidad: articulo.cantidad
+            }
+          });
+        } catch (error) {
+          console.error('Error al crear tipo de artículo personalizado:', error);
+          // Continuar con el siguiente artículo si hay un error
+          continue;
+        }
       } else {
-        // Buscar el tipo de artículo por nombre
+        // Buscar el tipo de artículo estándar por nombre
         const tipoArticulo = await prisma.tipoArticulo.findUnique({
           where: { nombre: articulo.tipoArticulo }
         });
@@ -131,7 +163,7 @@ export async function POST(request: NextRequest) {
           continue; 
         }
 
-        // Asociar el artículo a la solicitud
+        // Asociar el artículo a la solicitud con el tipo estándar
         await prisma.articuloSolicitud.create({
           data: {
             solicitudId: nuevaSolicitud.id,

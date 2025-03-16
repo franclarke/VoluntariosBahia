@@ -22,7 +22,8 @@ export async function GET(
       include: {
         articulos: {
           include: {
-            tipoArticulo: true
+            tipoArticulo: true,
+            tipoArticuloPersonalizado: true
           }
         }
       }
@@ -35,7 +36,33 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(solicitud);
+    // Transformar los datos para mantener la compatibilidad con el frontend
+    const articulosFormateados = solicitud.articulos.map(articulo => {
+      // Determinar el nombre del tipo de artículo (estándar o personalizado)
+      const tipoArticuloNombre = articulo.tipoArticulo?.nombre ?? 
+                               articulo.tipoArticuloPersonalizado?.nombre ?? 
+                               "Desconocido";
+      
+      // Determinar el ID del tipo de artículo (estándar o personalizado)
+      const tipoArticuloId = articulo.tipoArticulo?.id ?? 
+                            articulo.tipoArticuloPersonalizado?.id ?? 
+                            0;
+      
+      return {
+        ...articulo,
+        tipoArticulo: {
+          id: tipoArticuloId,
+          nombre: tipoArticuloNombre
+        }
+      };
+    });
+    
+    const solicitudFormateada = {
+      ...solicitud,
+      articulos: articulosFormateados
+    };
+
+    return NextResponse.json(solicitudFormateada);
   } catch (error) {
     console.error("Error al obtener solicitud:", error);
     return NextResponse.json(

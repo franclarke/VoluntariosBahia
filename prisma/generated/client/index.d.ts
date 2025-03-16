@@ -68,6 +68,11 @@ export type InformacionUtil = $Result.DefaultSelection<Prisma.$InformacionUtilPa
  * @deprecated Use MensajeContacto o InformacionUtil instead
  */
 export type Mensaje = $Result.DefaultSelection<Prisma.$MensajePayload>
+/**
+ * Model TipoArticuloPersonalizado
+ * 
+ */
+export type TipoArticuloPersonalizado = $Result.DefaultSelection<Prisma.$TipoArticuloPersonalizadoPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -303,6 +308,16 @@ export class PrismaClient<
     * ```
     */
   get mensaje(): Prisma.MensajeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tipoArticuloPersonalizado`: Exposes CRUD operations for the **TipoArticuloPersonalizado** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TipoArticuloPersonalizados
+    * const tipoArticuloPersonalizados = await prisma.tipoArticuloPersonalizado.findMany()
+    * ```
+    */
+  get tipoArticuloPersonalizado(): Prisma.TipoArticuloPersonalizadoDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -753,7 +768,8 @@ export namespace Prisma {
     SolicitudLimpieza: 'SolicitudLimpieza',
     MensajeContacto: 'MensajeContacto',
     InformacionUtil: 'InformacionUtil',
-    Mensaje: 'Mensaje'
+    Mensaje: 'Mensaje',
+    TipoArticuloPersonalizado: 'TipoArticuloPersonalizado'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -772,7 +788,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "tipoArticulo" | "puntoDonacion" | "articuloOferta" | "solicitud" | "articuloSolicitud" | "peticionDonacion" | "articuloPeticion" | "solicitudLimpieza" | "mensajeContacto" | "informacionUtil" | "mensaje"
+      modelProps: "tipoArticulo" | "puntoDonacion" | "articuloOferta" | "solicitud" | "articuloSolicitud" | "peticionDonacion" | "articuloPeticion" | "solicitudLimpieza" | "mensajeContacto" | "informacionUtil" | "mensaje" | "tipoArticuloPersonalizado"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1590,6 +1606,80 @@ export namespace Prisma {
           }
         }
       }
+      TipoArticuloPersonalizado: {
+        payload: Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>
+        fields: Prisma.TipoArticuloPersonalizadoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TipoArticuloPersonalizadoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TipoArticuloPersonalizadoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload>
+          }
+          findFirst: {
+            args: Prisma.TipoArticuloPersonalizadoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TipoArticuloPersonalizadoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload>
+          }
+          findMany: {
+            args: Prisma.TipoArticuloPersonalizadoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload>[]
+          }
+          create: {
+            args: Prisma.TipoArticuloPersonalizadoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload>
+          }
+          createMany: {
+            args: Prisma.TipoArticuloPersonalizadoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TipoArticuloPersonalizadoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload>[]
+          }
+          delete: {
+            args: Prisma.TipoArticuloPersonalizadoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload>
+          }
+          update: {
+            args: Prisma.TipoArticuloPersonalizadoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload>
+          }
+          deleteMany: {
+            args: Prisma.TipoArticuloPersonalizadoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TipoArticuloPersonalizadoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TipoArticuloPersonalizadoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload>[]
+          }
+          upsert: {
+            args: Prisma.TipoArticuloPersonalizadoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipoArticuloPersonalizadoPayload>
+          }
+          aggregate: {
+            args: Prisma.TipoArticuloPersonalizadoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTipoArticuloPersonalizado>
+          }
+          groupBy: {
+            args: Prisma.TipoArticuloPersonalizadoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TipoArticuloPersonalizadoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TipoArticuloPersonalizadoCountArgs<ExtArgs>
+            result: $Utils.Optional<TipoArticuloPersonalizadoCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1685,6 +1775,7 @@ export namespace Prisma {
     mensajeContacto?: MensajeContactoOmit
     informacionUtil?: InformacionUtilOmit
     mensaje?: MensajeOmit
+    tipoArticuloPersonalizado?: TipoArticuloPersonalizadoOmit
   }
 
   /* Types for Logging */
@@ -1860,10 +1951,12 @@ export namespace Prisma {
 
   export type SolicitudCountOutputType = {
     articulos: number
+    tiposArticuloPersonalizados: number
   }
 
   export type SolicitudCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     articulos?: boolean | SolicitudCountOutputTypeCountArticulosArgs
+    tiposArticuloPersonalizados?: boolean | SolicitudCountOutputTypeCountTiposArticuloPersonalizadosArgs
   }
 
   // Custom InputTypes
@@ -1882,6 +1975,13 @@ export namespace Prisma {
    */
   export type SolicitudCountOutputTypeCountArticulosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ArticuloSolicitudWhereInput
+  }
+
+  /**
+   * SolicitudCountOutputType without action
+   */
+  export type SolicitudCountOutputTypeCountTiposArticuloPersonalizadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TipoArticuloPersonalizadoWhereInput
   }
 
 
@@ -1913,6 +2013,37 @@ export namespace Prisma {
    */
   export type PeticionDonacionCountOutputTypeCountArticulosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ArticuloPeticionWhereInput
+  }
+
+
+  /**
+   * Count Type TipoArticuloPersonalizadoCountOutputType
+   */
+
+  export type TipoArticuloPersonalizadoCountOutputType = {
+    ArticuloSolicitud: number
+  }
+
+  export type TipoArticuloPersonalizadoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ArticuloSolicitud?: boolean | TipoArticuloPersonalizadoCountOutputTypeCountArticuloSolicitudArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TipoArticuloPersonalizadoCountOutputType without action
+   */
+  export type TipoArticuloPersonalizadoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizadoCountOutputType
+     */
+    select?: TipoArticuloPersonalizadoCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TipoArticuloPersonalizadoCountOutputType without action
+   */
+  export type TipoArticuloPersonalizadoCountOutputTypeCountArticuloSolicitudArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ArticuloSolicitudWhereInput
   }
 
 
@@ -5655,6 +5786,7 @@ export namespace Prisma {
     creadoEn?: boolean
     actualizadoEn?: boolean
     articulos?: boolean | Solicitud$articulosArgs<ExtArgs>
+    tiposArticuloPersonalizados?: boolean | Solicitud$tiposArticuloPersonalizadosArgs<ExtArgs>
     _count?: boolean | SolicitudCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["solicitud"]>
 
@@ -5700,6 +5832,7 @@ export namespace Prisma {
   export type SolicitudOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "direccion" | "contactoNombre" | "contactoTel" | "estado" | "latitud" | "longitud" | "descripcion" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["solicitud"]>
   export type SolicitudInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     articulos?: boolean | Solicitud$articulosArgs<ExtArgs>
+    tiposArticuloPersonalizados?: boolean | Solicitud$tiposArticuloPersonalizadosArgs<ExtArgs>
     _count?: boolean | SolicitudCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SolicitudIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5709,6 +5842,7 @@ export namespace Prisma {
     name: "Solicitud"
     objects: {
       articulos: Prisma.$ArticuloSolicitudPayload<ExtArgs>[]
+      tiposArticuloPersonalizados: Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6116,6 +6250,7 @@ export namespace Prisma {
   export interface Prisma__SolicitudClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     articulos<T extends Solicitud$articulosArgs<ExtArgs> = {}>(args?: Subset<T, Solicitud$articulosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticuloSolicitudPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tiposArticuloPersonalizados<T extends Solicitud$tiposArticuloPersonalizadosArgs<ExtArgs> = {}>(args?: Subset<T, Solicitud$tiposArticuloPersonalizadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6567,6 +6702,30 @@ export namespace Prisma {
   }
 
   /**
+   * Solicitud.tiposArticuloPersonalizados
+   */
+  export type Solicitud$tiposArticuloPersonalizadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    where?: TipoArticuloPersonalizadoWhereInput
+    orderBy?: TipoArticuloPersonalizadoOrderByWithRelationInput | TipoArticuloPersonalizadoOrderByWithRelationInput[]
+    cursor?: TipoArticuloPersonalizadoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TipoArticuloPersonalizadoScalarFieldEnum | TipoArticuloPersonalizadoScalarFieldEnum[]
+  }
+
+  /**
    * Solicitud without action
    */
   export type SolicitudDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6601,6 +6760,7 @@ export namespace Prisma {
     id: number | null
     solicitudId: number | null
     tipoArticuloId: number | null
+    tipoArticuloPersonalizadoId: number | null
     cantidad: number | null
   }
 
@@ -6608,6 +6768,7 @@ export namespace Prisma {
     id: number | null
     solicitudId: number | null
     tipoArticuloId: number | null
+    tipoArticuloPersonalizadoId: number | null
     cantidad: number | null
   }
 
@@ -6615,6 +6776,7 @@ export namespace Prisma {
     id: number | null
     solicitudId: number | null
     tipoArticuloId: number | null
+    tipoArticuloPersonalizadoId: number | null
     cantidad: number | null
     creadoEn: Date | null
   }
@@ -6623,6 +6785,7 @@ export namespace Prisma {
     id: number | null
     solicitudId: number | null
     tipoArticuloId: number | null
+    tipoArticuloPersonalizadoId: number | null
     cantidad: number | null
     creadoEn: Date | null
   }
@@ -6631,6 +6794,7 @@ export namespace Prisma {
     id: number
     solicitudId: number
     tipoArticuloId: number
+    tipoArticuloPersonalizadoId: number
     cantidad: number
     creadoEn: number
     _all: number
@@ -6641,6 +6805,7 @@ export namespace Prisma {
     id?: true
     solicitudId?: true
     tipoArticuloId?: true
+    tipoArticuloPersonalizadoId?: true
     cantidad?: true
   }
 
@@ -6648,6 +6813,7 @@ export namespace Prisma {
     id?: true
     solicitudId?: true
     tipoArticuloId?: true
+    tipoArticuloPersonalizadoId?: true
     cantidad?: true
   }
 
@@ -6655,6 +6821,7 @@ export namespace Prisma {
     id?: true
     solicitudId?: true
     tipoArticuloId?: true
+    tipoArticuloPersonalizadoId?: true
     cantidad?: true
     creadoEn?: true
   }
@@ -6663,6 +6830,7 @@ export namespace Prisma {
     id?: true
     solicitudId?: true
     tipoArticuloId?: true
+    tipoArticuloPersonalizadoId?: true
     cantidad?: true
     creadoEn?: true
   }
@@ -6671,6 +6839,7 @@ export namespace Prisma {
     id?: true
     solicitudId?: true
     tipoArticuloId?: true
+    tipoArticuloPersonalizadoId?: true
     cantidad?: true
     creadoEn?: true
     _all?: true
@@ -6765,7 +6934,8 @@ export namespace Prisma {
   export type ArticuloSolicitudGroupByOutputType = {
     id: number
     solicitudId: number
-    tipoArticuloId: number
+    tipoArticuloId: number | null
+    tipoArticuloPersonalizadoId: number | null
     cantidad: number
     creadoEn: Date
     _count: ArticuloSolicitudCountAggregateOutputType | null
@@ -6793,64 +6963,76 @@ export namespace Prisma {
     id?: boolean
     solicitudId?: boolean
     tipoArticuloId?: boolean
+    tipoArticuloPersonalizadoId?: boolean
     cantidad?: boolean
     creadoEn?: boolean
     solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloSolicitud$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizado?: boolean | ArticuloSolicitud$tipoArticuloPersonalizadoArgs<ExtArgs>
   }, ExtArgs["result"]["articuloSolicitud"]>
 
   export type ArticuloSolicitudSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     solicitudId?: boolean
     tipoArticuloId?: boolean
+    tipoArticuloPersonalizadoId?: boolean
     cantidad?: boolean
     creadoEn?: boolean
     solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloSolicitud$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizado?: boolean | ArticuloSolicitud$tipoArticuloPersonalizadoArgs<ExtArgs>
   }, ExtArgs["result"]["articuloSolicitud"]>
 
   export type ArticuloSolicitudSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     solicitudId?: boolean
     tipoArticuloId?: boolean
+    tipoArticuloPersonalizadoId?: boolean
     cantidad?: boolean
     creadoEn?: boolean
     solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloSolicitud$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizado?: boolean | ArticuloSolicitud$tipoArticuloPersonalizadoArgs<ExtArgs>
   }, ExtArgs["result"]["articuloSolicitud"]>
 
   export type ArticuloSolicitudSelectScalar = {
     id?: boolean
     solicitudId?: boolean
     tipoArticuloId?: boolean
+    tipoArticuloPersonalizadoId?: boolean
     cantidad?: boolean
     creadoEn?: boolean
   }
 
-  export type ArticuloSolicitudOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "solicitudId" | "tipoArticuloId" | "cantidad" | "creadoEn", ExtArgs["result"]["articuloSolicitud"]>
+  export type ArticuloSolicitudOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "solicitudId" | "tipoArticuloId" | "tipoArticuloPersonalizadoId" | "cantidad" | "creadoEn", ExtArgs["result"]["articuloSolicitud"]>
   export type ArticuloSolicitudInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloSolicitud$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizado?: boolean | ArticuloSolicitud$tipoArticuloPersonalizadoArgs<ExtArgs>
   }
   export type ArticuloSolicitudIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloSolicitud$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizado?: boolean | ArticuloSolicitud$tipoArticuloPersonalizadoArgs<ExtArgs>
   }
   export type ArticuloSolicitudIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
-    tipoArticulo?: boolean | TipoArticuloDefaultArgs<ExtArgs>
+    tipoArticulo?: boolean | ArticuloSolicitud$tipoArticuloArgs<ExtArgs>
+    tipoArticuloPersonalizado?: boolean | ArticuloSolicitud$tipoArticuloPersonalizadoArgs<ExtArgs>
   }
 
   export type $ArticuloSolicitudPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ArticuloSolicitud"
     objects: {
       solicitud: Prisma.$SolicitudPayload<ExtArgs>
-      tipoArticulo: Prisma.$TipoArticuloPayload<ExtArgs>
+      tipoArticulo: Prisma.$TipoArticuloPayload<ExtArgs> | null
+      tipoArticuloPersonalizado: Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       solicitudId: number
-      tipoArticuloId: number
+      tipoArticuloId: number | null
+      tipoArticuloPersonalizadoId: number | null
       cantidad: number
       creadoEn: Date
     }, ExtArgs["result"]["articuloSolicitud"]>
@@ -7248,7 +7430,8 @@ export namespace Prisma {
   export interface Prisma__ArticuloSolicitudClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     solicitud<T extends SolicitudDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SolicitudDefaultArgs<ExtArgs>>): Prisma__SolicitudClient<$Result.GetResult<Prisma.$SolicitudPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tipoArticulo<T extends TipoArticuloDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TipoArticuloDefaultArgs<ExtArgs>>): Prisma__TipoArticuloClient<$Result.GetResult<Prisma.$TipoArticuloPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tipoArticulo<T extends ArticuloSolicitud$tipoArticuloArgs<ExtArgs> = {}>(args?: Subset<T, ArticuloSolicitud$tipoArticuloArgs<ExtArgs>>): Prisma__TipoArticuloClient<$Result.GetResult<Prisma.$TipoArticuloPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    tipoArticuloPersonalizado<T extends ArticuloSolicitud$tipoArticuloPersonalizadoArgs<ExtArgs> = {}>(args?: Subset<T, ArticuloSolicitud$tipoArticuloPersonalizadoArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7281,6 +7464,7 @@ export namespace Prisma {
     readonly id: FieldRef<"ArticuloSolicitud", 'Int'>
     readonly solicitudId: FieldRef<"ArticuloSolicitud", 'Int'>
     readonly tipoArticuloId: FieldRef<"ArticuloSolicitud", 'Int'>
+    readonly tipoArticuloPersonalizadoId: FieldRef<"ArticuloSolicitud", 'Int'>
     readonly cantidad: FieldRef<"ArticuloSolicitud", 'Int'>
     readonly creadoEn: FieldRef<"ArticuloSolicitud", 'DateTime'>
   }
@@ -7676,6 +7860,44 @@ export namespace Prisma {
      * Limit how many ArticuloSolicituds to delete.
      */
     limit?: number
+  }
+
+  /**
+   * ArticuloSolicitud.tipoArticulo
+   */
+  export type ArticuloSolicitud$tipoArticuloArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticulo
+     */
+    select?: TipoArticuloSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticulo
+     */
+    omit?: TipoArticuloOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloInclude<ExtArgs> | null
+    where?: TipoArticuloWhereInput
+  }
+
+  /**
+   * ArticuloSolicitud.tipoArticuloPersonalizado
+   */
+  export type ArticuloSolicitud$tipoArticuloPersonalizadoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    where?: TipoArticuloPersonalizadoWhereInput
   }
 
   /**
@@ -14280,6 +14502,1119 @@ export namespace Prisma {
 
 
   /**
+   * Model TipoArticuloPersonalizado
+   */
+
+  export type AggregateTipoArticuloPersonalizado = {
+    _count: TipoArticuloPersonalizadoCountAggregateOutputType | null
+    _avg: TipoArticuloPersonalizadoAvgAggregateOutputType | null
+    _sum: TipoArticuloPersonalizadoSumAggregateOutputType | null
+    _min: TipoArticuloPersonalizadoMinAggregateOutputType | null
+    _max: TipoArticuloPersonalizadoMaxAggregateOutputType | null
+  }
+
+  export type TipoArticuloPersonalizadoAvgAggregateOutputType = {
+    id: number | null
+    solicitudId: number | null
+  }
+
+  export type TipoArticuloPersonalizadoSumAggregateOutputType = {
+    id: number | null
+    solicitudId: number | null
+  }
+
+  export type TipoArticuloPersonalizadoMinAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    solicitudId: number | null
+    creadoEn: Date | null
+  }
+
+  export type TipoArticuloPersonalizadoMaxAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    solicitudId: number | null
+    creadoEn: Date | null
+  }
+
+  export type TipoArticuloPersonalizadoCountAggregateOutputType = {
+    id: number
+    nombre: number
+    solicitudId: number
+    creadoEn: number
+    _all: number
+  }
+
+
+  export type TipoArticuloPersonalizadoAvgAggregateInputType = {
+    id?: true
+    solicitudId?: true
+  }
+
+  export type TipoArticuloPersonalizadoSumAggregateInputType = {
+    id?: true
+    solicitudId?: true
+  }
+
+  export type TipoArticuloPersonalizadoMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    solicitudId?: true
+    creadoEn?: true
+  }
+
+  export type TipoArticuloPersonalizadoMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    solicitudId?: true
+    creadoEn?: true
+  }
+
+  export type TipoArticuloPersonalizadoCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    solicitudId?: true
+    creadoEn?: true
+    _all?: true
+  }
+
+  export type TipoArticuloPersonalizadoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TipoArticuloPersonalizado to aggregate.
+     */
+    where?: TipoArticuloPersonalizadoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipoArticuloPersonalizados to fetch.
+     */
+    orderBy?: TipoArticuloPersonalizadoOrderByWithRelationInput | TipoArticuloPersonalizadoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TipoArticuloPersonalizadoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipoArticuloPersonalizados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipoArticuloPersonalizados.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TipoArticuloPersonalizados
+    **/
+    _count?: true | TipoArticuloPersonalizadoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TipoArticuloPersonalizadoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TipoArticuloPersonalizadoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TipoArticuloPersonalizadoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TipoArticuloPersonalizadoMaxAggregateInputType
+  }
+
+  export type GetTipoArticuloPersonalizadoAggregateType<T extends TipoArticuloPersonalizadoAggregateArgs> = {
+        [P in keyof T & keyof AggregateTipoArticuloPersonalizado]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTipoArticuloPersonalizado[P]>
+      : GetScalarType<T[P], AggregateTipoArticuloPersonalizado[P]>
+  }
+
+
+
+
+  export type TipoArticuloPersonalizadoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TipoArticuloPersonalizadoWhereInput
+    orderBy?: TipoArticuloPersonalizadoOrderByWithAggregationInput | TipoArticuloPersonalizadoOrderByWithAggregationInput[]
+    by: TipoArticuloPersonalizadoScalarFieldEnum[] | TipoArticuloPersonalizadoScalarFieldEnum
+    having?: TipoArticuloPersonalizadoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TipoArticuloPersonalizadoCountAggregateInputType | true
+    _avg?: TipoArticuloPersonalizadoAvgAggregateInputType
+    _sum?: TipoArticuloPersonalizadoSumAggregateInputType
+    _min?: TipoArticuloPersonalizadoMinAggregateInputType
+    _max?: TipoArticuloPersonalizadoMaxAggregateInputType
+  }
+
+  export type TipoArticuloPersonalizadoGroupByOutputType = {
+    id: number
+    nombre: string
+    solicitudId: number
+    creadoEn: Date
+    _count: TipoArticuloPersonalizadoCountAggregateOutputType | null
+    _avg: TipoArticuloPersonalizadoAvgAggregateOutputType | null
+    _sum: TipoArticuloPersonalizadoSumAggregateOutputType | null
+    _min: TipoArticuloPersonalizadoMinAggregateOutputType | null
+    _max: TipoArticuloPersonalizadoMaxAggregateOutputType | null
+  }
+
+  type GetTipoArticuloPersonalizadoGroupByPayload<T extends TipoArticuloPersonalizadoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TipoArticuloPersonalizadoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TipoArticuloPersonalizadoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TipoArticuloPersonalizadoGroupByOutputType[P]>
+            : GetScalarType<T[P], TipoArticuloPersonalizadoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TipoArticuloPersonalizadoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    solicitudId?: boolean
+    creadoEn?: boolean
+    solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
+    ArticuloSolicitud?: boolean | TipoArticuloPersonalizado$ArticuloSolicitudArgs<ExtArgs>
+    _count?: boolean | TipoArticuloPersonalizadoCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tipoArticuloPersonalizado"]>
+
+  export type TipoArticuloPersonalizadoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    solicitudId?: boolean
+    creadoEn?: boolean
+    solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tipoArticuloPersonalizado"]>
+
+  export type TipoArticuloPersonalizadoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    solicitudId?: boolean
+    creadoEn?: boolean
+    solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tipoArticuloPersonalizado"]>
+
+  export type TipoArticuloPersonalizadoSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    solicitudId?: boolean
+    creadoEn?: boolean
+  }
+
+  export type TipoArticuloPersonalizadoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "solicitudId" | "creadoEn", ExtArgs["result"]["tipoArticuloPersonalizado"]>
+  export type TipoArticuloPersonalizadoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
+    ArticuloSolicitud?: boolean | TipoArticuloPersonalizado$ArticuloSolicitudArgs<ExtArgs>
+    _count?: boolean | TipoArticuloPersonalizadoCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TipoArticuloPersonalizadoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
+  }
+  export type TipoArticuloPersonalizadoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    solicitud?: boolean | SolicitudDefaultArgs<ExtArgs>
+  }
+
+  export type $TipoArticuloPersonalizadoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TipoArticuloPersonalizado"
+    objects: {
+      solicitud: Prisma.$SolicitudPayload<ExtArgs>
+      ArticuloSolicitud: Prisma.$ArticuloSolicitudPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      nombre: string
+      solicitudId: number
+      creadoEn: Date
+    }, ExtArgs["result"]["tipoArticuloPersonalizado"]>
+    composites: {}
+  }
+
+  type TipoArticuloPersonalizadoGetPayload<S extends boolean | null | undefined | TipoArticuloPersonalizadoDefaultArgs> = $Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload, S>
+
+  type TipoArticuloPersonalizadoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TipoArticuloPersonalizadoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TipoArticuloPersonalizadoCountAggregateInputType | true
+    }
+
+  export interface TipoArticuloPersonalizadoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TipoArticuloPersonalizado'], meta: { name: 'TipoArticuloPersonalizado' } }
+    /**
+     * Find zero or one TipoArticuloPersonalizado that matches the filter.
+     * @param {TipoArticuloPersonalizadoFindUniqueArgs} args - Arguments to find a TipoArticuloPersonalizado
+     * @example
+     * // Get one TipoArticuloPersonalizado
+     * const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TipoArticuloPersonalizadoFindUniqueArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoFindUniqueArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TipoArticuloPersonalizado that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TipoArticuloPersonalizadoFindUniqueOrThrowArgs} args - Arguments to find a TipoArticuloPersonalizado
+     * @example
+     * // Get one TipoArticuloPersonalizado
+     * const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TipoArticuloPersonalizadoFindUniqueOrThrowArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TipoArticuloPersonalizado that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoFindFirstArgs} args - Arguments to find a TipoArticuloPersonalizado
+     * @example
+     * // Get one TipoArticuloPersonalizado
+     * const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TipoArticuloPersonalizadoFindFirstArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoFindFirstArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TipoArticuloPersonalizado that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoFindFirstOrThrowArgs} args - Arguments to find a TipoArticuloPersonalizado
+     * @example
+     * // Get one TipoArticuloPersonalizado
+     * const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TipoArticuloPersonalizadoFindFirstOrThrowArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoFindFirstOrThrowArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TipoArticuloPersonalizados that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TipoArticuloPersonalizados
+     * const tipoArticuloPersonalizados = await prisma.tipoArticuloPersonalizado.findMany()
+     * 
+     * // Get first 10 TipoArticuloPersonalizados
+     * const tipoArticuloPersonalizados = await prisma.tipoArticuloPersonalizado.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tipoArticuloPersonalizadoWithIdOnly = await prisma.tipoArticuloPersonalizado.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TipoArticuloPersonalizadoFindManyArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TipoArticuloPersonalizado.
+     * @param {TipoArticuloPersonalizadoCreateArgs} args - Arguments to create a TipoArticuloPersonalizado.
+     * @example
+     * // Create one TipoArticuloPersonalizado
+     * const TipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.create({
+     *   data: {
+     *     // ... data to create a TipoArticuloPersonalizado
+     *   }
+     * })
+     * 
+     */
+    create<T extends TipoArticuloPersonalizadoCreateArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoCreateArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TipoArticuloPersonalizados.
+     * @param {TipoArticuloPersonalizadoCreateManyArgs} args - Arguments to create many TipoArticuloPersonalizados.
+     * @example
+     * // Create many TipoArticuloPersonalizados
+     * const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TipoArticuloPersonalizadoCreateManyArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TipoArticuloPersonalizados and returns the data saved in the database.
+     * @param {TipoArticuloPersonalizadoCreateManyAndReturnArgs} args - Arguments to create many TipoArticuloPersonalizados.
+     * @example
+     * // Create many TipoArticuloPersonalizados
+     * const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TipoArticuloPersonalizados and only return the `id`
+     * const tipoArticuloPersonalizadoWithIdOnly = await prisma.tipoArticuloPersonalizado.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TipoArticuloPersonalizadoCreateManyAndReturnArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TipoArticuloPersonalizado.
+     * @param {TipoArticuloPersonalizadoDeleteArgs} args - Arguments to delete one TipoArticuloPersonalizado.
+     * @example
+     * // Delete one TipoArticuloPersonalizado
+     * const TipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.delete({
+     *   where: {
+     *     // ... filter to delete one TipoArticuloPersonalizado
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TipoArticuloPersonalizadoDeleteArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoDeleteArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TipoArticuloPersonalizado.
+     * @param {TipoArticuloPersonalizadoUpdateArgs} args - Arguments to update one TipoArticuloPersonalizado.
+     * @example
+     * // Update one TipoArticuloPersonalizado
+     * const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TipoArticuloPersonalizadoUpdateArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoUpdateArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TipoArticuloPersonalizados.
+     * @param {TipoArticuloPersonalizadoDeleteManyArgs} args - Arguments to filter TipoArticuloPersonalizados to delete.
+     * @example
+     * // Delete a few TipoArticuloPersonalizados
+     * const { count } = await prisma.tipoArticuloPersonalizado.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TipoArticuloPersonalizadoDeleteManyArgs>(args?: SelectSubset<T, TipoArticuloPersonalizadoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TipoArticuloPersonalizados.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TipoArticuloPersonalizados
+     * const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TipoArticuloPersonalizadoUpdateManyArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TipoArticuloPersonalizados and returns the data updated in the database.
+     * @param {TipoArticuloPersonalizadoUpdateManyAndReturnArgs} args - Arguments to update many TipoArticuloPersonalizados.
+     * @example
+     * // Update many TipoArticuloPersonalizados
+     * const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TipoArticuloPersonalizados and only return the `id`
+     * const tipoArticuloPersonalizadoWithIdOnly = await prisma.tipoArticuloPersonalizado.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TipoArticuloPersonalizadoUpdateManyAndReturnArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TipoArticuloPersonalizado.
+     * @param {TipoArticuloPersonalizadoUpsertArgs} args - Arguments to update or create a TipoArticuloPersonalizado.
+     * @example
+     * // Update or create a TipoArticuloPersonalizado
+     * const tipoArticuloPersonalizado = await prisma.tipoArticuloPersonalizado.upsert({
+     *   create: {
+     *     // ... data to create a TipoArticuloPersonalizado
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TipoArticuloPersonalizado we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TipoArticuloPersonalizadoUpsertArgs>(args: SelectSubset<T, TipoArticuloPersonalizadoUpsertArgs<ExtArgs>>): Prisma__TipoArticuloPersonalizadoClient<$Result.GetResult<Prisma.$TipoArticuloPersonalizadoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TipoArticuloPersonalizados.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoCountArgs} args - Arguments to filter TipoArticuloPersonalizados to count.
+     * @example
+     * // Count the number of TipoArticuloPersonalizados
+     * const count = await prisma.tipoArticuloPersonalizado.count({
+     *   where: {
+     *     // ... the filter for the TipoArticuloPersonalizados we want to count
+     *   }
+     * })
+    **/
+    count<T extends TipoArticuloPersonalizadoCountArgs>(
+      args?: Subset<T, TipoArticuloPersonalizadoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TipoArticuloPersonalizadoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TipoArticuloPersonalizado.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TipoArticuloPersonalizadoAggregateArgs>(args: Subset<T, TipoArticuloPersonalizadoAggregateArgs>): Prisma.PrismaPromise<GetTipoArticuloPersonalizadoAggregateType<T>>
+
+    /**
+     * Group by TipoArticuloPersonalizado.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipoArticuloPersonalizadoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TipoArticuloPersonalizadoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TipoArticuloPersonalizadoGroupByArgs['orderBy'] }
+        : { orderBy?: TipoArticuloPersonalizadoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TipoArticuloPersonalizadoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTipoArticuloPersonalizadoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TipoArticuloPersonalizado model
+   */
+  readonly fields: TipoArticuloPersonalizadoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TipoArticuloPersonalizado.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TipoArticuloPersonalizadoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    solicitud<T extends SolicitudDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SolicitudDefaultArgs<ExtArgs>>): Prisma__SolicitudClient<$Result.GetResult<Prisma.$SolicitudPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    ArticuloSolicitud<T extends TipoArticuloPersonalizado$ArticuloSolicitudArgs<ExtArgs> = {}>(args?: Subset<T, TipoArticuloPersonalizado$ArticuloSolicitudArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArticuloSolicitudPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TipoArticuloPersonalizado model
+   */ 
+  interface TipoArticuloPersonalizadoFieldRefs {
+    readonly id: FieldRef<"TipoArticuloPersonalizado", 'Int'>
+    readonly nombre: FieldRef<"TipoArticuloPersonalizado", 'String'>
+    readonly solicitudId: FieldRef<"TipoArticuloPersonalizado", 'Int'>
+    readonly creadoEn: FieldRef<"TipoArticuloPersonalizado", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TipoArticuloPersonalizado findUnique
+   */
+  export type TipoArticuloPersonalizadoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    /**
+     * Filter, which TipoArticuloPersonalizado to fetch.
+     */
+    where: TipoArticuloPersonalizadoWhereUniqueInput
+  }
+
+  /**
+   * TipoArticuloPersonalizado findUniqueOrThrow
+   */
+  export type TipoArticuloPersonalizadoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    /**
+     * Filter, which TipoArticuloPersonalizado to fetch.
+     */
+    where: TipoArticuloPersonalizadoWhereUniqueInput
+  }
+
+  /**
+   * TipoArticuloPersonalizado findFirst
+   */
+  export type TipoArticuloPersonalizadoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    /**
+     * Filter, which TipoArticuloPersonalizado to fetch.
+     */
+    where?: TipoArticuloPersonalizadoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipoArticuloPersonalizados to fetch.
+     */
+    orderBy?: TipoArticuloPersonalizadoOrderByWithRelationInput | TipoArticuloPersonalizadoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TipoArticuloPersonalizados.
+     */
+    cursor?: TipoArticuloPersonalizadoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipoArticuloPersonalizados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipoArticuloPersonalizados.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TipoArticuloPersonalizados.
+     */
+    distinct?: TipoArticuloPersonalizadoScalarFieldEnum | TipoArticuloPersonalizadoScalarFieldEnum[]
+  }
+
+  /**
+   * TipoArticuloPersonalizado findFirstOrThrow
+   */
+  export type TipoArticuloPersonalizadoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    /**
+     * Filter, which TipoArticuloPersonalizado to fetch.
+     */
+    where?: TipoArticuloPersonalizadoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipoArticuloPersonalizados to fetch.
+     */
+    orderBy?: TipoArticuloPersonalizadoOrderByWithRelationInput | TipoArticuloPersonalizadoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TipoArticuloPersonalizados.
+     */
+    cursor?: TipoArticuloPersonalizadoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipoArticuloPersonalizados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipoArticuloPersonalizados.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TipoArticuloPersonalizados.
+     */
+    distinct?: TipoArticuloPersonalizadoScalarFieldEnum | TipoArticuloPersonalizadoScalarFieldEnum[]
+  }
+
+  /**
+   * TipoArticuloPersonalizado findMany
+   */
+  export type TipoArticuloPersonalizadoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    /**
+     * Filter, which TipoArticuloPersonalizados to fetch.
+     */
+    where?: TipoArticuloPersonalizadoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipoArticuloPersonalizados to fetch.
+     */
+    orderBy?: TipoArticuloPersonalizadoOrderByWithRelationInput | TipoArticuloPersonalizadoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TipoArticuloPersonalizados.
+     */
+    cursor?: TipoArticuloPersonalizadoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipoArticuloPersonalizados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipoArticuloPersonalizados.
+     */
+    skip?: number
+    distinct?: TipoArticuloPersonalizadoScalarFieldEnum | TipoArticuloPersonalizadoScalarFieldEnum[]
+  }
+
+  /**
+   * TipoArticuloPersonalizado create
+   */
+  export type TipoArticuloPersonalizadoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TipoArticuloPersonalizado.
+     */
+    data: XOR<TipoArticuloPersonalizadoCreateInput, TipoArticuloPersonalizadoUncheckedCreateInput>
+  }
+
+  /**
+   * TipoArticuloPersonalizado createMany
+   */
+  export type TipoArticuloPersonalizadoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TipoArticuloPersonalizados.
+     */
+    data: TipoArticuloPersonalizadoCreateManyInput | TipoArticuloPersonalizadoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TipoArticuloPersonalizado createManyAndReturn
+   */
+  export type TipoArticuloPersonalizadoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * The data used to create many TipoArticuloPersonalizados.
+     */
+    data: TipoArticuloPersonalizadoCreateManyInput | TipoArticuloPersonalizadoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TipoArticuloPersonalizado update
+   */
+  export type TipoArticuloPersonalizadoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TipoArticuloPersonalizado.
+     */
+    data: XOR<TipoArticuloPersonalizadoUpdateInput, TipoArticuloPersonalizadoUncheckedUpdateInput>
+    /**
+     * Choose, which TipoArticuloPersonalizado to update.
+     */
+    where: TipoArticuloPersonalizadoWhereUniqueInput
+  }
+
+  /**
+   * TipoArticuloPersonalizado updateMany
+   */
+  export type TipoArticuloPersonalizadoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TipoArticuloPersonalizados.
+     */
+    data: XOR<TipoArticuloPersonalizadoUpdateManyMutationInput, TipoArticuloPersonalizadoUncheckedUpdateManyInput>
+    /**
+     * Filter which TipoArticuloPersonalizados to update
+     */
+    where?: TipoArticuloPersonalizadoWhereInput
+    /**
+     * Limit how many TipoArticuloPersonalizados to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TipoArticuloPersonalizado updateManyAndReturn
+   */
+  export type TipoArticuloPersonalizadoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * The data used to update TipoArticuloPersonalizados.
+     */
+    data: XOR<TipoArticuloPersonalizadoUpdateManyMutationInput, TipoArticuloPersonalizadoUncheckedUpdateManyInput>
+    /**
+     * Filter which TipoArticuloPersonalizados to update
+     */
+    where?: TipoArticuloPersonalizadoWhereInput
+    /**
+     * Limit how many TipoArticuloPersonalizados to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TipoArticuloPersonalizado upsert
+   */
+  export type TipoArticuloPersonalizadoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TipoArticuloPersonalizado to update in case it exists.
+     */
+    where: TipoArticuloPersonalizadoWhereUniqueInput
+    /**
+     * In case the TipoArticuloPersonalizado found by the `where` argument doesn't exist, create a new TipoArticuloPersonalizado with this data.
+     */
+    create: XOR<TipoArticuloPersonalizadoCreateInput, TipoArticuloPersonalizadoUncheckedCreateInput>
+    /**
+     * In case the TipoArticuloPersonalizado was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TipoArticuloPersonalizadoUpdateInput, TipoArticuloPersonalizadoUncheckedUpdateInput>
+  }
+
+  /**
+   * TipoArticuloPersonalizado delete
+   */
+  export type TipoArticuloPersonalizadoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+    /**
+     * Filter which TipoArticuloPersonalizado to delete.
+     */
+    where: TipoArticuloPersonalizadoWhereUniqueInput
+  }
+
+  /**
+   * TipoArticuloPersonalizado deleteMany
+   */
+  export type TipoArticuloPersonalizadoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TipoArticuloPersonalizados to delete
+     */
+    where?: TipoArticuloPersonalizadoWhereInput
+    /**
+     * Limit how many TipoArticuloPersonalizados to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TipoArticuloPersonalizado.ArticuloSolicitud
+   */
+  export type TipoArticuloPersonalizado$ArticuloSolicitudArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArticuloSolicitud
+     */
+    select?: ArticuloSolicitudSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArticuloSolicitud
+     */
+    omit?: ArticuloSolicitudOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArticuloSolicitudInclude<ExtArgs> | null
+    where?: ArticuloSolicitudWhereInput
+    orderBy?: ArticuloSolicitudOrderByWithRelationInput | ArticuloSolicitudOrderByWithRelationInput[]
+    cursor?: ArticuloSolicitudWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ArticuloSolicitudScalarFieldEnum | ArticuloSolicitudScalarFieldEnum[]
+  }
+
+  /**
+   * TipoArticuloPersonalizado without action
+   */
+  export type TipoArticuloPersonalizadoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipoArticuloPersonalizado
+     */
+    select?: TipoArticuloPersonalizadoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipoArticuloPersonalizado
+     */
+    omit?: TipoArticuloPersonalizadoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipoArticuloPersonalizadoInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14354,6 +15689,7 @@ export namespace Prisma {
     id: 'id',
     solicitudId: 'solicitudId',
     tipoArticuloId: 'tipoArticuloId',
+    tipoArticuloPersonalizadoId: 'tipoArticuloPersonalizadoId',
     cantidad: 'cantidad',
     creadoEn: 'creadoEn'
   };
@@ -14443,6 +15779,16 @@ export namespace Prisma {
   };
 
   export type MensajeScalarFieldEnum = (typeof MensajeScalarFieldEnum)[keyof typeof MensajeScalarFieldEnum]
+
+
+  export const TipoArticuloPersonalizadoScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    solicitudId: 'solicitudId',
+    creadoEn: 'creadoEn'
+  };
+
+  export type TipoArticuloPersonalizadoScalarFieldEnum = (typeof TipoArticuloPersonalizadoScalarFieldEnum)[keyof typeof TipoArticuloPersonalizadoScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -14776,6 +16122,7 @@ export namespace Prisma {
     creadoEn?: DateTimeFilter<"Solicitud"> | Date | string
     actualizadoEn?: DateTimeFilter<"Solicitud"> | Date | string
     articulos?: ArticuloSolicitudListRelationFilter
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoListRelationFilter
   }
 
   export type SolicitudOrderByWithRelationInput = {
@@ -14790,6 +16137,7 @@ export namespace Prisma {
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
     articulos?: ArticuloSolicitudOrderByRelationAggregateInput
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoOrderByRelationAggregateInput
   }
 
   export type SolicitudWhereUniqueInput = Prisma.AtLeast<{
@@ -14807,6 +16155,7 @@ export namespace Prisma {
     creadoEn?: DateTimeFilter<"Solicitud"> | Date | string
     actualizadoEn?: DateTimeFilter<"Solicitud"> | Date | string
     articulos?: ArticuloSolicitudListRelationFilter
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoListRelationFilter
   }, "id">
 
   export type SolicitudOrderByWithAggregationInput = {
@@ -14849,41 +16198,49 @@ export namespace Prisma {
     NOT?: ArticuloSolicitudWhereInput | ArticuloSolicitudWhereInput[]
     id?: IntFilter<"ArticuloSolicitud"> | number
     solicitudId?: IntFilter<"ArticuloSolicitud"> | number
-    tipoArticuloId?: IntFilter<"ArticuloSolicitud"> | number
+    tipoArticuloId?: IntNullableFilter<"ArticuloSolicitud"> | number | null
+    tipoArticuloPersonalizadoId?: IntNullableFilter<"ArticuloSolicitud"> | number | null
     cantidad?: IntFilter<"ArticuloSolicitud"> | number
     creadoEn?: DateTimeFilter<"ArticuloSolicitud"> | Date | string
     solicitud?: XOR<SolicitudScalarRelationFilter, SolicitudWhereInput>
-    tipoArticulo?: XOR<TipoArticuloScalarRelationFilter, TipoArticuloWhereInput>
+    tipoArticulo?: XOR<TipoArticuloNullableScalarRelationFilter, TipoArticuloWhereInput> | null
+    tipoArticuloPersonalizado?: XOR<TipoArticuloPersonalizadoNullableScalarRelationFilter, TipoArticuloPersonalizadoWhereInput> | null
   }
 
   export type ArticuloSolicitudOrderByWithRelationInput = {
     id?: SortOrder
     solicitudId?: SortOrder
-    tipoArticuloId?: SortOrder
+    tipoArticuloId?: SortOrderInput | SortOrder
+    tipoArticuloPersonalizadoId?: SortOrderInput | SortOrder
     cantidad?: SortOrder
     creadoEn?: SortOrder
     solicitud?: SolicitudOrderByWithRelationInput
     tipoArticulo?: TipoArticuloOrderByWithRelationInput
+    tipoArticuloPersonalizado?: TipoArticuloPersonalizadoOrderByWithRelationInput
   }
 
   export type ArticuloSolicitudWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     solicitudId_tipoArticuloId?: ArticuloSolicitudSolicitudIdTipoArticuloIdCompoundUniqueInput
+    solicitudId_tipoArticuloPersonalizadoId?: ArticuloSolicitudSolicitudIdTipoArticuloPersonalizadoIdCompoundUniqueInput
     AND?: ArticuloSolicitudWhereInput | ArticuloSolicitudWhereInput[]
     OR?: ArticuloSolicitudWhereInput[]
     NOT?: ArticuloSolicitudWhereInput | ArticuloSolicitudWhereInput[]
     solicitudId?: IntFilter<"ArticuloSolicitud"> | number
-    tipoArticuloId?: IntFilter<"ArticuloSolicitud"> | number
+    tipoArticuloId?: IntNullableFilter<"ArticuloSolicitud"> | number | null
+    tipoArticuloPersonalizadoId?: IntNullableFilter<"ArticuloSolicitud"> | number | null
     cantidad?: IntFilter<"ArticuloSolicitud"> | number
     creadoEn?: DateTimeFilter<"ArticuloSolicitud"> | Date | string
     solicitud?: XOR<SolicitudScalarRelationFilter, SolicitudWhereInput>
-    tipoArticulo?: XOR<TipoArticuloScalarRelationFilter, TipoArticuloWhereInput>
-  }, "id" | "solicitudId_tipoArticuloId">
+    tipoArticulo?: XOR<TipoArticuloNullableScalarRelationFilter, TipoArticuloWhereInput> | null
+    tipoArticuloPersonalizado?: XOR<TipoArticuloPersonalizadoNullableScalarRelationFilter, TipoArticuloPersonalizadoWhereInput> | null
+  }, "id" | "solicitudId_tipoArticuloId" | "solicitudId_tipoArticuloPersonalizadoId">
 
   export type ArticuloSolicitudOrderByWithAggregationInput = {
     id?: SortOrder
     solicitudId?: SortOrder
-    tipoArticuloId?: SortOrder
+    tipoArticuloId?: SortOrderInput | SortOrder
+    tipoArticuloPersonalizadoId?: SortOrderInput | SortOrder
     cantidad?: SortOrder
     creadoEn?: SortOrder
     _count?: ArticuloSolicitudCountOrderByAggregateInput
@@ -14899,7 +16256,8 @@ export namespace Prisma {
     NOT?: ArticuloSolicitudScalarWhereWithAggregatesInput | ArticuloSolicitudScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"ArticuloSolicitud"> | number
     solicitudId?: IntWithAggregatesFilter<"ArticuloSolicitud"> | number
-    tipoArticuloId?: IntWithAggregatesFilter<"ArticuloSolicitud"> | number
+    tipoArticuloId?: IntNullableWithAggregatesFilter<"ArticuloSolicitud"> | number | null
+    tipoArticuloPersonalizadoId?: IntNullableWithAggregatesFilter<"ArticuloSolicitud"> | number | null
     cantidad?: IntWithAggregatesFilter<"ArticuloSolicitud"> | number
     creadoEn?: DateTimeWithAggregatesFilter<"ArticuloSolicitud"> | Date | string
   }
@@ -15328,6 +16686,61 @@ export namespace Prisma {
     creadoEn?: DateTimeWithAggregatesFilter<"Mensaje"> | Date | string
   }
 
+  export type TipoArticuloPersonalizadoWhereInput = {
+    AND?: TipoArticuloPersonalizadoWhereInput | TipoArticuloPersonalizadoWhereInput[]
+    OR?: TipoArticuloPersonalizadoWhereInput[]
+    NOT?: TipoArticuloPersonalizadoWhereInput | TipoArticuloPersonalizadoWhereInput[]
+    id?: IntFilter<"TipoArticuloPersonalizado"> | number
+    nombre?: StringFilter<"TipoArticuloPersonalizado"> | string
+    solicitudId?: IntFilter<"TipoArticuloPersonalizado"> | number
+    creadoEn?: DateTimeFilter<"TipoArticuloPersonalizado"> | Date | string
+    solicitud?: XOR<SolicitudScalarRelationFilter, SolicitudWhereInput>
+    ArticuloSolicitud?: ArticuloSolicitudListRelationFilter
+  }
+
+  export type TipoArticuloPersonalizadoOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    solicitudId?: SortOrder
+    creadoEn?: SortOrder
+    solicitud?: SolicitudOrderByWithRelationInput
+    ArticuloSolicitud?: ArticuloSolicitudOrderByRelationAggregateInput
+  }
+
+  export type TipoArticuloPersonalizadoWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    nombre?: string
+    AND?: TipoArticuloPersonalizadoWhereInput | TipoArticuloPersonalizadoWhereInput[]
+    OR?: TipoArticuloPersonalizadoWhereInput[]
+    NOT?: TipoArticuloPersonalizadoWhereInput | TipoArticuloPersonalizadoWhereInput[]
+    solicitudId?: IntFilter<"TipoArticuloPersonalizado"> | number
+    creadoEn?: DateTimeFilter<"TipoArticuloPersonalizado"> | Date | string
+    solicitud?: XOR<SolicitudScalarRelationFilter, SolicitudWhereInput>
+    ArticuloSolicitud?: ArticuloSolicitudListRelationFilter
+  }, "id" | "nombre">
+
+  export type TipoArticuloPersonalizadoOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    solicitudId?: SortOrder
+    creadoEn?: SortOrder
+    _count?: TipoArticuloPersonalizadoCountOrderByAggregateInput
+    _avg?: TipoArticuloPersonalizadoAvgOrderByAggregateInput
+    _max?: TipoArticuloPersonalizadoMaxOrderByAggregateInput
+    _min?: TipoArticuloPersonalizadoMinOrderByAggregateInput
+    _sum?: TipoArticuloPersonalizadoSumOrderByAggregateInput
+  }
+
+  export type TipoArticuloPersonalizadoScalarWhereWithAggregatesInput = {
+    AND?: TipoArticuloPersonalizadoScalarWhereWithAggregatesInput | TipoArticuloPersonalizadoScalarWhereWithAggregatesInput[]
+    OR?: TipoArticuloPersonalizadoScalarWhereWithAggregatesInput[]
+    NOT?: TipoArticuloPersonalizadoScalarWhereWithAggregatesInput | TipoArticuloPersonalizadoScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"TipoArticuloPersonalizado"> | number
+    nombre?: StringWithAggregatesFilter<"TipoArticuloPersonalizado"> | string
+    solicitudId?: IntWithAggregatesFilter<"TipoArticuloPersonalizado"> | number
+    creadoEn?: DateTimeWithAggregatesFilter<"TipoArticuloPersonalizado"> | Date | string
+  }
+
   export type TipoArticuloCreateInput = {
     nombre: string
     creadoEn?: Date | string
@@ -15568,6 +16981,7 @@ export namespace Prisma {
     creadoEn?: Date | string
     actualizadoEn?: Date | string
     articulos?: ArticuloSolicitudCreateNestedManyWithoutSolicitudInput
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoCreateNestedManyWithoutSolicitudInput
   }
 
   export type SolicitudUncheckedCreateInput = {
@@ -15582,6 +16996,7 @@ export namespace Prisma {
     creadoEn?: Date | string
     actualizadoEn?: Date | string
     articulos?: ArticuloSolicitudUncheckedCreateNestedManyWithoutSolicitudInput
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoUncheckedCreateNestedManyWithoutSolicitudInput
   }
 
   export type SolicitudUpdateInput = {
@@ -15595,6 +17010,7 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     articulos?: ArticuloSolicitudUpdateManyWithoutSolicitudNestedInput
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoUpdateManyWithoutSolicitudNestedInput
   }
 
   export type SolicitudUncheckedUpdateInput = {
@@ -15609,6 +17025,7 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     articulos?: ArticuloSolicitudUncheckedUpdateManyWithoutSolicitudNestedInput
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoUncheckedUpdateManyWithoutSolicitudNestedInput
   }
 
   export type SolicitudCreateManyInput = {
@@ -15653,13 +17070,15 @@ export namespace Prisma {
     cantidad: number
     creadoEn?: Date | string
     solicitud: SolicitudCreateNestedOneWithoutArticulosInput
-    tipoArticulo: TipoArticuloCreateNestedOneWithoutArticulosSolicitudInput
+    tipoArticulo?: TipoArticuloCreateNestedOneWithoutArticulosSolicitudInput
+    tipoArticuloPersonalizado?: TipoArticuloPersonalizadoCreateNestedOneWithoutArticuloSolicitudInput
   }
 
   export type ArticuloSolicitudUncheckedCreateInput = {
     id?: number
     solicitudId: number
-    tipoArticuloId: number
+    tipoArticuloId?: number | null
+    tipoArticuloPersonalizadoId?: number | null
     cantidad: number
     creadoEn?: Date | string
   }
@@ -15668,13 +17087,15 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     solicitud?: SolicitudUpdateOneRequiredWithoutArticulosNestedInput
-    tipoArticulo?: TipoArticuloUpdateOneRequiredWithoutArticulosSolicitudNestedInput
+    tipoArticulo?: TipoArticuloUpdateOneWithoutArticulosSolicitudNestedInput
+    tipoArticuloPersonalizado?: TipoArticuloPersonalizadoUpdateOneWithoutArticuloSolicitudNestedInput
   }
 
   export type ArticuloSolicitudUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     solicitudId?: IntFieldUpdateOperationsInput | number
-    tipoArticuloId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoArticuloPersonalizadoId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: IntFieldUpdateOperationsInput | number
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15682,7 +17103,8 @@ export namespace Prisma {
   export type ArticuloSolicitudCreateManyInput = {
     id?: number
     solicitudId: number
-    tipoArticuloId: number
+    tipoArticuloId?: number | null
+    tipoArticuloPersonalizadoId?: number | null
     cantidad: number
     creadoEn?: Date | string
   }
@@ -15695,7 +17117,8 @@ export namespace Prisma {
   export type ArticuloSolicitudUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     solicitudId?: IntFieldUpdateOperationsInput | number
-    tipoArticuloId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoArticuloPersonalizadoId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: IntFieldUpdateOperationsInput | number
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16146,6 +17569,55 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TipoArticuloPersonalizadoCreateInput = {
+    nombre: string
+    creadoEn?: Date | string
+    solicitud: SolicitudCreateNestedOneWithoutTiposArticuloPersonalizadosInput
+    ArticuloSolicitud?: ArticuloSolicitudCreateNestedManyWithoutTipoArticuloPersonalizadoInput
+  }
+
+  export type TipoArticuloPersonalizadoUncheckedCreateInput = {
+    id?: number
+    nombre: string
+    solicitudId: number
+    creadoEn?: Date | string
+    ArticuloSolicitud?: ArticuloSolicitudUncheckedCreateNestedManyWithoutTipoArticuloPersonalizadoInput
+  }
+
+  export type TipoArticuloPersonalizadoUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    solicitud?: SolicitudUpdateOneRequiredWithoutTiposArticuloPersonalizadosNestedInput
+    ArticuloSolicitud?: ArticuloSolicitudUpdateManyWithoutTipoArticuloPersonalizadoNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    solicitudId?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    ArticuloSolicitud?: ArticuloSolicitudUncheckedUpdateManyWithoutTipoArticuloPersonalizadoNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoCreateManyInput = {
+    id?: number
+    nombre: string
+    solicitudId: number
+    creadoEn?: Date | string
+  }
+
+  export type TipoArticuloPersonalizadoUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TipoArticuloPersonalizadoUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    solicitudId?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -16511,6 +17983,16 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type TipoArticuloPersonalizadoListRelationFilter = {
+    every?: TipoArticuloPersonalizadoWhereInput
+    some?: TipoArticuloPersonalizadoWhereInput
+    none?: TipoArticuloPersonalizadoWhereInput
+  }
+
+  export type TipoArticuloPersonalizadoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type SolicitudCountOrderByAggregateInput = {
     id?: SortOrder
     direccion?: SortOrder
@@ -16567,15 +18049,31 @@ export namespace Prisma {
     isNot?: SolicitudWhereInput
   }
 
+  export type TipoArticuloNullableScalarRelationFilter = {
+    is?: TipoArticuloWhereInput | null
+    isNot?: TipoArticuloWhereInput | null
+  }
+
+  export type TipoArticuloPersonalizadoNullableScalarRelationFilter = {
+    is?: TipoArticuloPersonalizadoWhereInput | null
+    isNot?: TipoArticuloPersonalizadoWhereInput | null
+  }
+
   export type ArticuloSolicitudSolicitudIdTipoArticuloIdCompoundUniqueInput = {
     solicitudId: number
     tipoArticuloId: number
+  }
+
+  export type ArticuloSolicitudSolicitudIdTipoArticuloPersonalizadoIdCompoundUniqueInput = {
+    solicitudId: number
+    tipoArticuloPersonalizadoId: number
   }
 
   export type ArticuloSolicitudCountOrderByAggregateInput = {
     id?: SortOrder
     solicitudId?: SortOrder
     tipoArticuloId?: SortOrder
+    tipoArticuloPersonalizadoId?: SortOrder
     cantidad?: SortOrder
     creadoEn?: SortOrder
   }
@@ -16584,6 +18082,7 @@ export namespace Prisma {
     id?: SortOrder
     solicitudId?: SortOrder
     tipoArticuloId?: SortOrder
+    tipoArticuloPersonalizadoId?: SortOrder
     cantidad?: SortOrder
   }
 
@@ -16591,6 +18090,7 @@ export namespace Prisma {
     id?: SortOrder
     solicitudId?: SortOrder
     tipoArticuloId?: SortOrder
+    tipoArticuloPersonalizadoId?: SortOrder
     cantidad?: SortOrder
     creadoEn?: SortOrder
   }
@@ -16599,6 +18099,7 @@ export namespace Prisma {
     id?: SortOrder
     solicitudId?: SortOrder
     tipoArticuloId?: SortOrder
+    tipoArticuloPersonalizadoId?: SortOrder
     cantidad?: SortOrder
     creadoEn?: SortOrder
   }
@@ -16607,6 +18108,7 @@ export namespace Prisma {
     id?: SortOrder
     solicitudId?: SortOrder
     tipoArticuloId?: SortOrder
+    tipoArticuloPersonalizadoId?: SortOrder
     cantidad?: SortOrder
   }
 
@@ -16907,6 +18409,37 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type TipoArticuloPersonalizadoCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    solicitudId?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type TipoArticuloPersonalizadoAvgOrderByAggregateInput = {
+    id?: SortOrder
+    solicitudId?: SortOrder
+  }
+
+  export type TipoArticuloPersonalizadoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    solicitudId?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type TipoArticuloPersonalizadoMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    solicitudId?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type TipoArticuloPersonalizadoSumOrderByAggregateInput = {
+    id?: SortOrder
+    solicitudId?: SortOrder
+  }
+
   export type ArticuloOfertaCreateNestedManyWithoutTipoArticuloInput = {
     create?: XOR<ArticuloOfertaCreateWithoutTipoArticuloInput, ArticuloOfertaUncheckedCreateWithoutTipoArticuloInput> | ArticuloOfertaCreateWithoutTipoArticuloInput[] | ArticuloOfertaUncheckedCreateWithoutTipoArticuloInput[]
     connectOrCreate?: ArticuloOfertaCreateOrConnectWithoutTipoArticuloInput | ArticuloOfertaCreateOrConnectWithoutTipoArticuloInput[]
@@ -17150,11 +18683,25 @@ export namespace Prisma {
     connect?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
   }
 
+  export type TipoArticuloPersonalizadoCreateNestedManyWithoutSolicitudInput = {
+    create?: XOR<TipoArticuloPersonalizadoCreateWithoutSolicitudInput, TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput> | TipoArticuloPersonalizadoCreateWithoutSolicitudInput[] | TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput[]
+    connectOrCreate?: TipoArticuloPersonalizadoCreateOrConnectWithoutSolicitudInput | TipoArticuloPersonalizadoCreateOrConnectWithoutSolicitudInput[]
+    createMany?: TipoArticuloPersonalizadoCreateManySolicitudInputEnvelope
+    connect?: TipoArticuloPersonalizadoWhereUniqueInput | TipoArticuloPersonalizadoWhereUniqueInput[]
+  }
+
   export type ArticuloSolicitudUncheckedCreateNestedManyWithoutSolicitudInput = {
     create?: XOR<ArticuloSolicitudCreateWithoutSolicitudInput, ArticuloSolicitudUncheckedCreateWithoutSolicitudInput> | ArticuloSolicitudCreateWithoutSolicitudInput[] | ArticuloSolicitudUncheckedCreateWithoutSolicitudInput[]
     connectOrCreate?: ArticuloSolicitudCreateOrConnectWithoutSolicitudInput | ArticuloSolicitudCreateOrConnectWithoutSolicitudInput[]
     createMany?: ArticuloSolicitudCreateManySolicitudInputEnvelope
     connect?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+  }
+
+  export type TipoArticuloPersonalizadoUncheckedCreateNestedManyWithoutSolicitudInput = {
+    create?: XOR<TipoArticuloPersonalizadoCreateWithoutSolicitudInput, TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput> | TipoArticuloPersonalizadoCreateWithoutSolicitudInput[] | TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput[]
+    connectOrCreate?: TipoArticuloPersonalizadoCreateOrConnectWithoutSolicitudInput | TipoArticuloPersonalizadoCreateOrConnectWithoutSolicitudInput[]
+    createMany?: TipoArticuloPersonalizadoCreateManySolicitudInputEnvelope
+    connect?: TipoArticuloPersonalizadoWhereUniqueInput | TipoArticuloPersonalizadoWhereUniqueInput[]
   }
 
   export type ArticuloSolicitudUpdateManyWithoutSolicitudNestedInput = {
@@ -17171,6 +18718,20 @@ export namespace Prisma {
     deleteMany?: ArticuloSolicitudScalarWhereInput | ArticuloSolicitudScalarWhereInput[]
   }
 
+  export type TipoArticuloPersonalizadoUpdateManyWithoutSolicitudNestedInput = {
+    create?: XOR<TipoArticuloPersonalizadoCreateWithoutSolicitudInput, TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput> | TipoArticuloPersonalizadoCreateWithoutSolicitudInput[] | TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput[]
+    connectOrCreate?: TipoArticuloPersonalizadoCreateOrConnectWithoutSolicitudInput | TipoArticuloPersonalizadoCreateOrConnectWithoutSolicitudInput[]
+    upsert?: TipoArticuloPersonalizadoUpsertWithWhereUniqueWithoutSolicitudInput | TipoArticuloPersonalizadoUpsertWithWhereUniqueWithoutSolicitudInput[]
+    createMany?: TipoArticuloPersonalizadoCreateManySolicitudInputEnvelope
+    set?: TipoArticuloPersonalizadoWhereUniqueInput | TipoArticuloPersonalizadoWhereUniqueInput[]
+    disconnect?: TipoArticuloPersonalizadoWhereUniqueInput | TipoArticuloPersonalizadoWhereUniqueInput[]
+    delete?: TipoArticuloPersonalizadoWhereUniqueInput | TipoArticuloPersonalizadoWhereUniqueInput[]
+    connect?: TipoArticuloPersonalizadoWhereUniqueInput | TipoArticuloPersonalizadoWhereUniqueInput[]
+    update?: TipoArticuloPersonalizadoUpdateWithWhereUniqueWithoutSolicitudInput | TipoArticuloPersonalizadoUpdateWithWhereUniqueWithoutSolicitudInput[]
+    updateMany?: TipoArticuloPersonalizadoUpdateManyWithWhereWithoutSolicitudInput | TipoArticuloPersonalizadoUpdateManyWithWhereWithoutSolicitudInput[]
+    deleteMany?: TipoArticuloPersonalizadoScalarWhereInput | TipoArticuloPersonalizadoScalarWhereInput[]
+  }
+
   export type ArticuloSolicitudUncheckedUpdateManyWithoutSolicitudNestedInput = {
     create?: XOR<ArticuloSolicitudCreateWithoutSolicitudInput, ArticuloSolicitudUncheckedCreateWithoutSolicitudInput> | ArticuloSolicitudCreateWithoutSolicitudInput[] | ArticuloSolicitudUncheckedCreateWithoutSolicitudInput[]
     connectOrCreate?: ArticuloSolicitudCreateOrConnectWithoutSolicitudInput | ArticuloSolicitudCreateOrConnectWithoutSolicitudInput[]
@@ -17185,6 +18746,20 @@ export namespace Prisma {
     deleteMany?: ArticuloSolicitudScalarWhereInput | ArticuloSolicitudScalarWhereInput[]
   }
 
+  export type TipoArticuloPersonalizadoUncheckedUpdateManyWithoutSolicitudNestedInput = {
+    create?: XOR<TipoArticuloPersonalizadoCreateWithoutSolicitudInput, TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput> | TipoArticuloPersonalizadoCreateWithoutSolicitudInput[] | TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput[]
+    connectOrCreate?: TipoArticuloPersonalizadoCreateOrConnectWithoutSolicitudInput | TipoArticuloPersonalizadoCreateOrConnectWithoutSolicitudInput[]
+    upsert?: TipoArticuloPersonalizadoUpsertWithWhereUniqueWithoutSolicitudInput | TipoArticuloPersonalizadoUpsertWithWhereUniqueWithoutSolicitudInput[]
+    createMany?: TipoArticuloPersonalizadoCreateManySolicitudInputEnvelope
+    set?: TipoArticuloPersonalizadoWhereUniqueInput | TipoArticuloPersonalizadoWhereUniqueInput[]
+    disconnect?: TipoArticuloPersonalizadoWhereUniqueInput | TipoArticuloPersonalizadoWhereUniqueInput[]
+    delete?: TipoArticuloPersonalizadoWhereUniqueInput | TipoArticuloPersonalizadoWhereUniqueInput[]
+    connect?: TipoArticuloPersonalizadoWhereUniqueInput | TipoArticuloPersonalizadoWhereUniqueInput[]
+    update?: TipoArticuloPersonalizadoUpdateWithWhereUniqueWithoutSolicitudInput | TipoArticuloPersonalizadoUpdateWithWhereUniqueWithoutSolicitudInput[]
+    updateMany?: TipoArticuloPersonalizadoUpdateManyWithWhereWithoutSolicitudInput | TipoArticuloPersonalizadoUpdateManyWithWhereWithoutSolicitudInput[]
+    deleteMany?: TipoArticuloPersonalizadoScalarWhereInput | TipoArticuloPersonalizadoScalarWhereInput[]
+  }
+
   export type SolicitudCreateNestedOneWithoutArticulosInput = {
     create?: XOR<SolicitudCreateWithoutArticulosInput, SolicitudUncheckedCreateWithoutArticulosInput>
     connectOrCreate?: SolicitudCreateOrConnectWithoutArticulosInput
@@ -17197,6 +18772,12 @@ export namespace Prisma {
     connect?: TipoArticuloWhereUniqueInput
   }
 
+  export type TipoArticuloPersonalizadoCreateNestedOneWithoutArticuloSolicitudInput = {
+    create?: XOR<TipoArticuloPersonalizadoCreateWithoutArticuloSolicitudInput, TipoArticuloPersonalizadoUncheckedCreateWithoutArticuloSolicitudInput>
+    connectOrCreate?: TipoArticuloPersonalizadoCreateOrConnectWithoutArticuloSolicitudInput
+    connect?: TipoArticuloPersonalizadoWhereUniqueInput
+  }
+
   export type SolicitudUpdateOneRequiredWithoutArticulosNestedInput = {
     create?: XOR<SolicitudCreateWithoutArticulosInput, SolicitudUncheckedCreateWithoutArticulosInput>
     connectOrCreate?: SolicitudCreateOrConnectWithoutArticulosInput
@@ -17205,12 +18786,24 @@ export namespace Prisma {
     update?: XOR<XOR<SolicitudUpdateToOneWithWhereWithoutArticulosInput, SolicitudUpdateWithoutArticulosInput>, SolicitudUncheckedUpdateWithoutArticulosInput>
   }
 
-  export type TipoArticuloUpdateOneRequiredWithoutArticulosSolicitudNestedInput = {
+  export type TipoArticuloUpdateOneWithoutArticulosSolicitudNestedInput = {
     create?: XOR<TipoArticuloCreateWithoutArticulosSolicitudInput, TipoArticuloUncheckedCreateWithoutArticulosSolicitudInput>
     connectOrCreate?: TipoArticuloCreateOrConnectWithoutArticulosSolicitudInput
     upsert?: TipoArticuloUpsertWithoutArticulosSolicitudInput
+    disconnect?: TipoArticuloWhereInput | boolean
+    delete?: TipoArticuloWhereInput | boolean
     connect?: TipoArticuloWhereUniqueInput
     update?: XOR<XOR<TipoArticuloUpdateToOneWithWhereWithoutArticulosSolicitudInput, TipoArticuloUpdateWithoutArticulosSolicitudInput>, TipoArticuloUncheckedUpdateWithoutArticulosSolicitudInput>
+  }
+
+  export type TipoArticuloPersonalizadoUpdateOneWithoutArticuloSolicitudNestedInput = {
+    create?: XOR<TipoArticuloPersonalizadoCreateWithoutArticuloSolicitudInput, TipoArticuloPersonalizadoUncheckedCreateWithoutArticuloSolicitudInput>
+    connectOrCreate?: TipoArticuloPersonalizadoCreateOrConnectWithoutArticuloSolicitudInput
+    upsert?: TipoArticuloPersonalizadoUpsertWithoutArticuloSolicitudInput
+    disconnect?: TipoArticuloPersonalizadoWhereInput | boolean
+    delete?: TipoArticuloPersonalizadoWhereInput | boolean
+    connect?: TipoArticuloPersonalizadoWhereUniqueInput
+    update?: XOR<XOR<TipoArticuloPersonalizadoUpdateToOneWithWhereWithoutArticuloSolicitudInput, TipoArticuloPersonalizadoUpdateWithoutArticuloSolicitudInput>, TipoArticuloPersonalizadoUncheckedUpdateWithoutArticuloSolicitudInput>
   }
 
   export type ArticuloPeticionCreateNestedManyWithoutPeticionDonacionInput = {
@@ -17289,6 +18882,62 @@ export namespace Prisma {
     upsert?: TipoArticuloUpsertWithoutArticulosPeticionInput
     connect?: TipoArticuloWhereUniqueInput
     update?: XOR<XOR<TipoArticuloUpdateToOneWithWhereWithoutArticulosPeticionInput, TipoArticuloUpdateWithoutArticulosPeticionInput>, TipoArticuloUncheckedUpdateWithoutArticulosPeticionInput>
+  }
+
+  export type SolicitudCreateNestedOneWithoutTiposArticuloPersonalizadosInput = {
+    create?: XOR<SolicitudCreateWithoutTiposArticuloPersonalizadosInput, SolicitudUncheckedCreateWithoutTiposArticuloPersonalizadosInput>
+    connectOrCreate?: SolicitudCreateOrConnectWithoutTiposArticuloPersonalizadosInput
+    connect?: SolicitudWhereUniqueInput
+  }
+
+  export type ArticuloSolicitudCreateNestedManyWithoutTipoArticuloPersonalizadoInput = {
+    create?: XOR<ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput, ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput> | ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput[] | ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput[]
+    connectOrCreate?: ArticuloSolicitudCreateOrConnectWithoutTipoArticuloPersonalizadoInput | ArticuloSolicitudCreateOrConnectWithoutTipoArticuloPersonalizadoInput[]
+    createMany?: ArticuloSolicitudCreateManyTipoArticuloPersonalizadoInputEnvelope
+    connect?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+  }
+
+  export type ArticuloSolicitudUncheckedCreateNestedManyWithoutTipoArticuloPersonalizadoInput = {
+    create?: XOR<ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput, ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput> | ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput[] | ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput[]
+    connectOrCreate?: ArticuloSolicitudCreateOrConnectWithoutTipoArticuloPersonalizadoInput | ArticuloSolicitudCreateOrConnectWithoutTipoArticuloPersonalizadoInput[]
+    createMany?: ArticuloSolicitudCreateManyTipoArticuloPersonalizadoInputEnvelope
+    connect?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+  }
+
+  export type SolicitudUpdateOneRequiredWithoutTiposArticuloPersonalizadosNestedInput = {
+    create?: XOR<SolicitudCreateWithoutTiposArticuloPersonalizadosInput, SolicitudUncheckedCreateWithoutTiposArticuloPersonalizadosInput>
+    connectOrCreate?: SolicitudCreateOrConnectWithoutTiposArticuloPersonalizadosInput
+    upsert?: SolicitudUpsertWithoutTiposArticuloPersonalizadosInput
+    connect?: SolicitudWhereUniqueInput
+    update?: XOR<XOR<SolicitudUpdateToOneWithWhereWithoutTiposArticuloPersonalizadosInput, SolicitudUpdateWithoutTiposArticuloPersonalizadosInput>, SolicitudUncheckedUpdateWithoutTiposArticuloPersonalizadosInput>
+  }
+
+  export type ArticuloSolicitudUpdateManyWithoutTipoArticuloPersonalizadoNestedInput = {
+    create?: XOR<ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput, ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput> | ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput[] | ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput[]
+    connectOrCreate?: ArticuloSolicitudCreateOrConnectWithoutTipoArticuloPersonalizadoInput | ArticuloSolicitudCreateOrConnectWithoutTipoArticuloPersonalizadoInput[]
+    upsert?: ArticuloSolicitudUpsertWithWhereUniqueWithoutTipoArticuloPersonalizadoInput | ArticuloSolicitudUpsertWithWhereUniqueWithoutTipoArticuloPersonalizadoInput[]
+    createMany?: ArticuloSolicitudCreateManyTipoArticuloPersonalizadoInputEnvelope
+    set?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+    disconnect?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+    delete?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+    connect?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+    update?: ArticuloSolicitudUpdateWithWhereUniqueWithoutTipoArticuloPersonalizadoInput | ArticuloSolicitudUpdateWithWhereUniqueWithoutTipoArticuloPersonalizadoInput[]
+    updateMany?: ArticuloSolicitudUpdateManyWithWhereWithoutTipoArticuloPersonalizadoInput | ArticuloSolicitudUpdateManyWithWhereWithoutTipoArticuloPersonalizadoInput[]
+    deleteMany?: ArticuloSolicitudScalarWhereInput | ArticuloSolicitudScalarWhereInput[]
+  }
+
+  export type ArticuloSolicitudUncheckedUpdateManyWithoutTipoArticuloPersonalizadoNestedInput = {
+    create?: XOR<ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput, ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput> | ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput[] | ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput[]
+    connectOrCreate?: ArticuloSolicitudCreateOrConnectWithoutTipoArticuloPersonalizadoInput | ArticuloSolicitudCreateOrConnectWithoutTipoArticuloPersonalizadoInput[]
+    upsert?: ArticuloSolicitudUpsertWithWhereUniqueWithoutTipoArticuloPersonalizadoInput | ArticuloSolicitudUpsertWithWhereUniqueWithoutTipoArticuloPersonalizadoInput[]
+    createMany?: ArticuloSolicitudCreateManyTipoArticuloPersonalizadoInputEnvelope
+    set?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+    disconnect?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+    delete?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+    connect?: ArticuloSolicitudWhereUniqueInput | ArticuloSolicitudWhereUniqueInput[]
+    update?: ArticuloSolicitudUpdateWithWhereUniqueWithoutTipoArticuloPersonalizadoInput | ArticuloSolicitudUpdateWithWhereUniqueWithoutTipoArticuloPersonalizadoInput[]
+    updateMany?: ArticuloSolicitudUpdateManyWithWhereWithoutTipoArticuloPersonalizadoInput | ArticuloSolicitudUpdateManyWithWhereWithoutTipoArticuloPersonalizadoInput[]
+    deleteMany?: ArticuloSolicitudScalarWhereInput | ArticuloSolicitudScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -17553,11 +19202,13 @@ export namespace Prisma {
     cantidad: number
     creadoEn?: Date | string
     solicitud: SolicitudCreateNestedOneWithoutArticulosInput
+    tipoArticuloPersonalizado?: TipoArticuloPersonalizadoCreateNestedOneWithoutArticuloSolicitudInput
   }
 
   export type ArticuloSolicitudUncheckedCreateWithoutTipoArticuloInput = {
     id?: number
     solicitudId: number
+    tipoArticuloPersonalizadoId?: number | null
     cantidad: number
     creadoEn?: Date | string
   }
@@ -17650,7 +19301,8 @@ export namespace Prisma {
     NOT?: ArticuloSolicitudScalarWhereInput | ArticuloSolicitudScalarWhereInput[]
     id?: IntFilter<"ArticuloSolicitud"> | number
     solicitudId?: IntFilter<"ArticuloSolicitud"> | number
-    tipoArticuloId?: IntFilter<"ArticuloSolicitud"> | number
+    tipoArticuloId?: IntNullableFilter<"ArticuloSolicitud"> | number | null
+    tipoArticuloPersonalizadoId?: IntNullableFilter<"ArticuloSolicitud"> | number | null
     cantidad?: IntFilter<"ArticuloSolicitud"> | number
     creadoEn?: DateTimeFilter<"ArticuloSolicitud"> | Date | string
   }
@@ -17825,12 +19477,14 @@ export namespace Prisma {
   export type ArticuloSolicitudCreateWithoutSolicitudInput = {
     cantidad: number
     creadoEn?: Date | string
-    tipoArticulo: TipoArticuloCreateNestedOneWithoutArticulosSolicitudInput
+    tipoArticulo?: TipoArticuloCreateNestedOneWithoutArticulosSolicitudInput
+    tipoArticuloPersonalizado?: TipoArticuloPersonalizadoCreateNestedOneWithoutArticuloSolicitudInput
   }
 
   export type ArticuloSolicitudUncheckedCreateWithoutSolicitudInput = {
     id?: number
-    tipoArticuloId: number
+    tipoArticuloId?: number | null
+    tipoArticuloPersonalizadoId?: number | null
     cantidad: number
     creadoEn?: Date | string
   }
@@ -17842,6 +19496,29 @@ export namespace Prisma {
 
   export type ArticuloSolicitudCreateManySolicitudInputEnvelope = {
     data: ArticuloSolicitudCreateManySolicitudInput | ArticuloSolicitudCreateManySolicitudInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TipoArticuloPersonalizadoCreateWithoutSolicitudInput = {
+    nombre: string
+    creadoEn?: Date | string
+    ArticuloSolicitud?: ArticuloSolicitudCreateNestedManyWithoutTipoArticuloPersonalizadoInput
+  }
+
+  export type TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput = {
+    id?: number
+    nombre: string
+    creadoEn?: Date | string
+    ArticuloSolicitud?: ArticuloSolicitudUncheckedCreateNestedManyWithoutTipoArticuloPersonalizadoInput
+  }
+
+  export type TipoArticuloPersonalizadoCreateOrConnectWithoutSolicitudInput = {
+    where: TipoArticuloPersonalizadoWhereUniqueInput
+    create: XOR<TipoArticuloPersonalizadoCreateWithoutSolicitudInput, TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput>
+  }
+
+  export type TipoArticuloPersonalizadoCreateManySolicitudInputEnvelope = {
+    data: TipoArticuloPersonalizadoCreateManySolicitudInput | TipoArticuloPersonalizadoCreateManySolicitudInput[]
     skipDuplicates?: boolean
   }
 
@@ -17861,6 +19538,32 @@ export namespace Prisma {
     data: XOR<ArticuloSolicitudUpdateManyMutationInput, ArticuloSolicitudUncheckedUpdateManyWithoutSolicitudInput>
   }
 
+  export type TipoArticuloPersonalizadoUpsertWithWhereUniqueWithoutSolicitudInput = {
+    where: TipoArticuloPersonalizadoWhereUniqueInput
+    update: XOR<TipoArticuloPersonalizadoUpdateWithoutSolicitudInput, TipoArticuloPersonalizadoUncheckedUpdateWithoutSolicitudInput>
+    create: XOR<TipoArticuloPersonalizadoCreateWithoutSolicitudInput, TipoArticuloPersonalizadoUncheckedCreateWithoutSolicitudInput>
+  }
+
+  export type TipoArticuloPersonalizadoUpdateWithWhereUniqueWithoutSolicitudInput = {
+    where: TipoArticuloPersonalizadoWhereUniqueInput
+    data: XOR<TipoArticuloPersonalizadoUpdateWithoutSolicitudInput, TipoArticuloPersonalizadoUncheckedUpdateWithoutSolicitudInput>
+  }
+
+  export type TipoArticuloPersonalizadoUpdateManyWithWhereWithoutSolicitudInput = {
+    where: TipoArticuloPersonalizadoScalarWhereInput
+    data: XOR<TipoArticuloPersonalizadoUpdateManyMutationInput, TipoArticuloPersonalizadoUncheckedUpdateManyWithoutSolicitudInput>
+  }
+
+  export type TipoArticuloPersonalizadoScalarWhereInput = {
+    AND?: TipoArticuloPersonalizadoScalarWhereInput | TipoArticuloPersonalizadoScalarWhereInput[]
+    OR?: TipoArticuloPersonalizadoScalarWhereInput[]
+    NOT?: TipoArticuloPersonalizadoScalarWhereInput | TipoArticuloPersonalizadoScalarWhereInput[]
+    id?: IntFilter<"TipoArticuloPersonalizado"> | number
+    nombre?: StringFilter<"TipoArticuloPersonalizado"> | string
+    solicitudId?: IntFilter<"TipoArticuloPersonalizado"> | number
+    creadoEn?: DateTimeFilter<"TipoArticuloPersonalizado"> | Date | string
+  }
+
   export type SolicitudCreateWithoutArticulosInput = {
     direccion: string
     contactoNombre: string
@@ -17871,6 +19574,7 @@ export namespace Prisma {
     descripcion?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoCreateNestedManyWithoutSolicitudInput
   }
 
   export type SolicitudUncheckedCreateWithoutArticulosInput = {
@@ -17884,6 +19588,7 @@ export namespace Prisma {
     descripcion?: string | null
     creadoEn?: Date | string
     actualizadoEn?: Date | string
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoUncheckedCreateNestedManyWithoutSolicitudInput
   }
 
   export type SolicitudCreateOrConnectWithoutArticulosInput = {
@@ -17911,6 +19616,24 @@ export namespace Prisma {
     create: XOR<TipoArticuloCreateWithoutArticulosSolicitudInput, TipoArticuloUncheckedCreateWithoutArticulosSolicitudInput>
   }
 
+  export type TipoArticuloPersonalizadoCreateWithoutArticuloSolicitudInput = {
+    nombre: string
+    creadoEn?: Date | string
+    solicitud: SolicitudCreateNestedOneWithoutTiposArticuloPersonalizadosInput
+  }
+
+  export type TipoArticuloPersonalizadoUncheckedCreateWithoutArticuloSolicitudInput = {
+    id?: number
+    nombre: string
+    solicitudId: number
+    creadoEn?: Date | string
+  }
+
+  export type TipoArticuloPersonalizadoCreateOrConnectWithoutArticuloSolicitudInput = {
+    where: TipoArticuloPersonalizadoWhereUniqueInput
+    create: XOR<TipoArticuloPersonalizadoCreateWithoutArticuloSolicitudInput, TipoArticuloPersonalizadoUncheckedCreateWithoutArticuloSolicitudInput>
+  }
+
   export type SolicitudUpsertWithoutArticulosInput = {
     update: XOR<SolicitudUpdateWithoutArticulosInput, SolicitudUncheckedUpdateWithoutArticulosInput>
     create: XOR<SolicitudCreateWithoutArticulosInput, SolicitudUncheckedCreateWithoutArticulosInput>
@@ -17932,6 +19655,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoUpdateManyWithoutSolicitudNestedInput
   }
 
   export type SolicitudUncheckedUpdateWithoutArticulosInput = {
@@ -17945,6 +19669,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    tiposArticuloPersonalizados?: TipoArticuloPersonalizadoUncheckedUpdateManyWithoutSolicitudNestedInput
   }
 
   export type TipoArticuloUpsertWithoutArticulosSolicitudInput = {
@@ -17971,6 +19696,30 @@ export namespace Prisma {
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     articulosOferta?: ArticuloOfertaUncheckedUpdateManyWithoutTipoArticuloNestedInput
     articulosPeticion?: ArticuloPeticionUncheckedUpdateManyWithoutTipoArticuloNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoUpsertWithoutArticuloSolicitudInput = {
+    update: XOR<TipoArticuloPersonalizadoUpdateWithoutArticuloSolicitudInput, TipoArticuloPersonalizadoUncheckedUpdateWithoutArticuloSolicitudInput>
+    create: XOR<TipoArticuloPersonalizadoCreateWithoutArticuloSolicitudInput, TipoArticuloPersonalizadoUncheckedCreateWithoutArticuloSolicitudInput>
+    where?: TipoArticuloPersonalizadoWhereInput
+  }
+
+  export type TipoArticuloPersonalizadoUpdateToOneWithWhereWithoutArticuloSolicitudInput = {
+    where?: TipoArticuloPersonalizadoWhereInput
+    data: XOR<TipoArticuloPersonalizadoUpdateWithoutArticuloSolicitudInput, TipoArticuloPersonalizadoUncheckedUpdateWithoutArticuloSolicitudInput>
+  }
+
+  export type TipoArticuloPersonalizadoUpdateWithoutArticuloSolicitudInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    solicitud?: SolicitudUpdateOneRequiredWithoutTiposArticuloPersonalizadosNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoUncheckedUpdateWithoutArticuloSolicitudInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    solicitudId?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ArticuloPeticionCreateWithoutPeticionDonacionInput = {
@@ -18124,6 +19873,117 @@ export namespace Prisma {
     articulosSolicitud?: ArticuloSolicitudUncheckedUpdateManyWithoutTipoArticuloNestedInput
   }
 
+  export type SolicitudCreateWithoutTiposArticuloPersonalizadosInput = {
+    direccion: string
+    contactoNombre: string
+    contactoTel: string
+    estado?: string
+    latitud: number
+    longitud: number
+    descripcion?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    articulos?: ArticuloSolicitudCreateNestedManyWithoutSolicitudInput
+  }
+
+  export type SolicitudUncheckedCreateWithoutTiposArticuloPersonalizadosInput = {
+    id?: number
+    direccion: string
+    contactoNombre: string
+    contactoTel: string
+    estado?: string
+    latitud: number
+    longitud: number
+    descripcion?: string | null
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    articulos?: ArticuloSolicitudUncheckedCreateNestedManyWithoutSolicitudInput
+  }
+
+  export type SolicitudCreateOrConnectWithoutTiposArticuloPersonalizadosInput = {
+    where: SolicitudWhereUniqueInput
+    create: XOR<SolicitudCreateWithoutTiposArticuloPersonalizadosInput, SolicitudUncheckedCreateWithoutTiposArticuloPersonalizadosInput>
+  }
+
+  export type ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput = {
+    cantidad: number
+    creadoEn?: Date | string
+    solicitud: SolicitudCreateNestedOneWithoutArticulosInput
+    tipoArticulo?: TipoArticuloCreateNestedOneWithoutArticulosSolicitudInput
+  }
+
+  export type ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput = {
+    id?: number
+    solicitudId: number
+    tipoArticuloId?: number | null
+    cantidad: number
+    creadoEn?: Date | string
+  }
+
+  export type ArticuloSolicitudCreateOrConnectWithoutTipoArticuloPersonalizadoInput = {
+    where: ArticuloSolicitudWhereUniqueInput
+    create: XOR<ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput, ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput>
+  }
+
+  export type ArticuloSolicitudCreateManyTipoArticuloPersonalizadoInputEnvelope = {
+    data: ArticuloSolicitudCreateManyTipoArticuloPersonalizadoInput | ArticuloSolicitudCreateManyTipoArticuloPersonalizadoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SolicitudUpsertWithoutTiposArticuloPersonalizadosInput = {
+    update: XOR<SolicitudUpdateWithoutTiposArticuloPersonalizadosInput, SolicitudUncheckedUpdateWithoutTiposArticuloPersonalizadosInput>
+    create: XOR<SolicitudCreateWithoutTiposArticuloPersonalizadosInput, SolicitudUncheckedCreateWithoutTiposArticuloPersonalizadosInput>
+    where?: SolicitudWhereInput
+  }
+
+  export type SolicitudUpdateToOneWithWhereWithoutTiposArticuloPersonalizadosInput = {
+    where?: SolicitudWhereInput
+    data: XOR<SolicitudUpdateWithoutTiposArticuloPersonalizadosInput, SolicitudUncheckedUpdateWithoutTiposArticuloPersonalizadosInput>
+  }
+
+  export type SolicitudUpdateWithoutTiposArticuloPersonalizadosInput = {
+    direccion?: StringFieldUpdateOperationsInput | string
+    contactoNombre?: StringFieldUpdateOperationsInput | string
+    contactoTel?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latitud?: FloatFieldUpdateOperationsInput | number
+    longitud?: FloatFieldUpdateOperationsInput | number
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    articulos?: ArticuloSolicitudUpdateManyWithoutSolicitudNestedInput
+  }
+
+  export type SolicitudUncheckedUpdateWithoutTiposArticuloPersonalizadosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    direccion?: StringFieldUpdateOperationsInput | string
+    contactoNombre?: StringFieldUpdateOperationsInput | string
+    contactoTel?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    latitud?: FloatFieldUpdateOperationsInput | number
+    longitud?: FloatFieldUpdateOperationsInput | number
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    articulos?: ArticuloSolicitudUncheckedUpdateManyWithoutSolicitudNestedInput
+  }
+
+  export type ArticuloSolicitudUpsertWithWhereUniqueWithoutTipoArticuloPersonalizadoInput = {
+    where: ArticuloSolicitudWhereUniqueInput
+    update: XOR<ArticuloSolicitudUpdateWithoutTipoArticuloPersonalizadoInput, ArticuloSolicitudUncheckedUpdateWithoutTipoArticuloPersonalizadoInput>
+    create: XOR<ArticuloSolicitudCreateWithoutTipoArticuloPersonalizadoInput, ArticuloSolicitudUncheckedCreateWithoutTipoArticuloPersonalizadoInput>
+  }
+
+  export type ArticuloSolicitudUpdateWithWhereUniqueWithoutTipoArticuloPersonalizadoInput = {
+    where: ArticuloSolicitudWhereUniqueInput
+    data: XOR<ArticuloSolicitudUpdateWithoutTipoArticuloPersonalizadoInput, ArticuloSolicitudUncheckedUpdateWithoutTipoArticuloPersonalizadoInput>
+  }
+
+  export type ArticuloSolicitudUpdateManyWithWhereWithoutTipoArticuloPersonalizadoInput = {
+    where: ArticuloSolicitudScalarWhereInput
+    data: XOR<ArticuloSolicitudUpdateManyMutationInput, ArticuloSolicitudUncheckedUpdateManyWithoutTipoArticuloPersonalizadoInput>
+  }
+
   export type ArticuloOfertaCreateManyTipoArticuloInput = {
     id?: number
     puntoDonacionId: number
@@ -18143,6 +20003,7 @@ export namespace Prisma {
   export type ArticuloSolicitudCreateManyTipoArticuloInput = {
     id?: number
     solicitudId: number
+    tipoArticuloPersonalizadoId?: number | null
     cantidad: number
     creadoEn?: Date | string
   }
@@ -18197,11 +20058,13 @@ export namespace Prisma {
     cantidad?: IntFieldUpdateOperationsInput | number
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     solicitud?: SolicitudUpdateOneRequiredWithoutArticulosNestedInput
+    tipoArticuloPersonalizado?: TipoArticuloPersonalizadoUpdateOneWithoutArticuloSolicitudNestedInput
   }
 
   export type ArticuloSolicitudUncheckedUpdateWithoutTipoArticuloInput = {
     id?: IntFieldUpdateOperationsInput | number
     solicitudId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloPersonalizadoId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: IntFieldUpdateOperationsInput | number
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18209,6 +20072,7 @@ export namespace Prisma {
   export type ArticuloSolicitudUncheckedUpdateManyWithoutTipoArticuloInput = {
     id?: IntFieldUpdateOperationsInput | number
     solicitudId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloPersonalizadoId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: IntFieldUpdateOperationsInput | number
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18250,28 +20114,57 @@ export namespace Prisma {
 
   export type ArticuloSolicitudCreateManySolicitudInput = {
     id?: number
-    tipoArticuloId: number
+    tipoArticuloId?: number | null
+    tipoArticuloPersonalizadoId?: number | null
     cantidad: number
+    creadoEn?: Date | string
+  }
+
+  export type TipoArticuloPersonalizadoCreateManySolicitudInput = {
+    id?: number
+    nombre: string
     creadoEn?: Date | string
   }
 
   export type ArticuloSolicitudUpdateWithoutSolicitudInput = {
     cantidad?: IntFieldUpdateOperationsInput | number
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
-    tipoArticulo?: TipoArticuloUpdateOneRequiredWithoutArticulosSolicitudNestedInput
+    tipoArticulo?: TipoArticuloUpdateOneWithoutArticulosSolicitudNestedInput
+    tipoArticuloPersonalizado?: TipoArticuloPersonalizadoUpdateOneWithoutArticuloSolicitudNestedInput
   }
 
   export type ArticuloSolicitudUncheckedUpdateWithoutSolicitudInput = {
     id?: IntFieldUpdateOperationsInput | number
-    tipoArticuloId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoArticuloPersonalizadoId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: IntFieldUpdateOperationsInput | number
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ArticuloSolicitudUncheckedUpdateManyWithoutSolicitudInput = {
     id?: IntFieldUpdateOperationsInput | number
-    tipoArticuloId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    tipoArticuloPersonalizadoId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TipoArticuloPersonalizadoUpdateWithoutSolicitudInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    ArticuloSolicitud?: ArticuloSolicitudUpdateManyWithoutTipoArticuloPersonalizadoNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoUncheckedUpdateWithoutSolicitudInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    ArticuloSolicitud?: ArticuloSolicitudUncheckedUpdateManyWithoutTipoArticuloPersonalizadoNestedInput
+  }
+
+  export type TipoArticuloPersonalizadoUncheckedUpdateManyWithoutSolicitudInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -18298,6 +20191,37 @@ export namespace Prisma {
   export type ArticuloPeticionUncheckedUpdateManyWithoutPeticionDonacionInput = {
     id?: IntFieldUpdateOperationsInput | number
     tipoArticuloId?: IntFieldUpdateOperationsInput | number
+    cantidad?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArticuloSolicitudCreateManyTipoArticuloPersonalizadoInput = {
+    id?: number
+    solicitudId: number
+    tipoArticuloId?: number | null
+    cantidad: number
+    creadoEn?: Date | string
+  }
+
+  export type ArticuloSolicitudUpdateWithoutTipoArticuloPersonalizadoInput = {
+    cantidad?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    solicitud?: SolicitudUpdateOneRequiredWithoutArticulosNestedInput
+    tipoArticulo?: TipoArticuloUpdateOneWithoutArticulosSolicitudNestedInput
+  }
+
+  export type ArticuloSolicitudUncheckedUpdateWithoutTipoArticuloPersonalizadoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    solicitudId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
+    cantidad?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArticuloSolicitudUncheckedUpdateManyWithoutTipoArticuloPersonalizadoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    solicitudId?: IntFieldUpdateOperationsInput | number
+    tipoArticuloId?: NullableIntFieldUpdateOperationsInput | number | null
     cantidad?: IntFieldUpdateOperationsInput | number
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -38,6 +38,10 @@ export async function PUT(
       where: { 
         id: artId,
         solicitudId: solicitudId
+      },
+      include: {
+        tipoArticulo: true,
+        tipoArticuloPersonalizado: true
       }
     });
     
@@ -56,6 +60,10 @@ export async function PUT(
       where: { id: artId },
       data: {
         cantidad: nuevaCantidad
+      },
+      include: {
+        tipoArticulo: true,
+        tipoArticuloPersonalizado: true
       }
     });
     
@@ -77,11 +85,28 @@ export async function PUT(
       });
     }
     
+    // Formatear el artículo actualizado para mantener compatibilidad con el frontend
+    const tipoArticuloNombre = articuloActualizado.tipoArticulo?.nombre ?? 
+                               articuloActualizado.tipoArticuloPersonalizado?.nombre ?? 
+                               "Desconocido";
+    
+    const tipoArticuloId = articuloActualizado.tipoArticulo?.id ?? 
+                           articuloActualizado.tipoArticuloPersonalizado?.id ?? 
+                           0;
+    
+    const articuloFormateado = {
+      ...articuloActualizado,
+      tipoArticulo: {
+        id: tipoArticuloId,
+        nombre: tipoArticuloNombre
+      }
+    };
+    
     return NextResponse.json({
       message: nuevaCantidad > 0 
         ? "Artículo actualizado correctamente" 
         : "Artículo completamente entregado",
-      articulo: articuloActualizado,
+      articulo: articuloFormateado,
       solicitudCompletada: articulosPendientes.length === 0
     });
   } catch (error) {

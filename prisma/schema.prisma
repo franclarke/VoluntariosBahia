@@ -20,7 +20,7 @@ model TipoArticulo {
 
 model PuntoDonacion {
   id              Int              @id @default(autoincrement())
-  nombre          String?          // Campo opcional para el nombre del centro
+  nombre          String? // Campo opcional para el nombre del centro
   direccion       String
   responsable     String
   telefono        String?
@@ -36,43 +36,47 @@ model PuntoDonacion {
 }
 
 model ArticuloOferta {
-  id                   Int                @id @default(autoincrement())
-  puntoDonacionId      Int
-  tipoArticuloId       Int
-  cantidad             Int?
-  estado               String             @default("Disponible")
-  creadoEn             DateTime           @default(now())
-  actualizadoEn        DateTime           @updatedAt
-  puntoDonacion        PuntoDonacion      @relation(fields: [puntoDonacionId], references: [id], onDelete: Cascade)
-  tipoArticulo         TipoArticulo       @relation(fields: [tipoArticuloId], references: [id])
+  id              Int           @id @default(autoincrement())
+  puntoDonacionId Int
+  tipoArticuloId  Int
+  cantidad        Int?
+  estado          String        @default("Disponible")
+  creadoEn        DateTime      @default(now())
+  actualizadoEn   DateTime      @updatedAt
+  puntoDonacion   PuntoDonacion @relation(fields: [puntoDonacionId], references: [id], onDelete: Cascade)
+  tipoArticulo    TipoArticulo  @relation(fields: [tipoArticuloId], references: [id])
 
   @@unique([puntoDonacionId, tipoArticuloId])
 }
 
 model Solicitud {
-  id             Int                 @id @default(autoincrement())
-  direccion      String
-  contactoNombre String
-  contactoTel    String
-  estado         String              @default("Pendiente")
-  latitud        Float
-  longitud       Float
-  descripcion    String?
-  creadoEn       DateTime            @default(now())
-  actualizadoEn  DateTime            @updatedAt
-  articulos      ArticuloSolicitud[]
+  id                          Int                         @id @default(autoincrement())
+  direccion                   String
+  contactoNombre              String
+  contactoTel                 String
+  estado                      String                      @default("Pendiente")
+  latitud                     Float
+  longitud                    Float
+  descripcion                 String?
+  creadoEn                    DateTime                    @default(now())
+  actualizadoEn               DateTime                    @updatedAt
+  articulos                   ArticuloSolicitud[]
+  tiposArticuloPersonalizados TipoArticuloPersonalizado[]
 }
 
 model ArticuloSolicitud {
-  id             Int          @id @default(autoincrement())
-  solicitudId    Int
-  tipoArticuloId Int
-  cantidad       Int
-  creadoEn       DateTime     @default(now())
-  solicitud      Solicitud    @relation(fields: [solicitudId], references: [id], onDelete: Cascade)
-  tipoArticulo   TipoArticulo @relation(fields: [tipoArticuloId], references: [id])
+  id                          Int                        @id @default(autoincrement())
+  solicitudId                 Int
+  tipoArticuloId              Int? // Ahora es opcional
+  tipoArticuloPersonalizadoId Int? // Nueva referencia al tipo personalizado
+  cantidad                    Int
+  creadoEn                    DateTime                   @default(now())
+  solicitud                   Solicitud                  @relation(fields: [solicitudId], references: [id], onDelete: Cascade)
+  tipoArticulo                TipoArticulo?              @relation(fields: [tipoArticuloId], references: [id])
+  tipoArticuloPersonalizado   TipoArticuloPersonalizado? @relation(fields: [tipoArticuloPersonalizadoId], references: [id])
 
   @@unique([solicitudId, tipoArticuloId])
+  @@unique([solicitudId, tipoArticuloPersonalizadoId])
 }
 
 model PeticionDonacion {
@@ -102,51 +106,61 @@ model ArticuloPeticion {
 }
 
 model SolicitudLimpieza {
-  id             Int       @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   direccion      String
   contactoNombre String
   contactoTel    String
-  estado         String    @default("Pendiente")
+  estado         String   @default("Pendiente")
   latitud        Float
   longitud       Float
   descripcion    String?
-  creadoEn       DateTime  @default(now())
-  actualizadoEn  DateTime  @updatedAt
+  creadoEn       DateTime @default(now())
+  actualizadoEn  DateTime @updatedAt
 }
 
 // Tabla para mensajes de contacto
 model MensajeContacto {
-  id             Int       @id @default(autoincrement())
-  nombre         String
-  email          String?
-  telefono       String?
-  mensaje        String
-  leido          Boolean   @default(false)
-  creadoEn       DateTime  @default(now())
+  id       Int      @id @default(autoincrement())
+  nombre   String
+  email    String?
+  telefono String?
+  mensaje  String
+  leido    Boolean  @default(false)
+  creadoEn DateTime @default(now())
 }
 
 // Tabla para información útil
 model InformacionUtil {
-  id             Int       @id @default(autoincrement())
-  nombre         String
-  email          String?
-  telefono       String
-  direccion      String?
-  horario        String?
-  descripcion    String?
-  leido          Boolean   @default(false)
-  creadoEn       DateTime  @default(now())
+  id          Int      @id @default(autoincrement())
+  nombre      String
+  email       String?
+  telefono    String
+  direccion   String?
+  horario     String?
+  descripcion String?
+  leido       Boolean  @default(false)
+  creadoEn    DateTime @default(now())
 }
 
 // Mantener la tabla Mensaje para compatibilidad con código existente
 // pero marcarla como obsoleta
 /// @deprecated Use MensajeContacto o InformacionUtil instead
 model Mensaje {
-  id             Int       @id @default(autoincrement())
-  nombre         String
-  email          String
-  telefono       String?
-  mensaje        String
-  leido          Boolean   @default(false)
-  creadoEn       DateTime  @default(now())
+  id       Int      @id @default(autoincrement())
+  nombre   String
+  email    String
+  telefono String?
+  mensaje  String
+  leido    Boolean  @default(false)
+  creadoEn DateTime @default(now())
+}
+
+// Agregar nuevo modelo para artículos personalizados
+model TipoArticuloPersonalizado {
+  id                Int                 @id @default(autoincrement())
+  nombre            String              @unique
+  solicitudId       Int // Relación con la solicitud donde se creó este tipo personalizado
+  creadoEn          DateTime            @default(now())
+  solicitud         Solicitud           @relation(fields: [solicitudId], references: [id], onDelete: Cascade)
+  ArticuloSolicitud ArticuloSolicitud[]
 }

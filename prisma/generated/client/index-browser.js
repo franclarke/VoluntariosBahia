@@ -166,6 +166,7 @@ exports.Prisma.ArticuloSolicitudScalarFieldEnum = {
   id: 'id',
   solicitudId: 'solicitudId',
   tipoArticuloId: 'tipoArticuloId',
+  tipoArticuloPersonalizadoId: 'tipoArticuloPersonalizadoId',
   cantidad: 'cantidad',
   creadoEn: 'creadoEn'
 };
@@ -236,6 +237,13 @@ exports.Prisma.MensajeScalarFieldEnum = {
   creadoEn: 'creadoEn'
 };
 
+exports.Prisma.TipoArticuloPersonalizadoScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  solicitudId: 'solicitudId',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -263,7 +271,8 @@ exports.Prisma.ModelName = {
   SolicitudLimpieza: 'SolicitudLimpieza',
   MensajeContacto: 'MensajeContacto',
   InformacionUtil: 'InformacionUtil',
-  Mensaje: 'Mensaje'
+  Mensaje: 'Mensaje',
+  TipoArticuloPersonalizado: 'TipoArticuloPersonalizado'
 };
 
 /**
