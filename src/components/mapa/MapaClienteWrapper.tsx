@@ -14,7 +14,7 @@ import {
   iconoRojoHighlighted,
   iconoVerdeHighlighted,
 } from "@/lib/leaflet-config";
-
+import WhatsAppButton from "./WhatsAppButton";
 // Interfaces para los tipos de datos
 interface ArticuloOferta {
   id: number
@@ -514,7 +514,7 @@ export default function MapaClienteWrapper({
                           <p className="text-sm">{solicitud.descripcion}</p>
                         </div>
                       )}
-
+                      <WhatsAppButton phoneNumber={solicitud.contactoTel} message={'Hola, me gustaría entregar los artículos solicitados'} />
                       <Button
                         size="sm"
                         className="w-full mt-2 py-2 font-medium"
