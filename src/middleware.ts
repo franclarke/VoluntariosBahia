@@ -3,71 +3,62 @@ import { NextRequest, NextResponse } from "next/server";
 // import { verify } from "jsonwebtoken";
 
 // Rutas que requieren autenticación de administrador
-const ADMIN_ROUTES = [
-  "/admin",
-  "/api/admin/peticiones",
-  "/api/tipos-articulos/crear",
-  "/api/centros-distribucion/crear"
-];
+const ADMIN_ROUTES = ['/admin'];
 
 // Rutas excluidas de la autenticación
 const EXCLUDED_ROUTES = [
   "/admin/login"
 ];
 
+// Rutas antiguas que deben redirigirse a las nuevas
+const REDIRECT_ROUTES = [
+  { from: '/voluntario', to: '/' },
+  { from: '/solicitar', to: '/donacion' },
+  { from: '/solicitar-limpieza', to: '/limpieza' },
+  { from: '/solicitar-centro', to: '/punto-donacion' }
+];
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  
+  // Verificar si es una ruta que debe redirigirse
+  const redirectRoute = REDIRECT_ROUTES.find(route => pathname === route.from);
+  if (redirectRoute) {
+    const url = request.nextUrl.clone();
+    url.pathname = redirectRoute.to;
+    return NextResponse.redirect(url);
+  }
   
   // Verificar si la ruta está excluida de la autenticación
   if (EXCLUDED_ROUTES.some(route => pathname === route)) {
     return NextResponse.next();
   }
   
-  // Verificar si la ruta requiere autenticación de administrador
-  const requiresAuth = ADMIN_ROUTES.some(route => pathname.startsWith(route));
-  
-  if (!requiresAuth) {
-    return NextResponse.next();
-  }
-  
-  // Obtener token de la cookie
-  const token = request.cookies.get("admin_token")?.value;
-  
-  if (!token) {
-    // Si es una ruta de API, devolver error 401
-    if (pathname.startsWith("/api/")) {
-      return NextResponse.json(
-        { error: "No autorizado" },
-        { status: 401 }
-      );
-    }
+  // Verificar si es una ruta de administrador
+  if (ADMIN_ROUTES.some(route => pathname.startsWith(route))) {
+    const token = request.cookies.get('admin_token')?.value;
     
-    // Si es una ruta de página, redirigir al login
-    return NextResponse.redirect(new URL("/admin/login", request.url));
+    // Si no hay token, redirigir al login
+    if (!token) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin/login';
+      return NextResponse.redirect(url);
+    }
   }
   
-  try {
-    // En lugar de verificar el token con jsonwebtoken, simplemente verificamos que exista
-    // La verificación completa se realizará en las rutas API
-    return NextResponse.next();
-  } catch {
-    // Token inválido
-    if (pathname.startsWith("/api/")) {
-      return NextResponse.json(
-        { error: "No autorizado" },
-        { status: 401 }
-      );
-    }
-    
-    return NextResponse.redirect(new URL("/admin/login", request.url));
-  }
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
     "/admin/:path*",
-    "/api/admin/:path*",
-    "/api/tipos-articulos/crear",
-    "/api/centros-distribucion/crear"
+    "/voluntario",
+    "/solicitar",
+    "/solicitar-limpieza",
+    "/solicitar-centro",
+    "/donacion/:path*",
+    "/limpieza/:path*",
+    "/punto-donacion/:path*",
+    "/"
   ]
 }; 

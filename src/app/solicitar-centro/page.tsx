@@ -5,10 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Trash2, Plus, Building, RefreshCw } from "lucide-react";
+import { Trash2, Plus, Building, RefreshCw, MapPin } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import dynamic from "next/dynamic";
+
+// Importar el mapa de forma dinámica para evitar problemas con SSR
+const MapaUbicacion = dynamic(() => import("@/components/solicitar/MapaUbicacion"), {
+  ssr: false,
+  loading: () => <div className="h-[300px] w-full bg-muted flex items-center justify-center">Cargando mapa...</div>
+});
 
 interface ArticuloDisponible {
   tipoArticuloId: number;
@@ -33,11 +40,14 @@ export default function SolicitarCentroPage() {
     horarioApertura: "",
     horarioCierre: "",
     descripcion: "",
-    nombre: ""
+    nombre: "",
+    latitud: "",
+    longitud: ""
   });
   const [articulos, setArticulos] = useState<ArticuloDisponible[]>([
     { tipoArticuloId: 0, cantidad: 1 }
   ]);
+  const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState(false);
 
   // Cargar tipos de artículos desde la API
   useEffect(() => {
@@ -77,6 +87,15 @@ export default function SolicitarCentroPage() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleUbicacionChange = (lat: number, lng: number) => {
+    setFormData(prev => ({
+      ...prev,
+      latitud: lat.toString(),
+      longitud: lng.toString()
+    }));
+    setUbicacionSeleccionada(true);
+  };
+
   const handleArticuloChange = (index: number, field: keyof ArticuloDisponible, value: number | string) => {
     const nuevosArticulos = [...articulos];
     nuevosArticulos[index] = { ...nuevosArticulos[index], [field]: value };
@@ -110,6 +129,12 @@ export default function SolicitarCentroPage() {
       return;
     }
 
+    // Validar que se haya seleccionado una ubicación en el mapa
+    if (!ubicacionSeleccionada) {
+      toast.error("Por favor selecciona una ubicación en el mapa");
+      return;
+    }
+
     // Validar que todos los artículos tengan tipo y cantidad
     const articulosInvalidos = articulos.some(art => {
       if (art.tipoArticuloId === 0 || art.cantidad < 1) return true;
@@ -124,14 +149,8 @@ export default function SolicitarCentroPage() {
     try {
       setLoading(true);
       
-      console.log("Enviando solicitud de centro:", {
-        direccion: formData.direccion,
-        responsable: formData.responsable,
-        articulos: articulos
-      });
-      
       // Crear la solicitud de centro
-      const response = await fetch("/api/solicitudes-centro", {
+      const response = await fetch("/api/puntos-donacion", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -144,6 +163,8 @@ export default function SolicitarCentroPage() {
           horarioCierre: formData.horarioCierre || null,
           descripcion: formData.descripcion || null,
           nombre: formData.nombre || null,
+          latitud: parseFloat(formData.latitud),
+          longitud: parseFloat(formData.longitud),
           articulos: articulos
         }),
       });
@@ -176,9 +197,12 @@ export default function SolicitarCentroPage() {
       horarioApertura: "",
       horarioCierre: "",
       descripcion: "",
-      nombre: ""
+      nombre: "",
+      latitud: "",
+      longitud: ""
     });
     setArticulos([{ tipoArticuloId: 0, cantidad: 1 }]);
+    setUbicacionSeleccionada(false);
     setEnviado(false);
   };
 
@@ -187,10 +211,10 @@ export default function SolicitarCentroPage() {
       <div className="flex flex-col space-y-2 mb-4">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center">
           <Building className="mr-2 h-6 w-6 text-primary" />
-          Solicitar Registro de Centro
+          Solicitar Punto de Donación
         </h1>
         <p className="text-muted-foreground">
-          Completa el formulario para registrar un centro de distribución de donaciones en Bahía Blanca.
+          Completa el formulario para registrar un punto de donación en Bahía Blanca.
           Tu solicitud será revisada por un administrador antes de ser aprobada.
         </p>
       </div>
@@ -218,16 +242,16 @@ export default function SolicitarCentroPage() {
       ) : (
         <Card className="shadow-sm">
           <CardHeader>
-            <CardTitle>Formulario de Registro</CardTitle>
+            <CardTitle>Solicitud de Punto de Donación</CardTitle>
             <CardDescription>
-              Completa los datos del centro de distribución y los artículos que podrás recibir
+              Completa los datos del punto de donación y los artículos que podrás recibir
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="direccion">Dirección del centro *</Label>
+                  <Label htmlFor="direccion">Dirección del punto de donación *</Label>
                   <Input
                     id="direccion"
                     name="direccion"
@@ -237,12 +261,25 @@ export default function SolicitarCentroPage() {
                     required
                   />
                   <p className="text-xs text-muted-foreground">
-                    Ingresa la dirección lo más detallada posible para que los voluntarios puedan ubicar el centro.
+                    Ingresa la dirección lo más detallada posible para que los voluntarios puedan ubicar el punto de donación.
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="nombre">Nombre del centro (opcional)</Label>
+                  <div className="flex items-center gap-2 mb-2">
+                    <MapPin className="h-4 w-4 text-muted-foreground" />
+                    <Label>Selecciona la ubicación en el mapa *</Label>
+                  </div>
+                  <div className="h-[300px] w-full rounded-md overflow-hidden border">
+                    <MapaUbicacion onUbicacionChange={handleUbicacionChange} />
+                  </div>
+                  {ubicacionSeleccionada && (
+                    <p className="text-xs text-muted-foreground">Ubicación seleccionada correctamente</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="nombre">Nombre del punto de donación (opcional)</Label>
                   <Input
                     id="nombre"
                     name="nombre"
@@ -303,7 +340,7 @@ export default function SolicitarCentroPage() {
                   <Textarea
                     id="descripcion"
                     name="descripcion"
-                    placeholder="Describe brevemente tu centro de distribución"
+                    placeholder="Describe brevemente tu punto de donación"
                     value={formData.descripcion}
                     onChange={handleChange}
                     rows={3}

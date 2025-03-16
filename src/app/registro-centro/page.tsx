@@ -8,9 +8,9 @@ export default function RegistroCentroPage() {
     <div className="container mx-auto py-6 max-w-3xl">
       <Card>
         <CardHeader>
-          <CardTitle>Registrar Centro de Distribución</CardTitle>
+          <CardTitle>Registrar Punto de Donación</CardTitle>
           <CardDescription>
-            Completa el formulario para registrar un nuevo centro de entrega de donaciones
+            Completa el formulario para registrar un nuevo punto de donación
           </CardDescription>
         </CardHeader>
         <CardContent>

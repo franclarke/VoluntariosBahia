@@ -6,9 +6,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Trash2, Plus } from "lucide-react";
+import { Trash2, Plus, MapPin } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import dynamic from "next/dynamic";
+
+// Importar el mapa de forma dinámica para evitar problemas con SSR
+const MapaUbicacion = dynamic(() => import("@/components/solicitar/MapaUbicacion"), {
+  ssr: false,
+  loading: () => <div className="h-[300px] w-full bg-muted flex items-center justify-center">Cargando mapa...</div>
+});
 
 interface ArticuloSolicitado {
   tipoArticulo: string;
@@ -33,11 +40,14 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
     direccion: "",
     contactoNombre: "",
     contactoTel: "",
-    descripcion: ""
+    descripcion: "",
+    latitud: "",
+    longitud: ""
   });
   const [articulos, setArticulos] = useState<ArticuloSolicitado[]>([
     { tipoArticulo: "", cantidad: 1 }
   ]);
+  const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState(false);
 
   // Cargar tipos de artículos desde la API
   useEffect(() => {
@@ -83,6 +93,15 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleUbicacionChange = (lat: number, lng: number) => {
+    setFormData(prev => ({
+      ...prev,
+      latitud: lat.toString(),
+      longitud: lng.toString()
+    }));
+    setUbicacionSeleccionada(true);
+  };
+
   const handleArticuloChange = (index: number, field: keyof ArticuloSolicitado, value: string | number) => {
     const nuevosArticulos = [...articulos];
     nuevosArticulos[index] = { ...nuevosArticulos[index], [field]: value };
@@ -116,6 +135,12 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
       return;
     }
 
+    // Validar que se haya seleccionado una ubicación en el mapa
+    if (!ubicacionSeleccionada) {
+      toast.error("Por favor selecciona una ubicación en el mapa");
+      return;
+    }
+
     // Validar que todos los artículos tengan tipo y cantidad
     const articulosInvalidos = articulos.some(art => {
       if (!art.tipoArticulo || art.cantidad < 1) return true;
@@ -124,21 +149,32 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
     });
     
     if (articulosInvalidos) {
-      toast.error("Por favor completa correctamente todos los artículos solicitados");
+      toast.error("Todos los artículos deben tener tipo y cantidad válida");
       return;
     }
 
     try {
       setLoading(true);
       
-      // Preparar los artículos para enviar (usar el tipo personalizado si es "Otro")
-      const articulosParaEnviar = articulos.map(art => ({
-        tipoArticulo: art.tipoArticulo === "Otro" ? art.tipoPersonalizado! : art.tipoArticulo,
-        cantidad: art.cantidad
-      }));
+      // Preparar los artículos para enviar (usar el tipo existente, no el personalizado)
+      const articulosParaEnviar = articulos.map(art => {
+        // Si es "Otro", usamos el tipo existente en lugar de crear uno nuevo
+        if (art.tipoArticulo === "Otro") {
+          return {
+            tipoArticulo: art.tipoArticulo,
+            tipoPersonalizado: art.tipoPersonalizado,
+            cantidad: art.cantidad
+          };
+        } else {
+          return {
+            tipoArticulo: art.tipoArticulo,
+            cantidad: art.cantidad
+          };
+        }
+      });
 
       // Enviar datos al servidor
-      const response = await fetch("/api/peticiones", {
+      const response = await fetch("/api/solicitudes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -148,6 +184,8 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
           contactoNombre: formData.contactoNombre,
           contactoTel: formData.contactoTel,
           descripcion: formData.descripcion,
+          latitud: parseFloat(formData.latitud),
+          longitud: parseFloat(formData.longitud),
           articulos: articulosParaEnviar
         }),
       });
@@ -230,6 +268,19 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
                 Incluye calle, número, piso/depto y barrio para facilitar la entrega
               </p>
             </div>
+
+            <div className="space-y-1.5 sm:space-y-2">
+              <div className="flex items-center gap-2 mb-2">
+                <MapPin className="h-4 w-4 text-muted-foreground" />
+                <Label>Selecciona la ubicación en el mapa *</Label>
+              </div>
+              <div className="h-[300px] w-full rounded-md overflow-hidden border">
+                <MapaUbicacion onUbicacionChange={handleUbicacionChange} />
+              </div>
+              {ubicacionSeleccionada && (
+                <p className="text-xs text-muted-foreground">Ubicación seleccionada correctamente</p>
+              )}
+            </div>
           </div>
           
           {/* Artículos solicitados */}
@@ -271,7 +322,7 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
                       <SelectTrigger id={`tipoArticulo-${index}`} className="text-sm sm:text-base">
                         <SelectValue placeholder="Selecciona un tipo" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="z-[9999]">
                         {cargandoTipos ? (
                           <div className="p-2 text-center">Cargando...</div>
                         ) : (
@@ -281,20 +332,19 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
                                 {tipo}
                               </SelectItem>
                             ))}
-                            <SelectItem value="otro" className="text-sm sm:text-base">Otro (especificar)</SelectItem>
                           </>
                         )}
                       </SelectContent>
                     </Select>
                     
-                    {articulo.tipoArticulo === "otro" && (
+                    {articulo.tipoArticulo === "Otro" && (
                       <div className="mt-2">
                         <Input
                           placeholder="Especifica el tipo de artículo"
                           value={articulo.tipoPersonalizado || ""}
                           onChange={(e) => handleArticuloChange(index, "tipoPersonalizado", e.target.value)}
                           className="text-sm sm:text-base"
-                          required={articulo.tipoArticulo === "otro"}
+                          required={articulo.tipoArticulo === "Otro"}
                         />
                       </div>
                     )}

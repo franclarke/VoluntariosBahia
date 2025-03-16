@@ -4,36 +4,62 @@ import { prisma } from "@/lib/prisma";
 // Configuración para las rutas de API
 export const dynamic = 'force-dynamic';
 
-// PUT /api/solicitudes/:id/entregar
+// PUT /api/solicitudes/[id]/entregar
 // Marca una solicitud como entregada
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    // Usar desestructuración para obtener el ID
-    const { id } = params;
+    const id = params.id;
     
-    if (!id) {
+    const solicitudId = parseInt(id);
+    if (isNaN(solicitudId)) {
       return NextResponse.json(
-        { error: "ID de solicitud no proporcionado" },
+        { error: "ID inválido" },
         { status: 400 }
       );
     }
     
+    // Verificar que la solicitud existe
+    const solicitud = await prisma.solicitud.findUnique({
+      where: { id: solicitudId },
+      include: {
+        articulos: true
+      }
+    });
+    
+    if (!solicitud) {
+      return NextResponse.json(
+        { error: "Solicitud no encontrada" },
+        { status: 404 }
+      );
+    }
+    
+    if (solicitud.estado === "Entregada") {
+      return NextResponse.json(
+        { error: "La solicitud ya está marcada como entregada" },
+        { status: 400 }
+      );
+    }
+    
+    // Actualizar todos los artículos a cantidad 0
+    await prisma.articuloSolicitud.updateMany({
+      where: { solicitudId: solicitudId },
+      data: { cantidad: 0 }
+    });
+    
     // Actualizar el estado de la solicitud
-    const solicitud = await prisma.solicitud.update({
-      where: {
-        id: parseInt(id)
-      },
+    const solicitudActualizada = await prisma.solicitud.update({
+      where: { id: solicitudId },
       data: {
         estado: "Entregada"
       }
     });
     
     return NextResponse.json({
-      message: "Solicitud marcada como entregada",
-      solicitud
+      message: "Solicitud marcada como entregada correctamente",
+      solicitud: solicitudActualizada
     });
   } catch (error) {
     console.error("Error al marcar solicitud como entregada:", error);

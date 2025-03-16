@@ -1,0 +1,63 @@
+/* Estilos para corregir problemas de visualización de Leaflet */
+
+/* Asegurar que el contenedor del mapa tenga las dimensiones correctas */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Corregir la visualización de los marcadores */
+.leaflet-marker-icon {
+  width: 25px !important;
+  height: 41px !important;
+}
+
+/* Corregir la visualización de las sombras de los marcadores */
+.leaflet-marker-shadow {
+  width: 41px !important;
+  height: 41px !important;
+  display: block !important;
+}
+
+/* Asegurar que los popups estén por encima de otros elementos */
+.leaflet-popup {
+  z-index: 1000 !important;
+}
+
+/* Asegurar que los controles estén por encima de otros elementos */
+.leaflet-control {
+  z-index: 800 !important;
+}
+
+/* Asegurar que los marcadores estén por encima de otros elementos */
+.leaflet-marker-pane {
+  z-index: 600 !important;
+}
+
+/* Asegurar que las sombras estén por debajo de los marcadores */
+.leaflet-shadow-pane {
+  z-index: 500 !important;
+}
+
+/* Asegurar que los popups estén por encima de los marcadores */
+.leaflet-popup-pane {
+  z-index: 700 !important;
+}
+
+/* Corregir el tamaño de los iconos en los marcadores */
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
+
+/* Asegurar que el mapa no se superponga con otros elementos */
+.leaflet-map-pane {
+  z-index: 400 !important;
+}
+
+/* Corregir la visualización de los controles de zoom */
+.leaflet-control-zoom a {
+  line-height: 26px !important;
+  text-decoration: none !important;
+} 

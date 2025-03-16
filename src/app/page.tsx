@@ -1,139 +1,204 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
-import { MapPin, Users, ArrowRight, Home as HomeIcon } from "lucide-react";
-import { WhatsappIcon } from "@/components/icons/WhatsappIcon";
+"use client"
 
-export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center gap-6 sm:gap-8 py-4 sm:py-6 px-3 sm:px-4">
-      {/* Características principales */}
-      <div className="w-full max-w-6xl mx-auto">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-8">¿Cómo funciona?</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-          <Card className="flex flex-col h-full border-t-4 border-t-blue-500 shadow-sm hover:shadow-md transition-shadow">
-            <CardHeader className="pb-2 sm:pb-4">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <div className="bg-blue-100 p-2 rounded-full">
-                  <Users className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
-                </div>
-                <CardTitle className="text-base sm:text-lg">Soy Voluntario</CardTitle>
-              </div>
-              <CardDescription className="text-sm">
-                Quiero ayudar a transportar donaciones en Bahía Blanca
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow pb-2 sm:pb-4">
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                Como voluntario, podrás ver en un mapa interactivo:
-              </p>
-              <ul className="list-disc list-inside mt-1 sm:mt-2 text-xs sm:text-sm text-muted-foreground space-y-1">
-                <li>Centros de donación para recoger artículos (puntos azules)</li>
-                <li>Solicitudes de personas que necesitan recibir donaciones (puntos rojos)</li>
-                <li>Filtrar por tipos de artículos que puedes transportar</li>
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Button asChild className="w-full gap-2">
-                <Link href="/voluntario">
-                  <span>Acceder como Voluntario</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </CardFooter>
-          </Card>
+import { useState } from "react"
+import dynamic from "next/dynamic"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Filter, Map } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Switch } from "@/components/ui/switch"
+import { cn } from "@/lib/utils"
 
-          <Card className="flex flex-col h-full border-t-4 border-t-red-500 shadow-sm hover:shadow-md transition-shadow">
-            <CardHeader className="pb-2 sm:pb-4">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <div className="bg-red-100 p-2 rounded-full">
-                  <HomeIcon className="h-5 w-5 sm:h-6 sm:w-6 text-red-600" />
-                </div>
-                <CardTitle className="text-base sm:text-lg">Necesito Donaciones</CardTitle>
-              </div>
-              <CardDescription className="text-sm">
-                Solicitar artículos para mi familia o comunidad
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow pb-2 sm:pb-4">
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                Puedes solicitar:
-              </p>
-              <ul className="list-disc list-inside mt-1 sm:mt-2 text-xs sm:text-sm text-muted-foreground space-y-1">
-                <li>Diferentes tipos de artículos (ropa, alimentos, etc.)</li>
-                <li>Especificar cantidades necesarias</li>
-                <li>Proporcionar información de contacto y ubicación</li>
-                <li>Un voluntario te llevará lo que necesitas</li>
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Button asChild variant="outline" className="w-full gap-2">
-                <Link href="/solicitar">
-                  <span>Solicitar Donaciones</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </CardFooter>
-          </Card>
-
-          <Card className="flex flex-col h-full border-t-4 border-t-green-500 shadow-sm hover:shadow-md transition-shadow sm:col-span-2 md:col-span-1 sm:max-w-md sm:mx-auto md:max-w-none md:mx-0 w-full">
-            <CardHeader className="pb-2 sm:pb-4">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <div className="bg-green-100 p-2 rounded-full">
-                  <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
-                </div>
-                <CardTitle className="text-base sm:text-lg">Centro de Distribución</CardTitle>
-              </div>
-              <CardDescription className="text-sm">
-                Registrar un centro para recibir y distribuir donaciones
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow pb-2 sm:pb-4">
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                Solicita el registro de tu centro para:
-              </p>
-              <ul className="list-disc list-inside mt-1 sm:mt-2 text-xs sm:text-sm text-muted-foreground space-y-1">
-                <li>Recibir donaciones de voluntarios</li>
-                <li>Especificar qué artículos aceptas</li>
-                <li>Indicar horarios de atención</li>
-                <li>Aparecer en el mapa para los voluntarios</li>
-              </ul>
-              <p className="text-xs text-muted-foreground mt-2">
-                *Tu solicitud será revisada por un administrador
-              </p>
-            </CardContent>
-            <CardFooter>
-              <Button asChild variant="secondary" className="w-full gap-2">
-                <Link href="/solicitar-centro">
-                  <span>Solicitar Registro</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-      </div>
-
-      {/* Sección de información adicional */}
-      <div className="w-full max-w-6xl mx-auto mt-4 sm:mt-8 bg-muted rounded-xl p-4 sm:p-6">
-        <div className="text-center space-y-2 sm:space-y-3">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold">¿Quieres ayudar en Bahía Blanca?</h2>
-          <p className="text-sm sm:text-base text-muted-foreground max-w-[700px] mx-auto">
-            Contamos con grupos de whatsapp de voluntarios que se coordinan para transportar donaciones.
-          </p>
-          <div className="flex flex-col items-center justify-center mt-3 sm:mt-4">
-          <a 
-            href="https://linktr.ee/voluntariosbahia" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-medium rounded-full px-3 py-1.5 sm:px-4 sm:py-2 transition-colors text-sm sm:text-base"
-          >
-            <WhatsappIcon className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" />
-            <span>Contactar por WhatsApp</span>
-          </a>
-        </div>
-        </div>
+// Dynamic import to avoid SSR issues
+const MapaVoluntario = dynamic(() => import("@/components/voluntario/MapaVoluntario"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[70vh] w-full bg-muted flex items-center justify-center rounded-lg">
+      <div className="flex flex-col items-center gap-2">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+        <p className="text-sm text-muted-foreground">Cargando mapa...</p>
       </div>
     </div>
-  );
+  ),
+})
+
+export default function HomePage() {
+  // Visibility filters
+  const [mostrarPuntosDonacion, setMostrarPuntosDonacion] = useState(true)
+  const [mostrarSolicitudesDonacion, setMostrarSolicitudesDonacion] = useState(true)
+  const [mostrarSolicitudesLimpieza, setMostrarSolicitudesLimpieza] = useState(true)
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+
+  // Count active filters
+  const activeFiltersCount = [mostrarPuntosDonacion, mostrarSolicitudesDonacion, mostrarSolicitudesLimpieza].filter(
+    Boolean,
+  ).length
+
+  // Reset all filters
+  const resetFilters = () => {
+    setMostrarPuntosDonacion(true)
+    setMostrarSolicitudesDonacion(true)
+    setMostrarSolicitudesLimpieza(true)
+  }
+
+  return (
+    <div className="container-fluid mx-auto py-4 space-y-4 px-0 sm:px-0">
+      <Card className="shadow-sm">
+        <CardHeader className="pb-2 px-4 sm:px-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+            <div>
+              <CardTitle className="text-lg sm:text-xl">Mapa de Donaciones</CardTitle>
+              <CardDescription>Encuentra centros de donación y personas que necesitan ayuda</CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-2 px-4 sm:px-6">
+          <div className="flex flex-col space-y-4">
+            {/* Mobile filter button and desktop filter bar */}
+            <div className="flex items-center justify-between">
+              {/* Mobile filter button */}
+              <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="sm" className="sm:hidden flex items-center gap-1">
+                    <Filter className="h-4 w-4" />
+                    Filtros
+                    {activeFiltersCount > 0 && (
+                      <Badge variant="secondary" className="ml-1 h-5 w-5 p-0 flex items-center justify-center">
+                        {activeFiltersCount}
+                      </Badge>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="h-auto max-h-[60vh] rounded-t-xl">
+                  <SheetHeader className="mb-4">
+                    <SheetTitle className="flex items-center justify-between">
+                      <span className="flex items-center gap-2">
+                        <Map className="h-4 w-4" />
+                        Mostrar en el mapa
+                      </span>
+                      <Button variant="ghost" size="sm" onClick={resetFilters} className="h-8">
+                        Restablecer
+                      </Button>
+                    </SheetTitle>
+                  </SheetHeader>
+                  <div className="space-y-4">
+                    <FilterItem
+                      id="mobile-puntos-donacion"
+                      color="bg-blue-500"
+                      label="Centros de donación"
+                      checked={mostrarPuntosDonacion}
+                      onChange={() => setMostrarPuntosDonacion(!mostrarPuntosDonacion)}
+                    />
+                    <FilterItem
+                      id="mobile-solicitudes-donacion"
+                      color="bg-red-500"
+                      label="Solicitudes de donación"
+                      checked={mostrarSolicitudesDonacion}
+                      onChange={() => setMostrarSolicitudesDonacion(!mostrarSolicitudesDonacion)}
+                    />
+                    <FilterItem
+                      id="mobile-solicitudes-limpieza"
+                      color="bg-green-500"
+                      label="Solicitudes de limpieza"
+                      checked={mostrarSolicitudesLimpieza}
+                      onChange={() => setMostrarSolicitudesLimpieza(!mostrarSolicitudesLimpieza)}
+                    />
+                  </div>
+                  <div className="mt-6">
+                    <Button className="w-full" onClick={() => setIsFilterOpen(false)}>
+                      Aplicar filtros
+                    </Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              {/* Desktop filter pills */}
+              <div className="hidden sm:flex items-center gap-2 flex-wrap">
+                <FilterPill
+                  active={mostrarPuntosDonacion}
+                  color="bg-blue-500"
+                  label="Centros de donación"
+                  onClick={() => setMostrarPuntosDonacion(!mostrarPuntosDonacion)}
+                />
+                <FilterPill
+                  active={mostrarSolicitudesDonacion}
+                  color="bg-red-500"
+                  label="Solicitudes de donación"
+                  onClick={() => setMostrarSolicitudesDonacion(!mostrarSolicitudesDonacion)}
+                />
+                <FilterPill
+                  active={mostrarSolicitudesLimpieza}
+                  color="bg-green-500"
+                  label="Solicitudes de limpieza"
+                  onClick={() => setMostrarSolicitudesLimpieza(!mostrarSolicitudesLimpieza)}
+                />
+                {activeFiltersCount < 3 && (
+                  <Button variant="ghost" size="sm" onClick={resetFilters} className="h-8 text-xs">
+                    Restablecer
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            <div className="h-[70vh] w-full rounded-lg overflow-hidden border">
+              <MapaVoluntario
+                mostrarPuntosDonacion={mostrarPuntosDonacion}
+                mostrarSolicitudesDonacion={mostrarSolicitudesDonacion}
+                mostrarSolicitudesLimpieza={mostrarSolicitudesLimpieza}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
 }
+
+// Filter item component for mobile sheet
+interface FilterItemProps {
+  id: string
+  color: string
+  label: string
+  checked: boolean
+  onChange: () => void
+}
+
+function FilterItem({ id, color, label, checked, onChange }: FilterItemProps) {
+  return (
+    <div className="flex items-center justify-between p-3 rounded-lg border">
+      <Label htmlFor={id} className="flex items-center gap-2 cursor-pointer w-full">
+        <span className={`inline-block w-3 h-3 rounded-full ${color}`}></span>
+        <span className="text-sm font-medium">{label}</span>
+      </Label>
+      <Switch id={id} checked={checked} onCheckedChange={onChange} />
+    </div>
+  )
+}
+
+// Filter pill component for desktop
+interface FilterPillProps {
+  active: boolean
+  color: string
+  label: string
+  onClick: () => void
+}
+
+function FilterPill({ active, color, label, onClick }: FilterPillProps) {
+  return (
+    <Button
+      variant={active ? "default" : "outline"}
+      size="sm"
+      className={cn(
+        "h-8 text-xs transition-all",
+        active ? "bg-primary text-primary-foreground" : "bg-background text-muted-foreground",
+      )}
+      onClick={onClick}
+    >
+      <span className={`inline-block w-2 h-2 rounded-full ${color} mr-1.5`}></span>
+      {label}
+    </Button>
+  )
+}
+

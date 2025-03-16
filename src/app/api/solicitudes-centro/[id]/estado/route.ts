@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 // Actualiza el estado de una solicitud de centro
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     // Verificar si el usuario está autenticado como administrador
@@ -22,7 +22,7 @@ export async function PUT(
     }
     
     // Usar desestructuración para obtener el ID
-    const { id } = params;
+    const id = context.params.id;
     const { estado } = await request.json();
     
     if (!id) {

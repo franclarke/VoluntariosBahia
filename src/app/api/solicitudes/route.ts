@@ -5,11 +5,6 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-interface ArticuloSolicitud {
-  tipoArticuloId: number;
-  cantidad: number;
-}
-
 // GET /api/solicitudes
 // Obtiene todas las solicitudes con el estado especificado
 export async function GET(request: NextRequest) {
@@ -47,102 +42,114 @@ export async function GET(request: NextRequest) {
 // Crea una nueva solicitud de donación
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    
-    // Validar campos requeridos
-    if (!body.direccion || !body.contactoNombre || !body.contactoTel || !body.articulos || !Array.isArray(body.articulos)) {
-      return NextResponse.json(
-        { error: "Faltan campos requeridos o el formato es incorrecto" },
-        { status: 400 }
-      );
+    const { 
+      direccion, 
+      contactoNombre, 
+      contactoTel, 
+      latitud, 
+      longitud, 
+      descripcion, 
+      articulos 
+    } = await request.json();
+
+    // Validar campos obligatorios
+    if (!direccion || !contactoNombre || !contactoTel || !articulos || !Array.isArray(articulos)) {
+      return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 });
     }
-    
-    // Validar que haya al menos un artículo
-    if (body.articulos.length === 0) {
-      return NextResponse.json(
-        { error: "Debe incluir al menos un artículo" },
-        { status: 400 }
-      );
+
+    // Validar coordenadas
+    if (typeof latitud !== 'number' || typeof longitud !== 'number') {
+      return NextResponse.json({ error: 'Coordenadas inválidas' }, { status: 400 });
     }
-    
-    // Validar que todos los artículos tengan tipoArticuloId y cantidad
-    const articulosInvalidos = body.articulos.some((art: ArticuloSolicitud) => 
-      !art.tipoArticuloId || !art.cantidad || art.cantidad < 1
-    );
-    
-    if (articulosInvalidos) {
-      return NextResponse.json(
-        { error: "Todos los artículos deben tener tipo y cantidad válida" },
-        { status: 400 }
-      );
-    }
-    
-    // Verificar si se está basando en una petición
-    let peticionReferencia = null;
-    if (body.peticionReferenciaId) {
-      peticionReferencia = await prisma.peticionDonacion.findUnique({
-        where: { id: parseInt(body.peticionReferenciaId) },
-        include: {
-          articulos: {
-            include: {
-              tipoArticulo: true
-            }
-          }
+
+    // Validar artículos
+    for (const articulo of articulos) {
+      // Si el tipo es "Otro", verificar que tenga tipoPersonalizado
+      if (articulo.tipoArticulo === "Otro") {
+        if (!articulo.tipoPersonalizado || articulo.tipoPersonalizado.trim() === "") {
+          return NextResponse.json({ 
+            error: 'Todos los artículos deben tener tipo y cantidad válida' 
+          }, { status: 400 });
         }
-      });
-      
-      if (!peticionReferencia) {
-        return NextResponse.json(
-          { error: "La petición de referencia no existe" },
-          { status: 404 }
-        );
+      } else if (!articulo.tipoArticulo) {
+        return NextResponse.json({ 
+          error: 'Todos los artículos deben tener tipo y cantidad válida' 
+        }, { status: 400 });
       }
-      
-      console.log(`Creando solicitud basada en la petición #${body.peticionReferenciaId}`);
+
+      if (!articulo.cantidad || isNaN(articulo.cantidad) || articulo.cantidad < 1) {
+        return NextResponse.json({ 
+          error: 'Todos los artículos deben tener tipo y cantidad válida' 
+        }, { status: 400 });
+      }
     }
-    
-    // Crear la solicitud con sus artículos
-    const solicitud = await prisma.solicitud.create({
+
+    // Crear solicitud en la base de datos
+    const nuevaSolicitud = await prisma.solicitud.create({
       data: {
-        direccion: body.direccion,
-        contactoNombre: body.contactoNombre,
-        contactoTel: body.contactoTel,
-        latitud: body.latitud || 0,
-        longitud: body.longitud || 0,
-        descripcion: body.descripcion || null,
-        estado: body.estado || "Pendiente",
-        articulos: {
-          create: body.articulos.map((art: ArticuloSolicitud) => ({
-            tipoArticuloId: art.tipoArticuloId,
-            cantidad: art.cantidad
-          }))
-        }
-      },
-      include: {
-        articulos: {
-          include: {
-            tipoArticulo: true
-          }
-        }
+        direccion,
+        contactoNombre,
+        contactoTel,
+        latitud,
+        longitud,
+        descripcion,
+        estado: 'Pendiente'
       }
     });
-    
-    const response = {
-      ...solicitud,
-      peticionReferencia: peticionReferencia ? {
-        id: peticionReferencia.id,
-        direccion: peticionReferencia.direccion,
-        contactoNombre: peticionReferencia.contactoNombre,
-        contactoTel: peticionReferencia.contactoTel
-      } : null
-    };
-    
-    return NextResponse.json(response, { status: 201 });
+
+    // Procesar artículos
+    for (const articulo of articulos) {
+      // Si el tipo es "Otro", primero crear el nuevo tipo de artículo
+      if (articulo.tipoArticulo === "Otro" && articulo.tipoPersonalizado) {
+        let tipoArticulo = await prisma.tipoArticulo.findUnique({
+          where: { nombre: articulo.tipoPersonalizado }
+        });
+
+        // Si no existe, crear el nuevo tipo
+        if (!tipoArticulo) {
+          tipoArticulo = await prisma.tipoArticulo.create({
+            data: { nombre: articulo.tipoPersonalizado }
+          });
+        }
+
+        // Asociar el artículo a la solicitud
+        await prisma.articuloSolicitud.create({
+          data: {
+            solicitudId: nuevaSolicitud.id,
+            tipoArticuloId: tipoArticulo.id,
+            cantidad: articulo.cantidad
+          }
+        });
+      } else {
+        // Buscar el tipo de artículo por nombre
+        const tipoArticulo = await prisma.tipoArticulo.findUnique({
+          where: { nombre: articulo.tipoArticulo }
+        });
+
+        if (!tipoArticulo) {
+          // Manejar el caso donde no existe el tipo (raro pero podría pasar)
+          continue; 
+        }
+
+        // Asociar el artículo a la solicitud
+        await prisma.articuloSolicitud.create({
+          data: {
+            solicitudId: nuevaSolicitud.id,
+            tipoArticuloId: tipoArticulo.id,
+            cantidad: articulo.cantidad
+          }
+        });
+      }
+    }
+
+    return NextResponse.json({ 
+      mensaje: 'Solicitud creada exitosamente', 
+      solicitudId: nuevaSolicitud.id 
+    });
   } catch (error) {
-    console.error("Error al crear solicitud:", error);
-    return NextResponse.json(
-      { error: "Error al crear la solicitud" },
-      { status: 500 }
-    );
+    console.error('Error al crear solicitud:', error);
+    return NextResponse.json({ 
+      error: 'Error al procesar la solicitud. Inténtalo de nuevo más tarde.' 
+    }, { status: 500 });
   }
 }

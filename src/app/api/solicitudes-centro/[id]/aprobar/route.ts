@@ -5,81 +5,83 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = 'force-dynamic';
 
 // POST /api/solicitudes-centro/[id]/aprobar
-// Aprueba una solicitud de centro y crea el centro de distribución
+// Aprueba un punto de donación pendiente activándolo
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     // Obtener el ID de los parámetros y convertirlo a un número
-    const { id } = params;
-    console.log("Aprobando solicitud de centro con ID:", id);
+    const id = context.params.id;
+    console.log("Aprobando punto de donación con ID:", id);
     
-    const solicitudId = parseInt(id);
-    if (isNaN(solicitudId)) {
+    const puntoId = parseInt(id);
+    if (isNaN(puntoId)) {
       return NextResponse.json(
         { error: "ID inválido" },
         { status: 400 }
       );
     }
 
-    // Buscar la solicitud
-    const solicitud = await prisma.solicitudCentro.findUnique({
-      where: { id: solicitudId },
+    // Buscar el punto de donación
+    const puntoDonacion = await prisma.puntoDonacion.findUnique({
+      where: { id: puntoId },
       include: {
-        articulosSolicitados: true
+        articulos: {
+          include: {
+            tipoArticulo: true
+          }
+        }
       }
     });
 
-    if (!solicitud) {
+    if (!puntoDonacion) {
       return NextResponse.json(
-        { error: "Solicitud no encontrada" },
+        { error: "Punto de donación no encontrado" },
         { status: 404 }
       );
     }
 
-    if (solicitud.estado !== "Pendiente") {
+    if (puntoDonacion.activo) {
       return NextResponse.json(
-        { error: "La solicitud ya ha sido procesada" },
+        { error: "El punto de donación ya está activo" },
         { status: 400 }
       );
     }
 
-    console.log("Aprobando solicitud de centro:", solicitud);
+    console.log("Aprobando punto de donación:", puntoDonacion);
 
-    // Actualizar el estado de la solicitud
-    await prisma.solicitudCentro.update({
-      where: { id: solicitudId },
+    // Activar el punto de donación
+    const puntoActualizado = await prisma.puntoDonacion.update({
+      where: { id: puntoId },
       data: {
-        estado: "Aprobada"
-      }
-    });
-
-    // Crear el centro de distribución
-    const centro = await prisma.centroDistribucion.create({
-      data: {
-        direccion: solicitud.direccion,
-        responsable: solicitud.responsable,
-        telefono: solicitud.telefono,
-        horarioApertura: solicitud.horarioApertura,
-        horarioCierre: solicitud.horarioCierre,
-        latitud: solicitud.latitud,
-        longitud: solicitud.longitud,
-        descripcion: solicitud.descripcion,
-        nombre: solicitud.nombre,
         activo: true
       }
     });
     
+    // Actualizar el estado de los artículos a "Disponible"
+    if (puntoDonacion.articulos.length > 0) {
+      console.log("Actualizando estado de artículos a Disponible");
+      
+      for (const articulo of puntoDonacion.articulos) {
+        await prisma.articuloOferta.update({
+          where: { id: articulo.id },
+          data: {
+            estado: "Disponible"
+          }
+        });
+      }
+    }
+    
     return NextResponse.json({
       success: true,
-      message: "Solicitud aprobada y centro creado correctamente",
-      centro
+      message: "Punto de donación activado correctamente",
+      puntoDonacion: puntoActualizado
     });
   } catch (error) {
-    console.error("Error al aprobar solicitud de centro:", error);
+    console.error("Error al aprobar punto de donación:", error);
     return NextResponse.json(
-      { error: "Error al aprobar solicitud de centro" },
+      { error: "Error al aprobar punto de donación" },
       { status: 500 }
     );
   }

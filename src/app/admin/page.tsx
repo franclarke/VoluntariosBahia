@@ -332,14 +332,14 @@ export default function AdminPage() {
       </TabsContent>
 
       <TabsContent value="panel4" className="mt-0">
-        <Card>
+        <Card className="h-full">
           <CardHeader className="pb-2">
-            <CardTitle className="text-base sm:text-lg">Registrar Centro de Distribución</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Registrar Punto de Donación</CardTitle>
             <CardDescription className="text-xs sm:text-sm">
-              Registra un nuevo centro de entrega de donaciones
+              Registra un nuevo punto para recibir donaciones
             </CardDescription>
           </CardHeader>
-          <CardContent className="p-2 sm:p-4">
+          <CardContent className="pt-2">
             <RegistroCentro />
           </CardContent>
         </Card>
@@ -604,14 +604,14 @@ export default function AdminPage() {
             </TabsContent>
             
             <TabsContent value="registroCentro" className="p-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Registrar Centro de Distribución</CardTitle>
-                  <CardDescription>
-                    Registra un nuevo centro de entrega de donaciones
+              <Card className="h-full">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base sm:text-lg">Registrar Punto de Donación</CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">
+                    Registra un nuevo punto para recibir donaciones
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-2">
                   <RegistroCentro />
                 </CardContent>
               </Card>

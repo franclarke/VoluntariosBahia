@@ -2,15 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 // POST /api/solicitudes-centro/[id]/rechazar
-// Rechaza una solicitud de centro
+// Rechaza un punto de donación pendiente eliminándolo
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    console.log("Rechazando solicitud de centro con ID:", params.id);
+    console.log("Rechazando punto de donación con ID:", context.params.id);
     
-    const id = parseInt(params.id);
+    const id = parseInt(context.params.id);
     if (isNaN(id)) {
       return NextResponse.json(
         { error: "ID inválido" },
@@ -18,43 +18,45 @@ export async function POST(
       );
     }
 
-    // Buscar la solicitud
-    const solicitud = await prisma.solicitudCentro.findUnique({
+    // Buscar el punto de donación
+    const puntoDonacion = await prisma.puntoDonacion.findUnique({
       where: { id }
     });
 
-    if (!solicitud) {
+    if (!puntoDonacion) {
       return NextResponse.json(
-        { error: "Solicitud no encontrada" },
+        { error: "Punto de donación no encontrado" },
         { status: 404 }
       );
     }
 
-    if (solicitud.estado !== "Pendiente") {
+    if (puntoDonacion.activo) {
       return NextResponse.json(
-        { error: "La solicitud ya ha sido procesada" },
+        { error: "No se puede rechazar un punto de donación ya activo" },
         { status: 400 }
       );
     }
 
-    console.log("Rechazando solicitud de centro:", solicitud);
+    console.log("Rechazando punto de donación:", puntoDonacion);
 
-    // Actualizar el estado de la solicitud
-    await prisma.solicitudCentro.update({
-      where: { id },
-      data: {
-        estado: "Rechazada"
-      }
+    // Eliminar los artículos asociados al punto de donación
+    await prisma.articuloOferta.deleteMany({
+      where: { puntoDonacionId: id }
+    });
+
+    // Eliminar el punto de donación
+    await prisma.puntoDonacion.delete({
+      where: { id }
     });
 
     return NextResponse.json({
       success: true,
-      message: "Solicitud rechazada correctamente"
+      message: "Punto de donación rechazado y eliminado correctamente"
     });
   } catch (error) {
-    console.error("Error al rechazar solicitud:", error);
+    console.error("Error al rechazar punto de donación:", error);
     return NextResponse.json(
-      { error: "Error al rechazar solicitud" },
+      { error: "Error al rechazar punto de donación" },
       { status: 500 }
     );
   }

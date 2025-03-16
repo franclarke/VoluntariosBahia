@@ -123,7 +123,7 @@ exports.Prisma.TipoArticuloScalarFieldEnum = {
   creadoEn: 'creadoEn'
 };
 
-exports.Prisma.CentroDistribucionScalarFieldEnum = {
+exports.Prisma.PuntoDonacionScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
   direccion: 'direccion',
@@ -141,7 +141,7 @@ exports.Prisma.CentroDistribucionScalarFieldEnum = {
 
 exports.Prisma.ArticuloOfertaScalarFieldEnum = {
   id: 'id',
-  centroDistribucionId: 'centroDistribucionId',
+  puntoDonacionId: 'puntoDonacionId',
   tipoArticuloId: 'tipoArticuloId',
   cantidad: 'cantidad',
   estado: 'estado',
@@ -222,6 +222,29 @@ exports.Prisma.ArticuloSolicitadoScalarFieldEnum = {
   cantidad: 'cantidad'
 };
 
+exports.Prisma.SolicitudLimpiezaScalarFieldEnum = {
+  id: 'id',
+  direccion: 'direccion',
+  contactoNombre: 'contactoNombre',
+  contactoTel: 'contactoTel',
+  estado: 'estado',
+  latitud: 'latitud',
+  longitud: 'longitud',
+  descripcion: 'descripcion',
+  creadoEn: 'creadoEn',
+  actualizadoEn: 'actualizadoEn'
+};
+
+exports.Prisma.MensajeScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  email: 'email',
+  telefono: 'telefono',
+  mensaje: 'mensaje',
+  leido: 'leido',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -240,7 +263,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   TipoArticulo: 'TipoArticulo',
-  CentroDistribucion: 'CentroDistribucion',
+  PuntoDonacion: 'PuntoDonacion',
   ArticuloOferta: 'ArticuloOferta',
   Solicitud: 'Solicitud',
   ArticuloSolicitud: 'ArticuloSolicitud',
@@ -248,7 +271,9 @@ exports.Prisma.ModelName = {
   ArticuloPeticion: 'ArticuloPeticion',
   Administrador: 'Administrador',
   SolicitudCentro: 'SolicitudCentro',
-  ArticuloSolicitado: 'ArticuloSolicitado'
+  ArticuloSolicitado: 'ArticuloSolicitado',
+  SolicitudLimpieza: 'SolicitudLimpieza',
+  Mensaje: 'Mensaje'
 };
 
 /**

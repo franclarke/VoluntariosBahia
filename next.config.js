@@ -2,6 +2,11 @@
 const nextConfig = {
   // Configurar paquetes externos para componentes del servidor
   experimental: {
+    // Usar la nueva configuración para Next.js 15
+    serverActions: {
+      allowedOrigins: ["localhost:3000"],
+    },
+    // Mantener los paquetes externos necesarios
     serverComponentsExternalPackages: ["bcrypt", "jsonwebtoken"]
   },
   
@@ -13,8 +18,8 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true
   },
-  // Deshabilitar la minificación para evitar problemas con caracteres Unicode
-  swcMinify: false
+  // Habilitar la minificación para mejorar el rendimiento
+  swcMinify: true
 };
 
 module.exports = nextConfig; 

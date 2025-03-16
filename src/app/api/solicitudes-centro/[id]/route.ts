@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 // Elimina una solicitud de centro (solo para administradores)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     // Verificar si el usuario está autenticado como administrador
@@ -18,7 +18,7 @@ export async function DELETE(
       );
     }
     
-    const id = parseInt(params.id);
+    const id = parseInt(context.params.id);
     
     if (isNaN(id)) {
       return NextResponse.json(

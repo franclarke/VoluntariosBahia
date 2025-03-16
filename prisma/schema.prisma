@@ -19,7 +19,7 @@ model TipoArticulo {
   articulosSolicitados ArticuloSolicitado[]
 }
 
-model CentroDistribucion {
+model PuntoDonacion {
   id              Int              @id @default(autoincrement())
   nombre          String?          // Campo opcional para el nombre del centro
   direccion       String
@@ -38,16 +38,16 @@ model CentroDistribucion {
 
 model ArticuloOferta {
   id                   Int                @id @default(autoincrement())
-  centroDistribucionId Int
+  puntoDonacionId      Int
   tipoArticuloId       Int
-  cantidad             Int
+  cantidad             Int?
   estado               String             @default("Disponible")
   creadoEn             DateTime           @default(now())
   actualizadoEn        DateTime           @updatedAt
-  centroDistribucion   CentroDistribucion @relation(fields: [centroDistribucionId], references: [id], onDelete: Cascade)
+  puntoDonacion        PuntoDonacion      @relation(fields: [puntoDonacionId], references: [id], onDelete: Cascade)
   tipoArticulo         TipoArticulo       @relation(fields: [tipoArticuloId], references: [id])
 
-  @@unique([centroDistribucionId, tipoArticuloId])
+  @@unique([puntoDonacionId, tipoArticuloId])
 }
 
 model Solicitud {
@@ -134,4 +134,27 @@ model ArticuloSolicitado {
   cantidad          Int
   solicitudCentro   SolicitudCentro @relation(fields: [solicitudCentroId], references: [id], onDelete: Cascade)
   tipoArticulo      TipoArticulo    @relation(fields: [tipoArticuloId], references: [id])
+}
+
+model SolicitudLimpieza {
+  id             Int       @id @default(autoincrement())
+  direccion      String
+  contactoNombre String
+  contactoTel    String
+  estado         String    @default("Pendiente")
+  latitud        Float
+  longitud       Float
+  descripcion    String?
+  creadoEn       DateTime  @default(now())
+  actualizadoEn  DateTime  @updatedAt
+}
+
+model Mensaje {
+  id             Int       @id @default(autoincrement())
+  nombre         String
+  email          String
+  telefono       String?
+  mensaje        String
+  leido          Boolean   @default(false)
+  creadoEn       DateTime  @default(now())
 }
