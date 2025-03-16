@@ -35,7 +35,7 @@ export default function ContactoPage() {
     setLoading(true);
     
     try {
-      const response = await fetch("/api/mensajes", {
+      const response = await fetch("/api/mensajes/contacto", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

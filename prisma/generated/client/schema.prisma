@@ -10,13 +10,12 @@ datasource db {
 }
 
 model TipoArticulo {
-  id                   Int                  @id @default(autoincrement())
-  nombre               String               @unique
-  creadoEn             DateTime             @default(now())
-  articulosOferta      ArticuloOferta[]
-  articulosPeticion    ArticuloPeticion[]
-  articulosSolicitud   ArticuloSolicitud[]
-  articulosSolicitados ArticuloSolicitado[]
+  id                 Int                 @id @default(autoincrement())
+  nombre             String              @unique
+  creadoEn           DateTime            @default(now())
+  articulosOferta    ArticuloOferta[]
+  articulosPeticion  ArticuloPeticion[]
+  articulosSolicitud ArticuloSolicitud[]
 }
 
 model PuntoDonacion {
@@ -102,40 +101,6 @@ model ArticuloPeticion {
   @@unique([peticionDonacionId, tipoArticuloId])
 }
 
-model Administrador {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  password String
-  nombre   String?
-  creadoEn DateTime @default(now())
-}
-
-model SolicitudCentro {
-  id                   Int                  @id @default(autoincrement())
-  nombre               String?
-  direccion            String
-  responsable          String
-  telefono             String?
-  horarioApertura      String?
-  horarioCierre        String?
-  latitud              Float
-  longitud             Float
-  descripcion          String?
-  estado               String // "Pendiente", "Aprobada", "Rechazada"
-  createdAt            DateTime             @default(now())
-  updatedAt            DateTime             @updatedAt
-  articulosSolicitados ArticuloSolicitado[]
-}
-
-model ArticuloSolicitado {
-  id                Int             @id @default(autoincrement())
-  solicitudCentroId Int
-  tipoArticuloId    Int
-  cantidad          Int
-  solicitudCentro   SolicitudCentro @relation(fields: [solicitudCentroId], references: [id], onDelete: Cascade)
-  tipoArticulo      TipoArticulo    @relation(fields: [tipoArticuloId], references: [id])
-}
-
 model SolicitudLimpieza {
   id             Int      @id @default(autoincrement())
   direccion      String
@@ -149,6 +114,33 @@ model SolicitudLimpieza {
   actualizadoEn  DateTime @updatedAt
 }
 
+// Tabla para mensajes de contacto
+model MensajeContacto {
+  id       Int      @id @default(autoincrement())
+  nombre   String
+  email    String?
+  telefono String?
+  mensaje  String
+  leido    Boolean  @default(false)
+  creadoEn DateTime @default(now())
+}
+
+// Tabla para información útil
+model InformacionUtil {
+  id          Int      @id @default(autoincrement())
+  nombre      String
+  email       String?
+  telefono    String
+  direccion   String?
+  horario     String?
+  descripcion String?
+  leido       Boolean  @default(false)
+  creadoEn    DateTime @default(now())
+}
+
+// Mantener la tabla Mensaje para compatibilidad con código existente
+// pero marcarla como obsoleta
+/// @deprecated Use MensajeContacto o InformacionUtil instead
 model Mensaje {
   id       Int      @id @default(autoincrement())
   nombre   String

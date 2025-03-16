@@ -191,37 +191,6 @@ exports.Prisma.ArticuloPeticionScalarFieldEnum = {
   creadoEn: 'creadoEn'
 };
 
-exports.Prisma.AdministradorScalarFieldEnum = {
-  id: 'id',
-  email: 'email',
-  password: 'password',
-  nombre: 'nombre',
-  creadoEn: 'creadoEn'
-};
-
-exports.Prisma.SolicitudCentroScalarFieldEnum = {
-  id: 'id',
-  nombre: 'nombre',
-  direccion: 'direccion',
-  responsable: 'responsable',
-  telefono: 'telefono',
-  horarioApertura: 'horarioApertura',
-  horarioCierre: 'horarioCierre',
-  latitud: 'latitud',
-  longitud: 'longitud',
-  descripcion: 'descripcion',
-  estado: 'estado',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ArticuloSolicitadoScalarFieldEnum = {
-  id: 'id',
-  solicitudCentroId: 'solicitudCentroId',
-  tipoArticuloId: 'tipoArticuloId',
-  cantidad: 'cantidad'
-};
-
 exports.Prisma.SolicitudLimpiezaScalarFieldEnum = {
   id: 'id',
   direccion: 'direccion',
@@ -233,6 +202,28 @@ exports.Prisma.SolicitudLimpiezaScalarFieldEnum = {
   descripcion: 'descripcion',
   creadoEn: 'creadoEn',
   actualizadoEn: 'actualizadoEn'
+};
+
+exports.Prisma.MensajeContactoScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  email: 'email',
+  telefono: 'telefono',
+  mensaje: 'mensaje',
+  leido: 'leido',
+  creadoEn: 'creadoEn'
+};
+
+exports.Prisma.InformacionUtilScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  email: 'email',
+  telefono: 'telefono',
+  direccion: 'direccion',
+  horario: 'horario',
+  descripcion: 'descripcion',
+  leido: 'leido',
+  creadoEn: 'creadoEn'
 };
 
 exports.Prisma.MensajeScalarFieldEnum = {
@@ -269,10 +260,9 @@ exports.Prisma.ModelName = {
   ArticuloSolicitud: 'ArticuloSolicitud',
   PeticionDonacion: 'PeticionDonacion',
   ArticuloPeticion: 'ArticuloPeticion',
-  Administrador: 'Administrador',
-  SolicitudCentro: 'SolicitudCentro',
-  ArticuloSolicitado: 'ArticuloSolicitado',
   SolicitudLimpieza: 'SolicitudLimpieza',
+  MensajeContacto: 'MensajeContacto',
+  InformacionUtil: 'InformacionUtil',
   Mensaje: 'Mensaje'
 };
 

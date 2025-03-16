@@ -6,49 +6,35 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 // GET /api/mensajes
-// Obtiene todos los mensajes (solo para administradores)
-export async function GET(request: NextRequest) {
+// Obtiene mensajes públicos (contadores o información básica)
+export async function GET() {
   try {
-    // Verificar si el usuario está autenticado como administrador
-    const token = request.cookies.get("admin_token")?.value;
+    // Contar mensajes por tipo y estado
+    const [totalMensajes, totalMensajesContacto, totalInformacionUtil] = await Promise.all([
+      prisma.mensaje.count(),
+      prisma.mensajeContacto.count(),
+      prisma.informacionUtil.count()
+    ]);
     
-    if (!token) {
-      return NextResponse.json(
-        { error: "No autorizado" },
-        { status: 401 }
-      );
-    }
-
-    const url = new URL(request.url);
-    const leido = url.searchParams.get("leido");
-    // Construir el filtro para la consulta
-    const where: Record<string, boolean | undefined> = {};
-    if (leido === "true") {
-      where.leido = true;
-    } else if (leido === "false") {
-      where.leido = false;
-    }
-    
-    // Consulta para obtener mensajes
-    const mensajes = await prisma.mensaje.findMany({
-      where,
-      orderBy: {
-        creadoEn: "desc"
+    // Devolver solo información agregada, no los mensajes individuales
+    return NextResponse.json({
+      contadores: {
+        mensaje: totalMensajes,
+        mensajeContacto: totalMensajesContacto,
+        informacionUtil: totalInformacionUtil
       }
     });
-    
-    return NextResponse.json(mensajes);
   } catch (error) {
-    console.error("Error al obtener mensajes:", error);
+    console.error("Error al obtener contadores de mensajes:", error);
     return NextResponse.json(
-      { error: "Error al obtener mensajes" },
+      { error: "Error al obtener información" },
       { status: 500 }
     );
   }
 }
 
 // POST /api/mensajes
-// Crea un nuevo mensaje desde el formulario de información útil
+// Crea un nuevo mensaje desde el formulario de contacto (legado)
 export async function POST(request: NextRequest) {
   try {
     const { nombre, email, telefono, mensaje } = await request.json();

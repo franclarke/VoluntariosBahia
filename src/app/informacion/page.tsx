@@ -36,16 +36,18 @@ export default function InformacionPage() {
     setLoading(true);
     
     try {
-      const response = await fetch("/api/mensajes", {
+      const response = await fetch("/api/mensajes/informacion", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           nombre: formData.nombre,
-          email: formData.email || "contacto@voluntariosbahia.org",
+          email: formData.email,
           telefono: formData.telefono,
-          mensaje: `Dirección: ${formData.direccion || 'No especificada'}\nHorario: ${formData.horario || 'No especificado'}\nDescripción: ${formData.descripcion || 'No especificada'}`
+          direccion: formData.direccion,
+          horario: formData.horario,
+          descripcion: formData.descripcion
         }),
       });
       
