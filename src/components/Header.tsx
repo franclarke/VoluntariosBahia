@@ -6,7 +6,7 @@ import { MobileNav } from "@/components/mobile-nav"
 import { DesktopNav } from "@/components/desktop-nav"
 import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import Link from "next/link"
 
 export default function Header() {
@@ -60,6 +60,9 @@ export default function Header() {
                 side="left"
                 className="w-[85%] max-w-sm p-0 z-[1001]" // Ensure sheet is above map
               >
+                <SheetHeader>
+                  <SheetTitle>Menú</SheetTitle>
+                </SheetHeader>
                 <MobileNav />
               </SheetContent>
             </Sheet>

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { navItems } from "@/lib/navigation-data"
-import { SheetClose, SheetHeader } from "@/components/ui/sheet"
+import { SheetClose, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import Image from "next/image"
 
 export function MobileNav() {
@@ -14,6 +14,7 @@ export function MobileNav() {
   return (
     <div className="h-full flex flex-col bg-white">
       <SheetHeader className="px-6 py-4 border-b sticky top-0 bg-white z-10">
+        <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
         <div className="flex items-center justify-between">
           <div className="flex items-center h-10">
           <Link href="/" className="h-full w-auto">

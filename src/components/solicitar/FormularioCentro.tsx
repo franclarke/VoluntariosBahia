@@ -60,13 +60,15 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
         const response = await fetch("/api/tipos-articulos");
         if (response.ok) {
           const data = await response.json();
-          setTiposArticulos(data);
+          setTiposArticulos([...data, { id: -1, nombre: "Otro" }]);
         } else {
           toast.error("Error al cargar tipos de artículos");
+          setTiposArticulos([{ id: -1, nombre: "Otro" }]);
         }
       } catch (error) {
         console.error("Error al cargar tipos de artículos:", error);
         toast.error("Error al cargar tipos de artículos");
+        setTiposArticulos([{ id: -1, nombre: "Otro" }]);
       } finally {
         setCargandoTipos(false);
       }
@@ -103,6 +105,12 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
   const handleArticuloChange = (index: number, field: keyof ArticuloDisponible, value: number | string) => {
     const nuevosArticulos = [...articulos];
     nuevosArticulos[index] = { ...nuevosArticulos[index], [field]: value };
+    
+    // Si cambia el tipo de artículo a algo que no es "Otro", eliminar el tipo personalizado
+    if (field === "tipoArticuloId" && value !== -1) {
+      delete nuevosArticulos[index].tipoPersonalizado;
+    }
+    
     setArticulos(nuevosArticulos);
   };
 
@@ -134,7 +142,11 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
     }
 
     // Validar que todos los artículos tengan tipo y cantidad
-    const articulosInvalidos = articulos.some(art => !art.tipoArticuloId || art.cantidad < 1);
+    const articulosInvalidos = articulos.some(art => {
+      if (!art.tipoArticuloId || art.cantidad < 1) return true;
+      if (art.tipoArticuloId === -1 && (!art.tipoPersonalizado || art.tipoPersonalizado.trim() === "")) return true;
+      return false;
+    });
     if (articulosInvalidos) {
       toast.error("Todos los artículos deben tener tipo y cantidad válida");
       return;
@@ -148,10 +160,20 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
         ...formData,
         latitud: parseFloat(formData.latitud),
         longitud: parseFloat(formData.longitud),
-        articulos: articulos.map(art => ({
-          tipoArticuloId: art.tipoArticuloId,
-          cantidad: art.cantidad
-        }))
+        articulos: articulos.map(art => {
+          if (art.tipoArticuloId === -1) {
+            return {
+              tipoArticuloId: art.tipoArticuloId,
+              tipoPersonalizado: art.tipoPersonalizado,
+              cantidad: art.cantidad
+            };
+          } else {
+            return {
+              tipoArticuloId: art.tipoArticuloId,
+              cantidad: art.cantidad
+            };
+          }
+        })
       };
 
       console.log("Enviando solicitud de punto de donación:", solicitudData);
@@ -354,6 +376,18 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
                         )}
                       </SelectContent>
                     </Select>
+                    
+                    {articulo.tipoArticuloId === -1 && (
+                      <div className="mt-2">
+                        <Input
+                          placeholder="Especifica el tipo de artículo"
+                          value={articulo.tipoPersonalizado || ""}
+                          onChange={(e) => handleArticuloChange(index, "tipoPersonalizado", e.target.value)}
+                          className="text-sm sm:text-base"
+                          required={articulo.tipoArticuloId === -1}
+                        />
+                      </div>
+                    )}
                   </div>
                   
                   <div className="w-full sm:w-24 space-y-1.5 sm:space-y-2">
