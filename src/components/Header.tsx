@@ -65,7 +65,7 @@ export default function Header() {
             </Sheet>
 
             {/* Mobile centered logo */}
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center flex-1">
               <Link href="/">
                 <div 
                   className="h-20 w-40 bg-contain bg-center bg-no-repeat" 

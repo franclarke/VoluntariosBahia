@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import FormularioCentro from "@/components/solicitar/FormularioCentro";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 export default function SolicitarCentroPage() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -31,12 +33,13 @@ export default function SolicitarCentroPage() {
           <CardContent>
             <div className="space-y-4">
               <div className="flex justify-center">
-                <button
+                <Button
                   onClick={() => setFormSubmitted(false)}
-                  className="text-primary hover:underline"
+                  variant="outline"
                 >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
                   Realizar otra solicitud
-                </button>
+                </Button>
               </div>
             </div>
           </CardContent>

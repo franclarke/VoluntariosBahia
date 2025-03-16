@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "sonner";
 import FormularioLimpieza from "@/components/solicitar/FormularioLimpieza";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 export default function SolicitarLimpiezaPage() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -35,12 +36,13 @@ export default function SolicitarLimpiezaPage() {
                 Un voluntario se pondrá en contacto contigo para coordinar la visita. Por favor, mantén tu teléfono disponible.
               </p>
               <div className="flex justify-center">
-                <button
+                <Button
                   onClick={() => setFormSubmitted(false)}
-                  className="text-primary hover:underline"
+                  variant="outline"
                 >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
                   Realizar otra solicitud
-                </button>
+                </Button>
               </div>
             </div>
           </CardContent>

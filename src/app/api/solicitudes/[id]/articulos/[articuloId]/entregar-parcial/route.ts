@@ -11,8 +11,9 @@ export async function PUT(
   { params }: { params: { id: string, articuloId: string } }
 ) {
   try {
-    const id = params.id;
-    const articuloId = params.articuloId;
+    // Convertir params a Promises resueltas para evitar errores de Next.js
+    const id = await Promise.resolve(params.id);
+    const articuloId = await Promise.resolve(params.articuloId);
     const body = await request.json();
     const { cantidadEntregada } = body;
     

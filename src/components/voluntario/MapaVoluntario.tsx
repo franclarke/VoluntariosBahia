@@ -501,31 +501,36 @@ export default function MapaVoluntario({
     return (
       <div 
         ref={wrapperRef}
-        className="absolute z-50 bg-white rounded-lg shadow-lg p-1 border border-gray-200 w-[200px] top-0 left-0 transform -translate-x-1/2 -translate-y-full mb-1"
-        style={{ marginBottom: "10px" }}
+        className="fixed z-50 bg-white rounded-lg shadow-lg p-3 border border-gray-200"
+        style={{ 
+          width: "220px", 
+          top: "50%", 
+          left: "50%", 
+          transform: "translate(-50%, -50%)"
+        }}
       >
-        <div className="text-sm font-medium mb-1">¿Cuántas unidades entregaste?</div>
-        <div className="flex items-center justify-between mb-2">
+        <div className="text-sm font-medium mb-3 text-center">¿Cuántas unidades entregaste?</div>
+        <div className="flex items-center justify-center gap-4 mb-3">
           <button 
             onClick={() => setCantidad(prev => Math.max(1, prev - 1))}
-            className="bg-gray-100 hover:bg-gray-200 rounded-full p-1"
+            className="bg-gray-100 hover:bg-gray-200 rounded-full p-1.5"
             disabled={cantidad <= 1}
           >
-            <Minus className="h-4 w-4" />
+            <Minus className="h-5 w-5" />
           </button>
-          <span className="font-medium text-lg">{cantidad}</span>
+          <span className="font-medium text-xl">{cantidad}</span>
           <button 
             onClick={() => setCantidad(prev => Math.min(cantidadActual, prev + 1))}
-            className="bg-gray-100 hover:bg-gray-200 rounded-full p-1"
+            className="bg-gray-100 hover:bg-gray-200 rounded-full p-1.5"
             disabled={cantidad >= cantidadActual}
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-5 w-5" />
           </button>
         </div>
-        <div className="text-xs text-gray-500 mb-1 text-center">
+        <div className="text-xs text-gray-600 mb-3 text-center">
           {cantidad} de {cantidadActual} unidades
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-2">
           <Button 
             size="sm" 
             variant="outline" 
@@ -540,7 +545,7 @@ export default function MapaVoluntario({
             onClick={handleSubmit}
             disabled={loading}
           >
-            {loading ? <Loader2 className="h-3 w-3 animate-spin" /> : "Confirmar"}
+            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Confirmar"}
           </Button>
         </div>
       </div>
@@ -767,7 +772,7 @@ export default function MapaVoluntario({
                           className="w-full py-1 text-xs font-medium"
                           onClick={() => marcarPuntoComoInactivo(punto.id)}
                         >
-                          Marcar como inactivo
+                          Marcar como agotado
                         </Button>
                       </div>
                     </div>
@@ -940,7 +945,7 @@ export default function MapaVoluntario({
                           className="w-full py-1 text-xs font-medium"
                           onClick={() => marcarLimpiezaComoAtendida(solicitud.id)}
                         >
-                          Marcar como atendida
+                          Marcar como terminada
                         </Button>
                       </div>
                     </div>
