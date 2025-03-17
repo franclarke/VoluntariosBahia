@@ -19,7 +19,7 @@ const MapaUbicacion = dynamic(() => import("@/components/solicitar/MapaUbicacion
 
 interface ArticuloSolicitado {
   tipoArticulo: string;
-  cantidad: number;
+  cantidad: number | null;
   tipoPersonalizado?: string;
 }
 
@@ -45,7 +45,7 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
     longitud: ""
   });
   const [articulos, setArticulos] = useState<ArticuloSolicitado[]>([
-    { tipoArticulo: "", cantidad: 1 }
+    { tipoArticulo: "", cantidad: null }
   ]);
   const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState(false);
 
@@ -102,7 +102,7 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
     setUbicacionSeleccionada(true);
   };
 
-  const handleArticuloChange = (index: number, field: keyof ArticuloSolicitado, value: string | number) => {
+  const handleArticuloChange = (index: number, field: keyof ArticuloSolicitado, value: string | number | null) => {
     const nuevosArticulos = [...articulos];
     nuevosArticulos[index] = { ...nuevosArticulos[index], [field]: value };
     
@@ -115,7 +115,7 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
   };
 
   const agregarArticulo = () => {
-    setArticulos([...articulos, { tipoArticulo: "", cantidad: 1 }]);
+    setArticulos([...articulos, { tipoArticulo: "", cantidad: null }]);
   };
 
   const eliminarArticulo = (index: number) => {
@@ -143,11 +143,11 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
 
     // Validar que todos los artículos tengan tipo y cantidad
     const articulosInvalidos = articulos.some(art => {
-      if (!art.tipoArticulo || art.cantidad < 1) return true;
+      if (!art.tipoArticulo) return true;
+      if (art.cantidad === null || art.cantidad <= 0) return true;
       if (art.tipoArticulo === "Otro" && (!art.tipoPersonalizado || art.tipoPersonalizado.trim() === "")) return true;
       return false;
     });
-    
     if (articulosInvalidos) {
       toast.error("Todos los artículos deben tener tipo y cantidad válida");
       return;
@@ -158,17 +158,20 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
       
       // Preparar los artículos para enviar (usar el tipo existente, no el personalizado)
       const articulosParaEnviar = articulos.map(art => {
+        // Si la cantidad es null, asignarle valor 1 antes de enviar
+        const cantidad = art.cantidad === null ? 1 : art.cantidad;
+        
         // Si es "Otro", usamos el tipo existente en lugar de crear uno nuevo
         if (art.tipoArticulo === "Otro") {
           return {
             tipoArticulo: art.tipoArticulo,
             tipoPersonalizado: art.tipoPersonalizado,
-            cantidad: art.cantidad
+            cantidad
           };
         } else {
           return {
             tipoArticulo: art.tipoArticulo,
-            cantidad: art.cantidad
+            cantidad
           };
         }
       });
@@ -356,8 +359,11 @@ export default function FormularioSolicitud({ onSuccess }: FormularioSolicitudPr
                       id={`cantidad-${index}`}
                       type="number"
                       min="1"
-                      value={articulo.cantidad}
-                      onChange={(e) => handleArticuloChange(index, "cantidad", parseInt(e.target.value) || 1)}
+                      value={articulo.cantidad === null ? "" : articulo.cantidad}
+                      onChange={(e) => {
+                        const value = e.target.value === "" ? null : parseInt(e.target.value);
+                        handleArticuloChange(index, "cantidad", value);
+                      }}
                       className="text-sm sm:text-base"
                     />
                   </div>

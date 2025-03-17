@@ -19,7 +19,7 @@ const MapaUbicacion = dynamic(() => import("@/components/solicitar/MapaUbicacion
 
 interface ArticuloDisponible {
   tipoArticuloId: number;
-  cantidad: number;
+  cantidad: number | null;
   tipoPersonalizado?: string;
 }
 
@@ -48,7 +48,7 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
     longitud: ""
   });
   const [articulos, setArticulos] = useState<ArticuloDisponible[]>([
-    { tipoArticuloId: 0, cantidad: 1 }
+    { tipoArticuloId: 0, cantidad: null }
   ]);
   const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState(false);
 
@@ -102,7 +102,7 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
     setUbicacionSeleccionada(true);
   };
 
-  const handleArticuloChange = (index: number, field: keyof ArticuloDisponible, value: number | string) => {
+  const handleArticuloChange = (index: number, field: keyof ArticuloDisponible, value: number | string | null) => {
     const nuevosArticulos = [...articulos];
     nuevosArticulos[index] = { ...nuevosArticulos[index], [field]: value };
     
@@ -115,7 +115,7 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
   };
 
   const agregarArticulo = () => {
-    setArticulos([...articulos, { tipoArticuloId: 0, cantidad: 1 }]);
+    setArticulos([...articulos, { tipoArticuloId: 0, cantidad: null }]);
   };
 
   const eliminarArticulo = (index: number) => {
@@ -143,7 +143,8 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
 
     // Validar que todos los artículos tengan tipo y cantidad
     const articulosInvalidos = articulos.some(art => {
-      if (!art.tipoArticuloId || art.cantidad < 1) return true;
+      if (!art.tipoArticuloId) return true;
+      if (art.cantidad === null || art.cantidad <= 0) return true;
       if (art.tipoArticuloId === -1 && (!art.tipoPersonalizado || art.tipoPersonalizado.trim() === "")) return true;
       return false;
     });
@@ -161,16 +162,19 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
         latitud: parseFloat(formData.latitud),
         longitud: parseFloat(formData.longitud),
         articulos: articulos.map(art => {
+          // Si la cantidad es null, asignarle valor 1 antes de enviar
+          const cantidad = art.cantidad === null ? 1 : art.cantidad;
+          
           if (art.tipoArticuloId === -1) {
             return {
               tipoArticuloId: art.tipoArticuloId,
               tipoPersonalizado: art.tipoPersonalizado,
-              cantidad: art.cantidad
+              cantidad
             };
           } else {
             return {
               tipoArticuloId: art.tipoArticuloId,
-              cantidad: art.cantidad
+              cantidad
             };
           }
         })
@@ -396,8 +400,11 @@ export default function FormularioCentro({ onSuccess }: FormularioCentroProps) {
                       id={`cantidad-${index}`}
                       type="number"
                       min="1"
-                      value={articulo.cantidad}
-                      onChange={(e) => handleArticuloChange(index, "cantidad", parseInt(e.target.value) || 1)}
+                      value={articulo.cantidad === null ? "" : articulo.cantidad}
+                      onChange={(e) => {
+                        const value = e.target.value === "" ? null : parseInt(e.target.value);
+                        handleArticuloChange(index, "cantidad", value);
+                      }}
                       className="text-sm sm:text-base"
                     />
                   </div>
