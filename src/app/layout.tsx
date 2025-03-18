@@ -6,6 +6,8 @@ import "../styles/leaflet-fix.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/react"
+
 
 const inter = Inter({
   variable: "--font-sans",
@@ -53,6 +55,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1 container mx-auto px-3 py-4 sm:px-4 sm:py-8">
           {children}
+          <Analytics />
         </main>
         <Footer />
         <Toaster position="top-center" richColors closeButton />
