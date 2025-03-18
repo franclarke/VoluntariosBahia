@@ -46,7 +46,7 @@ export function DesktopNav({ isScrolled }: DesktopNavProps) {
         <Link href="/" className="h-full w-auto">
           <Image 
             src="/logo.png" 
-            alt="Voluntarios Donaciones Bahía" 
+            alt="Voluntarios Bahía" 
             width={120} 
             height={56} 
             className="h-full w-auto object-contain" 
